@@ -5,7 +5,7 @@ import { Address } from 'web3x/address'
 import { bufferToHex } from 'web3x/utils'
 import { Account } from 'web3x/account'
 import { replace, getLocation } from 'connected-react-router'
-import { Authenticator, AuthIdentity } from 'dcl-crypto'
+import { Authenticator, AuthIdentity } from 'beland-crypto'
 import { env } from 'decentraland-commons'
 import { getData as getWallet, isConnected, getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import {

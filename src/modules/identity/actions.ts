@@ -1,5 +1,5 @@
 import { action } from 'typesafe-actions'
-import { AuthIdentity } from 'dcl-crypto'
+import { AuthIdentity } from 'beland-crypto'
 import { ProviderType } from '@dcl/schemas'
 import { Wallet } from 'decentraland-dapps/dist/modules/wallet/types'
 

@@ -1,5 +1,5 @@
 import { CatalystClient } from 'dcl-catalyst-client'
-import { Authenticator, AuthIdentity } from 'dcl-crypto'
+import { Authenticator, AuthIdentity } from 'beland-crypto'
 import { Entity, EntityType } from 'dcl-catalyst-commons'
 import { utils } from 'decentraland-commons'
 import { Omit } from 'decentraland-dapps/dist/lib/types'
