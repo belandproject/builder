@@ -1,0 +1,103 @@
+.ProjectCard {
+  position: relative;
+  width: var(--homepage-card-width);
+  height: var(--homepage-card-height);
+  border-radius: 12px;
+  margin-bottom: var(--homepage-card-margin);
+  margin-right: var(--homepage-card-margin);
+  background: rgba(var(--bluish-steel-raw), 0.16);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ProjectCard .deployment-status {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 10px;
+  height: 10px;
+}
+
+.ProjectCard .project-data {
+  width: 100%;
+  margin: 0px 20px 16px 20px;
+  align-self: flex-end;
+  color: var(--text);
+  z-index: 1;
+}
+
+.ProjectCard .title {
+  margin-bottom: 14px;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 500;
+  max-width: 175px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  max-height: 50px;
+}
+
+.ProjectCard .description {
+  font-size: 17px;
+  font-weight: 200;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  user-select: none;
+}
+
+.ProjectCard .overlay {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background: var(--background);
+  opacity: 0.3;
+}
+
+.ProjectCard:hover {
+  z-index: 999;
+}
+
+.ProjectCard:hover .options-dropdown.ui.dropdown > .dropdown.icon {
+  visibility: visible;
+}
+
+.ProjectCard .options-dropdown.ui.dropdown > .dropdown.icon {
+  visibility: hidden;
+}
+
+.ProjectCard .options-dropdown .icon:before {
+  color: var(--text) !important;
+}
+
+.ProjectCard.has-thumbnail {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.ProjectCard .title-wrapper {
+  display: flex;
+}
+
+.ProjectCard .Icon.is-uploading {
+  margin-left: 4px;
+  margin-top: 2px;
+}
+
+.ProjectCard .error-indicator {
+  width: 16px;
+  height: 16px;
+  background: url(../../images/save-error.svg);
+  background-repeat: no-repeat;
+  background-position: center -2px;
+  margin-top: 3px;
+  margin-left: 7px;
+}

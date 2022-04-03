@@ -1,0 +1,109 @@
+.CollectionDetailPage .header-column {
+  flex: none;
+  width: calc(100% - 300px);
+}
+
+.CollectionDetailPage .header-row {
+  width: 100%;
+}
+
+.CollectionDetailPage .header-row .ui.header.name {
+  max-width: calc(100% - 40px);
+  line-height: 29px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.CollectionDetailPage .edit-collection-name {
+  display: none;
+  margin-left: 16px;
+  margin-bottom: 2px;
+}
+
+.CollectionDetailPage .section:not(.is-published) .header-row:hover .edit-collection-name {
+  display: inline-block;
+}
+
+.CollectionDetailPage .section:not(.is-published) .header-row:hover {
+  cursor: pointer;
+}
+
+.CollectionDetailPage .ui.toggle.on-sale {
+  text-transform: uppercase;
+}
+
+.CollectionDetailPage .ui.toggle.on-sale > label {
+  white-space: nowrap;
+}
+
+.CollectionDetailPage .ui.toggle.checkbox input.hidden:focus + label,
+.CollectionDetailPage .ui.toggle.on-sale input.hidden + label {
+  padding-left: 40px;
+  color: var(--secondary-text) !important;
+}
+
+.CollectionDetailPage .dcl.row.actions > .ui.button.action-button {
+  margin-left: 24px;
+  border: 1px solid var(--gray);
+  padding: 8px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  white-space: nowrap;
+}
+
+.CollectionDetailPage .actions .ui.button.action-button + .ui.dropdown {
+  margin-left: 0;
+}
+
+.CollectionDetailPage .actions .ui.button.action-button > .text {
+  color: var(--text);
+}
+
+.CollectionDetailPage .actions .ui.button.compact {
+  padding: 10px;
+}
+
+.CollectionDetailPage .actions .popup-button {
+  margin-left: 16px;
+}
+
+.CollectionDetailPage .Notice {
+  margin-bottom: 32px;
+}
+
+.CollectionDetailPage .ui.grid.equal.width > .row > .column {
+  padding-left: 0;
+}
+
+.CollectionDetailPage .dcl.narrow > .empty {
+  padding: 200px 0;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--divider);
+  justify-content: center;
+  color: var(--secondary-text);
+  text-align: center;
+  line-height: 22px;
+  font-size: 15px;
+}
+
+.CollectionDetailPage .sparkles {
+  width: 54px;
+  height: 56px;
+  background-image: url('../../images/sparkles.svg');
+  background-repeat: no-repeat;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.CollectionDetailPage .CollectionItem:first-child .grid {
+  border-top: 1px solid var(--divider);
+}
+
+.CollectionDetailPage .CollectionStatus {
+  width: 16px;
+  height: 16px;
+  margin-bottom: 6px;
+  margin-right: 12px;
+}
