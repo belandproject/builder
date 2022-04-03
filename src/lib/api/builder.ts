@@ -562,7 +562,7 @@ export class BuilderAPI extends BaseAPI {
 
   async saveAssetPack(assetPack: FullAssetPack) {
     const remotePack = toRemoteAssetPack(assetPack)
-    await this.request('put', `/assetPacks/${remotePack.id}`, { assetPack: remotePack })
+    await this.request('put', `/asset-packs/${remotePack.id}`, { assetPack: remotePack })
   }
 
   async saveAssetContents(
@@ -600,9 +600,9 @@ export class BuilderAPI extends BaseAPI {
   }
 
   async fetchAssetPacks(address?: string): Promise<FullAssetPack[]> {
-    const promisesOfRemoteAssetPacks: Array<Promise<RemoteAssetPack[]>> = [this.request('get', '/assetPacks', { owner: 'default' })]
+    const promisesOfRemoteAssetPacks: Array<Promise<RemoteAssetPack[]>> = [this.request('get', '/asset-packs', { owner: 'default' })]
     if (address) {
-      promisesOfRemoteAssetPacks.push(this.request('get', '/assetPacks', { owner: address }))
+      promisesOfRemoteAssetPacks.push(this.request('get', '/asset-packs', { owner: address }))
     }
 
     const assetPacks: RemoteAssetPack[][] = await Promise.all(promisesOfRemoteAssetPacks)
@@ -610,7 +610,7 @@ export class BuilderAPI extends BaseAPI {
   }
 
   async deleteAssetPack(assetPack: FullAssetPack) {
-    await this.request('delete', `/assetPacks/${assetPack.id}`)
+    await this.request('delete', `/asset-packs/${assetPack.id}`)
   }
 
   likePool(pool: string, like: boolean = true) {
