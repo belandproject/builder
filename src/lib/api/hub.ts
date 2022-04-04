@@ -19,7 +19,7 @@ export class HubAPI extends BaseAPI {
         headers = { ...config.headers }
       }
     }
-    const authHeaders = this.authorization.createAuthHeaders(method, path)
+    const authHeaders = this.authorization.createAuthBearerToken(method, path)
     headers = {
       ...headers,
       ...authHeaders
@@ -41,11 +41,13 @@ export class HubAPI extends BaseAPI {
     return error.isAxiosError
   }
 
-  async uploadMedia(fileContent: Blob, onUploadProgress?: (progress: { loaded: number; total: number }) => void) {
+  async uploadMedia(fileContent: Blob, filename: string, onUploadProgress?: (progress: { loaded: number; total: number }) => void) {
     const formData = new FormData()
-    formData.append('file', fileContent)
-    await this.request('post', `/upload`, formData, {
+    formData.append('file', fileContent, filename)
+    return await this.request('post', `/upload`, formData, {
       onUploadProgress
-    })
+    });
   }
 }
+
+

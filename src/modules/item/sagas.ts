@@ -100,8 +100,9 @@ import { ItemTooBigError } from './errors'
 import { buildZipContents, getMetadata, groupsOf, isValidText, generateCatalystImage, MAX_FILE_SIZE } from './utils'
 
 import { LoginSuccessAction, LOGIN_SUCCESS } from 'modules/identity/actions'
+import { HubAPI } from 'lib/api/hub'
 
-export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClient) {
+export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClient, hub: HubAPI) {
   yield takeEvery(FETCH_ITEMS_REQUEST, handleFetchItemsRequest)
   yield takeEvery(FETCH_ITEM_REQUEST, handleFetchItemRequest)
   yield takeEvery(FETCH_COLLECTION_ITEMS_REQUEST, handleFetchCollectionItemsRequest)
@@ -237,7 +238,12 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
         }
       }
 
-      yield call([legacyBuilder, 'saveItem'], item, contents)
+      for (let path in contents) {
+        const res: any[] = yield call([hub, 'uploadMedia'], contents[path], path)
+        item.contents[path] = res[0].hash;
+      }
+
+      yield call([legacyBuilder, 'saveItem'], item)
 
       yield put(saveItemSuccess(item, contents))
     } catch (error) {

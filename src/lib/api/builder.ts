@@ -23,7 +23,7 @@ export const BUILDER_SERVER_URL = env.get('REACT_APP_BUILDER_SERVER_URL', '')
 export const HUB_SERVER_URL = env.get('REACT_APP_MARKETPLACE_URL', '')
 
 
-export const getContentsStorageUrl = (hash: string = '') => `https://builder-api.decentraland.org/v1/storage/contents/${hash}`
+export const getContentsStorageUrl = (hash: string = '') => `${hash.replace('ipfs://', 'https://ipfs-test.beland.io/ipfs/')}`
 export const getAssetPackStorageUrl = (hash: string = '') => `${BUILDER_SERVER_URL}/storage/assetPacks/${hash}`
 export const getPreviewUrl = (projectId: string) => `${BUILDER_SERVER_URL}/projects/${projectId}/media/preview.png`
 
@@ -621,21 +621,8 @@ export class BuilderAPI extends BaseAPI {
     return remoteItems.map(fromRemoteItem)
   }
 
-  saveItem = async (item: Item, contents: Record<string, Blob>) => {
+  saveItem = async (item: Item) => {
     await this.request('post', `/items/${item.id}`, toRemoteItem(item))
-    // This has to be done after the PUT above, otherwise it will fail when creating an item, since it wont find it in the DB and return a 404
-    await this.saveItemContents(item, contents)
-  }
-
-  saveItemContents = async (item: Item, contents: Record<string, Blob>) => {
-    if (Object.keys(contents).length > 0) {
-      const formData = new FormData()
-      for (let path in contents) {
-        formData.append(item.contents[path], contents[path])
-      }
-
-      return this.request('post', `/items/${item.id}/files`, formData)
-    }
   }
 
   async deleteItem(id: string) {

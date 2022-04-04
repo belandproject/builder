@@ -56,7 +56,7 @@ export function* rootSaga(builderAPI: BuilderAPI, newBuilderClient: BuilderClien
     entitySaga(hubAPI),
     forumSaga(builderAPI),
     identitySaga(),
-    itemSaga(builderAPI, newBuilderClient),
+    itemSaga(builderAPI, newBuilderClient, hubAPI),
     keyboardSaga(),
     landSaga(),
     locationSaga(),

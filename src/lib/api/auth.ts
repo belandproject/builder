@@ -29,4 +29,20 @@ export class Authorization {
     }
     return headers
   }
+  
+  createAuthBearerToken(method: string = 'get', path: string = '') {
+    const headers: Record<string, string> = {}
+    const state = this.store.getState()
+    const address = getAddress(state)
+    if (address) {
+      const identities = getData(state)
+      const identity = identities[address]
+      if (identity) {
+        const endpoint = (method + ':' + path).toLowerCase()
+        const authChain = Authenticator.signPayload(identity, endpoint)
+        headers['Authorization'] = 'Bearer ' + btoa(JSON.stringify(authChain))
+      }
+    }
+    return headers
+  }
 }
