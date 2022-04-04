@@ -12,8 +12,9 @@ import { CONNECT_WALLET_SUCCESS } from 'decentraland-dapps/dist/modules/wallet/a
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { TRANSPARENT_PIXEL } from 'lib/getModelData'
 import { BuilderClient, NFT } from '@dcl/builder-client'
+import { marketplace } from 'lib/api/marketplace'
 
-export function* assetSaga(client: BuilderClient) {
+export function* assetSaga(_client: BuilderClient) {
   yield takeLatest(LOAD_COLLECTIBLES_REQUEST, handleLoadCollectibles)
   yield takeLatest(CONNECT_WALLET_SUCCESS, handleConnectWallet)
 
@@ -29,9 +30,9 @@ export function* assetSaga(client: BuilderClient) {
         throw new Error(`Invalid address: ${address}`)
       }
       const assets: Asset[] = []
-      const serverNFTs: NFT[] = yield call(getNFTs, address)
+      const serverNFTs: any[] = yield call(getNFTs, address, 0)
       for (const openseaAsset of serverNFTs) {
-        const uri = `ethereum://${openseaAsset.contract.address}/${openseaAsset.tokenId}`
+        const uri = `ethereum://${openseaAsset.tokenAddress}/${openseaAsset.tokenId}`
         assets.push({
           assetPackId: COLLECTIBLE_ASSET_PACK_ID,
           id: uri,
@@ -41,7 +42,7 @@ export function* assetSaga(client: BuilderClient) {
           name: openseaAsset.name || '',
           model: uri,
           script: null,
-          thumbnail: openseaAsset.imageThumbnailUrl || TRANSPARENT_PIXEL,
+          thumbnail: openseaAsset.image || TRANSPARENT_PIXEL,
           metrics: {
             triangles: 0,
             materials: 0,
@@ -60,17 +61,15 @@ export function* assetSaga(client: BuilderClient) {
     }
   }
 
-  async function getNFTs(owner: string, cursor?: string): Promise<NFT[]> {
-    const response = await client.getNFTs({ owner, cursor })
+  async function getNFTs(owner: string, offset: number): Promise<NFT[]> {
+    const limit = 1000;
+    const { count, rows } = await marketplace.fetchNfts({ owner, offset, limit })
 
-    const { next, nfts } = response
-
-    if (next) {
-      const nextNFTs = await getNFTs(owner, next)
-
-      return [...nfts, ...nextNFTs]
+    if (count > offset) {
+      const nextNFTs = await getNFTs(owner, offset  + limit)
+      return [...rows, ...nextNFTs]
     }
 
-    return nfts
+    return rows
   }
 }
