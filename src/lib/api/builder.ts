@@ -408,13 +408,6 @@ function getBaseCurationFields(remoteCuration: RemoteCollectionCuration | Remote
   }
 }
 
-function fromRemoteCollectionCuration(remoteCuration: RemoteCollectionCuration): CollectionCuration {
-  return {
-    ...getBaseCurationFields(remoteCuration),
-    collectionId: remoteCuration.collection_id
-  }
-}
-
 function fromRemoteItemCuration(remoteCuration: RemoteItemCuration): ItemCuration {
   return {
     ...getBaseCurationFields(remoteCuration),
@@ -713,18 +706,12 @@ export class BuilderAPI extends BaseAPI {
     return [];
   }
 
-  async fetchCuration(collectionId: string): Promise<CollectionCuration | undefined> {
-    const curation: RemoteCollectionCuration | undefined = await this.request('get', `/collections/${collectionId}/curation`)
-
-    if (!curation) {
-      return
-    }
-
-    return fromRemoteCollectionCuration(curation)
+  async fetchCuration(_collectionId: string): Promise<CollectionCuration | undefined> {
+    return
   }
 
-  pushCuration(collectionId: string): Promise<void> {
-    return this.request('post', `/collections/${collectionId}/curation`)
+  async pushCuration(_collectionId: string): Promise<void> {
+    
   }
 
   async pushItemCuration(itemId: string): Promise<ItemCuration> {
