@@ -6,7 +6,6 @@ import {
   LOAD_MANIFEST_SUCCESS,
   LOAD_MANIFEST_FAILURE
 } from 'modules/project/actions'
-import { getData as getPools } from 'modules/pool/selectors'
 import { getData as getProjects } from 'modules/project/selectors'
 import { getData as getScenes } from 'modules/scene/selectors'
 import { SCRIPT_INSTANCE_NAME } from 'modules/project/export'
@@ -105,9 +104,8 @@ export function* getSceneByProjectId(
   type: PreviewType.PROJECT | PreviewType.PUBLIC | PreviewType.POOL = PreviewType.PROJECT
 ) {
   const projects: ReturnType<typeof getProjects> = yield select(getProjects)
-  const pools: ReturnType<typeof getPools> = yield select(getPools)
   const scenes: ReturnType<typeof getScenes> = yield select(getScenes)
-  let project = projects[projectId] || pools[projectId]
+  let project = projects[projectId]
   let scene = project && scenes[project.sceneId]
 
   if (!scene) {
@@ -116,6 +114,7 @@ export function* getSceneByProjectId(
       success: take(LOAD_MANIFEST_SUCCESS),
       failure: take(LOAD_MANIFEST_FAILURE)
     })
+
     if (result.success) {
       scene = result.success.payload.manifest.scene
     } else if (result.failure) {

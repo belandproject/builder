@@ -247,9 +247,9 @@ export function* projectSaga(builder: BuilderAPI) {
   }
 
   function* handleLoadProjectRequest(action: LoadManifestRequestAction) {
-    const { id, type } = action.payload
+    const { id } = action.payload
     try {
-      const manifest: Manifest<Project> = yield call(() => builder.fetchManifest(id, type))
+      const manifest: Manifest<Project> = yield call(() => builder.fetchManifest(id))
       yield put(loadManifestSuccess(manifest))
     } catch (e) {
       yield put(loadManifestFailure(e.message))

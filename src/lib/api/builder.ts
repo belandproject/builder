@@ -3,18 +3,15 @@ import { env } from 'decentraland-commons'
 import { BaseAPI, APIParam } from 'decentraland-dapps/dist/lib/api'
 import { Omit } from 'decentraland-dapps/dist/lib/types'
 import { runMigrations } from 'modules/migrations/utils'
-import { migrations } from 'modules/migrations/manifest'
 import { Project, Manifest } from 'modules/project/types'
 import { Asset, AssetAction, AssetParameter } from 'modules/asset/types'
 import { Scene } from 'modules/scene/types'
 import { FullAssetPack } from 'modules/assetPack/types'
 import { dataURLToBlob, isDataUrl, objectURLToBlob } from 'modules/media/utils'
-import { createManifest } from 'modules/project/export'
 import { Pool } from 'modules/pool/types'
 import { Item, ItemType, ItemRarity, WearableData, Rarity, ItemApprovalData } from 'modules/item/types'
 import { Collection } from 'modules/collection/types'
 import { Cheque, ThirdParty } from 'modules/thirdParty/types'
-import { PreviewType } from 'modules/editor/types'
 import { ForumPost } from 'modules/forum/types'
 import { ModelMetrics } from 'modules/models/types'
 import { CollectionCuration } from 'modules/curations/collectionCuration/types'
@@ -24,7 +21,7 @@ import { ItemCuration } from 'modules/curations/itemCuration/types'
 
 export const BUILDER_SERVER_URL = env.get('REACT_APP_BUILDER_SERVER_URL', '')
 
-export const getContentsStorageUrl = (hash: string = '') => `${BUILDER_SERVER_URL}/storage/contents/${hash}`
+export const getContentsStorageUrl = (hash: string = '') => `https://builder-api.decentraland.org/v1/storage/contents/${hash}`
 export const getAssetPackStorageUrl = (hash: string = '') => `${BUILDER_SERVER_URL}/storage/assetPacks/${hash}`
 export const getPreviewUrl = (projectId: string) => `${BUILDER_SERVER_URL}/projects/${projectId}/media/preview.png`
 
@@ -75,12 +72,12 @@ export type RemoteCollection = {
 
 export type RemoteProject = {
   id: string
-  title: string
+  name: string
   description: string
   thumbnail: string
   is_public: boolean
-  scene_id: string
-  eth_address: string
+  scene?: Scene
+  owner: string
   rows: number
   cols: number
   created_at: string
@@ -173,11 +170,10 @@ export type RemoteItemCuration = {
 function toRemoteProject(project: Project): Omit<RemoteProject, 'thumbnail'> {
   return {
     id: project.id,
-    title: project.title,
+    name: project.title,
     description: project.description,
     is_public: project.isPublic,
-    scene_id: project.sceneId,
-    eth_address: project.ethAddress!,
+    owner: project.ethAddress!,
     rows: project.layout.rows,
     cols: project.layout.cols,
     created_at: project.createdAt,
@@ -188,12 +184,12 @@ function toRemoteProject(project: Project): Omit<RemoteProject, 'thumbnail'> {
 function fromRemoteProject(remoteProject: RemoteProject): Project {
   return {
     id: remoteProject.id,
-    title: remoteProject.title,
+    title: remoteProject.name,
     description: remoteProject.description,
     thumbnail: `${BUILDER_SERVER_URL}/projects/${remoteProject.id}/media/thumbnail.png`,
     isPublic: !!remoteProject.is_public,
-    sceneId: remoteProject.scene_id,
-    ethAddress: remoteProject.eth_address,
+    sceneId: remoteProject.id,
+    ethAddress: remoteProject.owner,
     layout: {
       rows: remoteProject.rows,
       cols: remoteProject.cols
@@ -504,8 +500,8 @@ export class BuilderAPI extends BaseAPI {
   }
 
   async fetchProjects() {
-    const { items }: { items: RemoteProject[]; total: number } = await this.request('get', `/projects`)
-    return items.map(fromRemoteProject)
+    const { rows }: { rows: RemoteProject[]; total: number } = await this.request('get', `/projects`)
+    return rows.map(fromRemoteProject)
   }
 
   async fetchPublicProject(projectId: string, type: 'public' | 'pool' = 'public') {
@@ -522,8 +518,10 @@ export class BuilderAPI extends BaseAPI {
   }
 
   async saveProject(project: Project, scene: Scene) {
-    const manifest = createManifest(toRemoteProject(project), scene)
-    await this.request('put', `/projects/${project.id}/manifest`, { manifest })
+    await this.request('post', `/projects/${project.id}`, {
+      ...toRemoteProject(project),
+      scene: scene
+    })
   }
 
   async saveProjectThumbnail(project: Project) {
@@ -539,22 +537,18 @@ export class BuilderAPI extends BaseAPI {
     await this.request('delete', `/projects/${id}`)
   }
 
-  async fetchManifest(id: string, type: PreviewType.PROJECT | PreviewType.POOL | PreviewType.PUBLIC = PreviewType.PROJECT) {
-    const remoteManifest = await this.request('get', `/${type}s/${id}/manifest`)
+  async fetchManifest(id: string) {
+    const remoteProject = await this.request('get', `/projects/${id}`)
     const manifest = {
-      ...remoteManifest,
-      project: fromRemoteProject(remoteManifest.project)
+      version: 1,
+      scene: {
+        ...remoteProject.scene,
+        id: remoteProject.id,
+      },
+      project: fromRemoteProject(remoteProject)
     } as Manifest
 
-    /* There are projects retrived from the cloud (S3, not DB) that don't have an ethAddress, even after migration (cos migration only impacts the DB),
-       those projects can be loaded into the app state via the Scene Pool, and they end up with a null ethAddress, and are mixed with projects
-       that the user created while being logged out (no ethAddress either). So to tell them appart we set them a placeholder value.
-    */
-    if (!manifest.project.ethAddress) {
-      manifest.project.ethAddress = 'legacy'
-    }
-
-    return runMigrations(manifest, migrations)
+    return runMigrations(manifest, {})
   }
 
   async saveAssetPack(assetPack: FullAssetPack) {
