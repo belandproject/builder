@@ -22,7 +22,6 @@ export function fromRemoteItem(remoteItem: RemoteItem): Item {
     createdAt: +new Date(remoteItem.created_at),
     updatedAt: +new Date(remoteItem.created_at)
   }
-
   if (remoteItem.collection_id) item.collectionId = remoteItem.collection_id
   if (remoteItem.blockchain_item_id) item.tokenId = remoteItem.blockchain_item_id
   if (remoteItem.price) item.price = remoteItem.price

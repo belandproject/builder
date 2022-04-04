@@ -153,7 +153,7 @@ describe('when getting status by item id', () => {
               }
             ],
             metadata: {
-              id: 'urn:decentraland:matic:collections-v2:anAddress:aTokenId',
+              id: 'urn:beland:matic:collections-v2:anAddress:aTokenId',
               name: 'pepito',
               description: 'yes it is a pepito',
               data: {
@@ -173,7 +173,7 @@ describe('when getting status by item id', () => {
               }
             ],
             metadata: {
-              id: 'urn:decentraland:matic:collections-v2:anAddress:anotherTokenId',
+              id: 'urn:beland:matic:collections-v2:anAddress:anotherTokenId',
               name: 'pepito',
               description: 'pepito hat very nice',
               data: {
@@ -203,7 +203,7 @@ describe('when getting the authorized collections', () => {
 
   beforeEach(() => {
     collections = []
-    thirdPartyId = 'urn:decentraland:ropsten:collections-thirdparty:third-party-1'
+    thirdPartyId = 'urn:beland:ropsten:collections-thirdparty:third-party-1'
     address = '0x0'
     thirdParties = {
       [thirdPartyId]: {
@@ -263,15 +263,16 @@ describe('when getting the authorized collections', () => {
     })
   })
 
-  describe("and there's a decentraland collection", () => {
+  describe("and there's a beland collection", () => {
     let regularCollection: Collection
 
     beforeEach(() => {
       regularCollection = {
         id: 'anId',
         name: 'aName',
+        symbol: "aName",
         owner: '',
-        urn: 'urn:decentraland:ropsten:collections-v2:0xcf0119336c76f513b5652f551c7c4a75457efec5',
+        urn: 'urn:beland:ropsten:collections-v2:0xcf0119336c76f513b5652f551c7c4a75457efec5',
         isPublished: false,
         isApproved: false,
         minters: [],
@@ -330,7 +331,7 @@ describe('when getting if the user has view or edit rights over a collection', (
   let state: RootState
   let address: string
   let collection: Collection
-  const thirdPartyId = 'urn:decentraland:matic:collections-thirdparty:some-tp-name'
+  const thirdPartyId = 'urn:beland:matic:collections-thirdparty:some-tp-name'
 
   beforeEach(() => {
     address = '0x0'
@@ -361,7 +362,7 @@ describe('when getting if the user has view or edit rights over a collection', (
   describe('and the collection is a regular collection', () => {
     beforeEach(() => {
       address = 'anotherAddress'
-      collection = { urn: 'urn:decentraland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8' } as Collection
+      collection = { urn: 'urn:beland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8' } as Collection
     })
 
     describe('and the user owns the collection', () => {

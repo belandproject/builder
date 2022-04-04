@@ -30,7 +30,7 @@ export type RemoteItem = {
   name: string
   description: string
   thumbnail: string
-  eth_address: string
+  owner: string
   collection_id: string | null
   blockchain_item_id: string | null
   price: string | null
@@ -55,7 +55,8 @@ export type RemoteItem = {
 export type RemoteCollection = {
   id: string // uuid
   name: string
-  eth_address: string
+  symbol: string
+  owner: string
   salt: string | null
   contract_address: string | null
   urn: string
@@ -109,7 +110,7 @@ export type RemoteAssetPack = {
   title: string
   url?: string
   thumbnail?: string
-  eth_address: string
+  owner: string
   assets: RemoteAsset[]
   created_at?: string
   updated_at?: string
@@ -226,7 +227,7 @@ function toRemoteAssetPack(assetPack: FullAssetPack): RemoteAssetPack {
   return {
     id: assetPack.id,
     title: assetPack.title,
-    eth_address: assetPack.ethAddress!,
+    owner: assetPack.ethAddress!,
     assets: assetPack.assets.map(asset => toRemoteAsset(asset))
   }
 }
@@ -236,7 +237,7 @@ function fromRemoteAssetPack(remoteAssetPack: RemoteAssetPack): FullAssetPack {
     id: remoteAssetPack.id,
     title: remoteAssetPack.title,
     thumbnail: getAssetPackStorageUrl(remoteAssetPack.thumbnail),
-    ethAddress: remoteAssetPack.eth_address,
+    ethAddress: remoteAssetPack.owner,
     assets: remoteAssetPack.assets.map(asset => fromRemoteAsset(asset)),
     createdAt: remoteAssetPack.created_at,
     updatedAt: remoteAssetPack.updated_at
@@ -295,7 +296,7 @@ function toRemoteItem(item: Item): RemoteItem {
     name: item.name,
     description: item.description || '',
     thumbnail: item.thumbnail,
-    eth_address: item.owner,
+    owner: item.owner,
     collection_id: item.collectionId || null,
     blockchain_item_id: item.tokenId || null,
     price: item.price || null,
@@ -316,7 +317,6 @@ function toRemoteItem(item: Item): RemoteItem {
     created_at: new Date(item.createdAt),
     updated_at: new Date(item.updatedAt)
   }
-
   return remoteItem
 }
 
@@ -325,7 +325,7 @@ function fromRemoteItem(remoteItem: RemoteItem) {
     id: remoteItem.id,
     name: remoteItem.name,
     thumbnail: remoteItem.thumbnail,
-    owner: remoteItem.eth_address,
+    owner: remoteItem.owner,
     description: remoteItem.description,
     isPublished: remoteItem.is_published,
     isApproved: remoteItem.is_approved,
@@ -356,7 +356,8 @@ function toRemoteCollection(collection: Collection): RemoteCollection {
   const remoteCollection: RemoteCollection = {
     id: collection.id,
     name: collection.name,
-    eth_address: collection.owner,
+    symbol: collection.symbol,
+    owner: collection.owner,
     salt: collection.salt || null,
     contract_address: collection.contractAddress || null,
     urn: collection.urn,
@@ -378,7 +379,8 @@ function fromRemoteCollection(remoteCollection: RemoteCollection) {
   const collection: Collection = {
     id: remoteCollection.id,
     name: remoteCollection.name,
-    owner: remoteCollection.eth_address,
+    symbol: remoteCollection.symbol,
+    owner: remoteCollection.owner,
     urn: remoteCollection.urn,
     isPublished: remoteCollection.is_published,
     isApproved: remoteCollection.is_approved,
@@ -625,7 +627,7 @@ export class BuilderAPI extends BaseAPI {
   }
 
   saveItem = async (item: Item, contents: Record<string, Blob>) => {
-    await this.request('put', `/items/${item.id}`, { item: toRemoteItem(item) })
+    await this.request('post', `/items/${item.id}`, toRemoteItem(item))
     // This has to be done after the PUT above, otherwise it will fail when creating an item, since it wont find it in the DB and return a 404
     await this.saveItemContents(item, contents)
   }
@@ -686,11 +688,8 @@ export class BuilderAPI extends BaseAPI {
     }
   }
 
-  async saveCollection(collection: Collection, data: string) {
-    const remoteCollection = await this.request('put', `/collections/${collection.id}`, {
-      collection: toRemoteCollection(collection),
-      data
-    })
+  async saveCollection(collection: Collection, _data: string) {
+    const remoteCollection = await this.request('post', `/collections/${collection.id}`, toRemoteCollection(collection))
     return fromRemoteCollection(remoteCollection)
   }
 

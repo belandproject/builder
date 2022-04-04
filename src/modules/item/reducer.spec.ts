@@ -49,17 +49,17 @@ describe('when reducing the save collection success action', () => {
   beforeEach(() => {
     fstItem = {
       id: 'fst-item',
-      urn: 'urn:decentraland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8:fst-token-id',
+      urn: 'urn:beland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8:fst-token-id',
       collectionId: 'fst-collection-id'
     } as Item
     sndItem = {
       id: 'snd-item',
-      urn: 'urn:decentraland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8:snd-token-id',
+      urn: 'urn:beland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8:snd-token-id',
       collectionId: 'fst-collection-id'
     } as Item
     thirdItem = {
       id: 'third-item',
-      urn: 'urn:decentraland:matic:collections-thirdparty:tp-id:tp-collection-id:tp-token-id',
+      urn: 'urn:beland:matic:collections-thirdparty:tp-id:tp-collection-id:tp-token-id',
       collectionId: 'snd-collection-id'
     } as Item
 
@@ -70,11 +70,11 @@ describe('when reducing the save collection success action', () => {
     }
     fstCollection = {
       id: 'fst-collection-id',
-      urn: 'urn:decentraland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8'
+      urn: 'urn:beland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8'
     } as Collection
     sndCollection = {
       id: 'snd-collection-id',
-      urn: 'urn:decentraland:matic:collections-thirdparty:tp-id:tp-collection-id'
+      urn: 'urn:beland:matic:collections-thirdparty:tp-id:tp-collection-id'
     } as Collection
   })
 
@@ -83,7 +83,7 @@ describe('when reducing the save collection success action', () => {
 
     beforeEach(() => {
       newCollectionAddress = '0x00192Fb10dF37c9FB26829eb2CC623cd1BF599E8'
-      fstCollection = { ...fstCollection, urn: `urn:decentraland:ropsten:collections-v2:${newCollectionAddress}` } as Collection
+      fstCollection = { ...fstCollection, urn: `urn:beland:ropsten:collections-v2:${newCollectionAddress}` } as Collection
       getChainIdByNetworkMock.mockReturnValueOnce(ChainId.ETHEREUM_ROPSTEN as any).mockReturnValueOnce(ChainId.ETHEREUM_ROPSTEN as any)
       result = itemReducer(state, saveCollectionSuccess(fstCollection))
     })
@@ -95,25 +95,25 @@ describe('when reducing the save collection success action', () => {
           ...state.data,
           [fstItem.id]: {
             ...fstItem,
-            urn: `urn:decentraland:ropsten:collections-v2:${newCollectionAddress}:fst-token-id`
+            urn: `urn:beland:ropsten:collections-v2:${newCollectionAddress}:fst-token-id`
           },
           [sndItem.id]: {
             ...sndItem,
-            urn: `urn:decentraland:ropsten:collections-v2:${newCollectionAddress}:snd-token-id`
+            urn: `urn:beland:ropsten:collections-v2:${newCollectionAddress}:snd-token-id`
           }
         }
       })
     })
   })
 
-  describe('and the collection is a decentraland collection', () => {
+  describe('and the collection is a beland collection', () => {
     let newThirdPartyCollectionId: string
 
     beforeEach(() => {
       newThirdPartyCollectionId = 'another-tp-collection-id'
       sndCollection = {
         ...sndCollection,
-        urn: `urn:decentraland:matic:collections-thirdparty:tp-id:${newThirdPartyCollectionId}`
+        urn: `urn:beland:matic:collections-thirdparty:tp-id:${newThirdPartyCollectionId}`
       } as Collection
       getChainIdByNetworkMock.mockReturnValueOnce(ChainId.MATIC_MAINNET as any)
       result = itemReducer(state, saveCollectionSuccess(sndCollection))
@@ -126,7 +126,7 @@ describe('when reducing the save collection success action', () => {
           ...state.data,
           [thirdItem.id]: {
             ...thirdItem,
-            urn: `urn:decentraland:matic:collections-thirdparty:tp-id:${newThirdPartyCollectionId}:tp-token-id`
+            urn: `urn:beland:matic:collections-thirdparty:tp-id:${newThirdPartyCollectionId}:tp-token-id`
           }
         }
       })

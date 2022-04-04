@@ -63,7 +63,7 @@ const getTPCollection = (props: Partial<Collection> = {}): Collection =>
     id: 'aCollection',
     isPublished: true,
     isApproved: false,
-    urn: 'urn:decentraland:mumbai:collections-thirdparty:thirdparty2:one-third-party-collection',
+    urn: 'urn:beland:mumbai:collections-thirdparty:thirdparty2:one-third-party-collection',
     ...props
   } as Collection)
 
@@ -90,14 +90,14 @@ const getEntity = (item: Item, props: Partial<Entity> = {}): Entity => ({
   id: 'anEntity',
   content: Object.keys(item.contents).map(file => ({ file, hash: item.contents[file] })),
   metadata: {
-    urn: 'urn:decentraland:collections-v2:aCollection:anItem',
+    urn: 'urn:beland:collections-v2:aCollection:anItem',
     name: item.name,
     description: item.description,
     data: item.data
   },
   timestamp: 0,
   type: EntityType.WEARABLE,
-  pointers: ['urn:decentraland:collections-v2:aCollection:anItem'],
+  pointers: ['urn:beland:collections-v2:aCollection:anItem'],
   version: EntityVersion.V3,
   ...props
 })
@@ -788,7 +788,7 @@ describe('when executing the approval flow', () => {
       beforeEach(() => {
         thirdPartyCollection = {
           name: 'some name',
-          urn: 'urn:decentraland:mumbai:collections-thirdparty:thirdparty2:tercer-fiesta-2'
+          urn: 'urn:beland:mumbai:collections-thirdparty:thirdparty2:tercer-fiesta-2'
         } as Collection
         remoteCollection = {
           contractAddress: '0xdeadbeef'

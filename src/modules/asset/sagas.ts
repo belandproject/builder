@@ -62,11 +62,11 @@ export function* assetSaga(_client: BuilderClient) {
   }
 
   async function getNFTs(owner: string, offset: number): Promise<NFT[]> {
-    const limit = 1000;
-    const { count, rows } = await marketplace.fetchNfts({ owner, offset, limit })
+    const limit = 1000
+    const { rows } = await marketplace.fetchNfts({ owner, offset, limit })
 
-    if (count > offset) {
-      const nextNFTs = await getNFTs(owner, offset  + limit)
+    if (rows.length > 0) {
+      const nextNFTs = await getNFTs(owner, offset + limit)
       return [...rows, ...nextNFTs]
     }
 

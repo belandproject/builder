@@ -39,6 +39,7 @@ export default class CreateThirdPartyCollectionModal extends React.PureComponent
         id: uuid.v4(),
         name: collectionName,
         owner: address!,
+        symbol: collectionName,
         urn: buildThirdPartyURN(decodedURN.suffix, urnSuffix),
         isPublished: false,
         isApproved: false,

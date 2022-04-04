@@ -16,7 +16,7 @@ describe('when getting the catalyst item URN', () => {
   })
 
   it('should use the supplied data to generate a valid item URN', () => {
-    expect(buildCatalystItemURN(contractAddress, tokenId)).toBe('urn:decentraland:matic:collections-v2:0x123123:token-id')
+    expect(buildCatalystItemURN(contractAddress, tokenId)).toBe('urn:beland:matic:collections-v2:0x123123:token-id')
   })
 
   it('should get the chain id for the matic network', () => {
@@ -35,7 +35,7 @@ describe('when building the third party URN', () => {
 
   it('should return a valid third party collection urn', () => {
     expect(buildThirdPartyURN(thirdPartyName, collectionId)).toBe(
-      'urn:decentraland:matic:collections-thirdparty:some-tp-name:the-collection-id'
+      'urn:beland:matic:collections-thirdparty:some-tp-name:the-collection-id'
     )
   })
 
@@ -49,7 +49,7 @@ describe('when building the third party URN', () => {
 
     it('should return a valid third party item urn', () => {
       expect(buildThirdPartyURN(thirdPartyName, collectionId, tokenId)).toBe(
-        'urn:decentraland:matic:collections-thirdparty:some-tp-name:the-collection-id:a-wonderful-token-id'
+        'urn:beland:matic:collections-thirdparty:some-tp-name:the-collection-id:a-wonderful-token-id'
       )
     })
 
@@ -76,7 +76,7 @@ describe('when decoding an URN', () => {
 
   describe('when a valid base avatar urn is used', () => {
     it('should decode and return each group', () => {
-      expect(decodeURN('urn:decentraland:off-chain:base-avatars:BaseMale')).toEqual({
+      expect(decodeURN('urn:beland:off-chain:base-avatars:BaseMale')).toEqual({
         type: URNType.BASE_AVATARS,
         protocol: URNProtocol.OFF_CHAIN,
         suffix: 'BaseMale'
@@ -87,7 +87,7 @@ describe('when decoding an URN', () => {
   describe('when a valid collection v2 urn is used', () => {
     describe('and the URN is a collection URN', () => {
       it('should decode and return each group', () => {
-        expect(decodeURN('urn:decentraland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8')).toEqual({
+        expect(decodeURN('urn:beland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8')).toEqual({
           type: URNType.COLLECTIONS_V2,
           protocol: URNProtocol.ROPSTEN,
           collectionAddress: '0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8',
@@ -98,7 +98,7 @@ describe('when decoding an URN', () => {
 
     describe('and the URN is an item URN', () => {
       it('should decode and return each group', () => {
-        expect(decodeURN('urn:decentraland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8:tokenId')).toEqual({
+        expect(decodeURN('urn:beland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8:tokenId')).toEqual({
           type: URNType.COLLECTIONS_V2,
           protocol: URNProtocol.ROPSTEN,
           tokenId: 'tokenId',
@@ -110,7 +110,7 @@ describe('when decoding an URN', () => {
   })
 
   describe('when a valid third party', () => {
-    let thirdPartyRecordURN = 'urn:decentraland:matic:collections-thirdparty:crypto-motors'
+    let thirdPartyRecordURN = 'urn:beland:matic:collections-thirdparty:crypto-motors'
 
     describe('when third party record urn is used', () => {
       it('should decode and return each group', () => {
@@ -157,16 +157,16 @@ describe('when extracting the third party item token id from an URN', () => {
   describe('when the URN is not a valid third party URN', () => {
     it("should throw an error signaling that the URN doesn't belong to a third party", () => {
       expect(() =>
-        extractThirdPartyTokenId('urn:decentraland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8')
+        extractThirdPartyTokenId('urn:beland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8')
       ).toThrowError(
-        'Tried to build a third party token for a non third party URN "urn:decentraland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8"'
+        'Tried to build a third party token for a non third party URN "urn:beland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8"'
       )
     })
   })
 
   describe('when the URN is a valid third party URN', () => {
     it('should extract the collection and token ids', () => {
-      expect(extractThirdPartyTokenId('urn:decentraland:mumbai:collections-thirdparty:thirdparty2:collection-id:token-id')).toBe(
+      expect(extractThirdPartyTokenId('urn:beland:mumbai:collections-thirdparty:thirdparty2:collection-id:token-id')).toBe(
         'collection-id:token-id'
       )
     })

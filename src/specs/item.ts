@@ -28,6 +28,7 @@ export const mockedItem: Item = {
   catalystContentHash: null,
   data: {
     category: WearableCategory.HAT,
+    __type: ItemType.WEARABLE as any,
     representations: [
       {
         bodyShapes: [WearableBodyShape.MALE],
@@ -63,10 +64,11 @@ export const mockedLocalItem: LocalItem = {
   },
   contents: mockedItem.contents,
   data: {
+    __type: ItemType.WEARABLE as any,
     category: LocalItemWearableCategory.HAT,
     representations: [
       {
-        bodyShapes: [WearableBodyShape.MALE],
+        bodyShapes: [WearableBodyShape.MALE as any],
         mainFile: 'anItemContent.glb',
         contents: ['anItemContent.glb', 'thumbnail.png'],
         overrideReplaces: [],
@@ -107,7 +109,7 @@ export const mockedRemoteItem: RemoteItem = {
     category: LocalItemWearableCategory.HAT,
     representations: [
       {
-        bodyShapes: [WearableBodyShape.MALE],
+        bodyShapes: [WearableBodyShape.MALE as any],
         mainFile: 'anItemContent.glb',
         contents: ['anItemContent.glb'],
         overrideReplaces: [],
@@ -116,7 +118,8 @@ export const mockedRemoteItem: RemoteItem = {
     ],
     replaces: [LocalItemWearableCategory.HELMET],
     hides: [LocalItemWearableCategory.HAIR],
-    tags: ['aHat']
+    tags: ['aHat'],
+    __type: ItemType.WEARABLE as any
   },
   is_published: false,
   is_approved: false,

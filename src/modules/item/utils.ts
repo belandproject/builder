@@ -92,7 +92,7 @@ export function hasBodyShape(item: Item, bodyShape: WearableBodyShape) {
 }
 
 export function toWearableBodyShapeType(wearableBodyShape: WearableBodyShape) {
-  // wearableBodyShape looks like "urn:decentraland:off-chain:base-avatars:BaseMale" (WearableBodyShape.MALE) and we just want the "BaseMale" part
+  // wearableBodyShape looks like "urn:beland:off-chain:base-avatars:BaseMale" (WearableBodyShape.MALE) and we just want the "BaseMale" part
   return decodeURN(wearableBodyShape).suffix as WearableBodyShapeType
 }
 

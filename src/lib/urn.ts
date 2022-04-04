@@ -2,7 +2,7 @@ import { getURNProtocol, Network } from '@dcl/schemas'
 import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
 
 /**
- * urn:decentraland:
+ * urn:beland:
  *   (?<protocol>
  *     mainnet|
  *     ropsten|
@@ -27,14 +27,14 @@ import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
  *     )
  *   )
  */
-const baseMatcher = 'urn:decentraland'
+const baseMatcher = 'urn:beland'
 const protocolMatcher = '(?<protocol>mainnet|ropsten|matic|mumbai|off-chain)'
-const typeMatcher = '(?<type>base-avatars|collections-v2|collections-thirdparty)'
+const typeMatcher = '(?<type>base-avatars|col|col-3dr)'
 
 const baseAvatarsSuffixMatcher = '((?<=base-avatars:)BaseMale|BaseFemale)'
-const collectionsSuffixMatcher = '((?<=collections-v2:)(?<collectionAddress>0x[a-fA-F0-9]{40}))(:(?<tokenId>[^:|\\s]+))?'
+const collectionsSuffixMatcher = '((?<=col:)(?<collectionAddress>0x[a-fA-F0-9]{40}))(:(?<tokenId>[^:|\\s]+))?'
 const thirdPartySuffixMatcher =
-  '((?<=collections-thirdparty:)(?<thirdPartyName>[^:|\\s]+)(:(?<thirdPartyCollectionId>[^:|\\s]+))?(:(?<thirdPartyTokenId>[^:|\\s]+))?)'
+  '((?<=col-3dr:)(?<thirdPartyName>[^:|\\s]+)(:(?<thirdPartyCollectionId>[^:|\\s]+))?(:(?<thirdPartyTokenId>[^:|\\s]+))?)'
 
 const urnRegExp = new RegExp(
   `${baseMatcher}:${protocolMatcher}:${typeMatcher}:(?<suffix>${baseAvatarsSuffixMatcher}|${collectionsSuffixMatcher}|${thirdPartySuffixMatcher})`
@@ -49,8 +49,8 @@ export enum URNProtocol {
 }
 export enum URNType {
   BASE_AVATARS = 'base-avatars',
-  COLLECTIONS_V2 = 'collections-v2',
-  COLLECTIONS_THIRDPARTY = 'collections-thirdparty'
+  COLLECTIONS_V2 = 'col',
+  COLLECTIONS_THIRDPARTY = 'col-3dr'
 }
 export type URN = string
 
@@ -76,7 +76,7 @@ export type DecodedURN<T extends URNType = any> = BaseDecodedURN &
     : BaseAvatarURN | CollectionsV2URN | CollectionThirdPartyURN)
 
 export function buildThirdPartyURN(thirdPartyName: string, collectionId: string, tokenId?: string) {
-  let urn = `urn:decentraland:${getNetworkURNProtocol(Network.MATIC)}:collections-thirdparty:${thirdPartyName}:${collectionId}`
+  let urn = `urn:beland:${getNetworkURNProtocol(Network.MATIC)}:col-3dr:${thirdPartyName}:${collectionId}`
   if (tokenId) {
     urn += `:${tokenId}`
   }
@@ -84,11 +84,11 @@ export function buildThirdPartyURN(thirdPartyName: string, collectionId: string,
 }
 
 export function buildCatalystItemURN(contractAddress: string, tokenId: string): URN {
-  return `urn:decentraland:${getNetworkURNProtocol(Network.MATIC)}:collections-v2:${contractAddress}:${tokenId}`
+  return `urn:beland:${getNetworkURNProtocol(Network.MATIC)}:col:${contractAddress}:${tokenId}`
 }
 
 export function buildDefaultCatalystCollectionURN() {
-  return `urn:decentraland:${getNetworkURNProtocol(Network.MATIC)}:collections-v2:0x0000000000000000000000000000000000000000`
+  return `urn:beland:${getNetworkURNProtocol(Network.MATIC)}:col:0x0000000000000000000000000000000000000000`
 }
 
 export function extractThirdPartyId(urn: URN): string {
@@ -97,7 +97,7 @@ export function extractThirdPartyId(urn: URN): string {
     throw new Error('URN is not a third party URN')
   }
 
-  return `urn:decentraland:${decodedURN.protocol}:collections-thirdparty:${decodedURN.thirdPartyName}`
+  return `urn:beland:${decodedURN.protocol}:col-3dr:${decodedURN.thirdPartyName}`
 }
 
 export function extractThirdPartyTokenId(urn: URN) {

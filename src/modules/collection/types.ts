@@ -3,6 +3,7 @@ import { Item } from 'modules/item/types'
 export type Collection = {
   id: string
   name: string
+  symbol: string,
   owner: string
   contractAddress?: string
   urn: string

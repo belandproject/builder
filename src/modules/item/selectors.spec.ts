@@ -185,8 +185,8 @@ describe('Item selectors', () => {
 
     describe('and the item is belongs to a TP', () => {
       beforeEach(() => {
-        state.collection.data[collectionId].urn = 'urn:decentraland:mumbai:collections-thirdparty:thirdparty2:a-collection-id'
-        state.item.data[itemId].urn = 'urn:decentraland:mumbai:collections-thirdparty:thirdparty2:a-collection-id:an-item-id'
+        state.collection.data[collectionId].urn = 'urn:beland:mumbai:collections-thirdparty:thirdparty2:a-collection-id'
+        state.item.data[itemId].urn = 'urn:beland:mumbai:collections-thirdparty:thirdparty2:a-collection-id:an-item-id'
       })
 
       describe('and the item is not published nor has an item curation', () => {
@@ -260,7 +260,7 @@ describe('Item selectors', () => {
 
     describe('and the items belongs to a standard collection', () => {
       beforeEach(() => {
-        state.collection.data[collectionId].urn = 'urn:decentraland:matic:collections-v2:0xbd0847050e3b92ed0e862b8a919c5dce7ce01311'
+        state.collection.data[collectionId].urn = 'urn:beland:matic:collections-v2:0xbd0847050e3b92ed0e862b8a919c5dce7ce01311'
       })
 
       describe('and the item is not published', () => {
@@ -278,7 +278,7 @@ describe('Item selectors', () => {
         beforeEach(() => {
           state.item.data[itemId] = {
             ...state.item.data[itemId],
-            urn: 'urn:decentraland:matic:collections-v2:0xbd0847050e3b92ed0e862b8a919c5dce7ce01311:0',
+            urn: 'urn:beland:matic:collections-v2:0xbd0847050e3b92ed0e862b8a919c5dce7ce01311:0',
             tokenId: '0',
             isPublished: true
           }
@@ -400,7 +400,7 @@ describe('Item selectors', () => {
 
       beforeEach(() => {
         // First item
-        state.collection.data[collectionId].urn = 'urn:decentraland:matic:collections-v2:0xbd0847050e3b92ed0e862b8a919c5dce7ce01311'
+        state.collection.data[collectionId].urn = 'urn:beland:matic:collections-v2:0xbd0847050e3b92ed0e862b8a919c5dce7ce01311'
 
         state.item.data[itemId] = {
           ...state.item.data[itemId],
@@ -412,13 +412,13 @@ describe('Item selectors', () => {
         state.item.data[anotherItemId] = {
           ...state.item.data[anotherItemId],
           id: anotherItemId,
-          urn: 'urn:decentraland:mumbai:collections-thirdparty:thirdparty2:a-collection-id:an-item-id',
+          urn: 'urn:beland:mumbai:collections-thirdparty:thirdparty2:a-collection-id:an-item-id',
           tokenId: '0',
           isPublished: true
         }
 
         state.collection.data[anotherCollectionId] = {
-          urn: 'urn:decentraland:mumbai:collections-thirdparty:thirdparty2:a-collection-id:an-item-id',
+          urn: 'urn:beland:mumbai:collections-thirdparty:thirdparty2:a-collection-id:an-item-id',
           id: anotherCollectionId,
           isPublished: true
         } as Collection
@@ -452,7 +452,7 @@ describe('Item selectors', () => {
     describe('when the item has a third party and the user is manager of that third party', () => {
       beforeEach(() => {
         address = '0x0'
-        thirdPartyId = 'urn:decentraland:matic:collections-thirdparty:some-tp-name'
+        thirdPartyId = 'urn:beland:matic:collections-thirdparty:some-tp-name'
         item.urn = `${thirdPartyId}:the-collection-id:a-wonderful-token-id`
 
         state = {
@@ -475,7 +475,7 @@ describe('Item selectors', () => {
     describe('when the item has a third party and the user is not manger of that third party', () => {
       beforeEach(() => {
         address = '0x0'
-        thirdPartyId = 'urn:decentraland:matic:collections-thirdparty:some-tp-name'
+        thirdPartyId = 'urn:beland:matic:collections-thirdparty:some-tp-name'
         item.urn = `${thirdPartyId}:the-collection-id:a-wonderful-token-id`
 
         state = {
@@ -550,7 +550,7 @@ describe('Item selectors', () => {
     describe("when the item doesn't belong to a third party", () => {
       beforeEach(() => {
         address = '0x0'
-        item.urn = 'urn:decentraland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8:0'
+        item.urn = 'urn:beland:ropsten:collections-v2:0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8:0'
       })
 
       describe('and the item has a collection', () => {

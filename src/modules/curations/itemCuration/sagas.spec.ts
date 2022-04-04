@@ -46,7 +46,7 @@ describe('when a third party collection is fetched', () => {
   beforeEach(() => {
     thirdPartyCollection = {
       id: 'aCollection',
-      urn: 'urn:decentraland:mumbai:collections-thirdparty:thirdparty2:tercer-fiesta-2'
+      urn: 'urn:beland:mumbai:collections-thirdparty:thirdparty2:tercer-fiesta-2'
     } as Collection
   })
 

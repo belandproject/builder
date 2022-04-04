@@ -19,7 +19,7 @@ describe('when converting a RemoteItem into an Item', () => {
       blockchain_item_id: null,
       total_supply: 0,
       price: null,
-      urn: 'urn:decentraland:mumbai:collections-thirdparty:thirdparty2:tercer-fiesta-2',
+      urn: 'urn:beland:mumbai:collections-thirdparty:thirdparty2:tercer-fiesta-2',
       beneficiary: null,
       rarity: Rarity.LEGENDARY,
       type: ItemType.WEARABLE,
@@ -63,7 +63,7 @@ describe('when converting a RemoteItem into an Item', () => {
       description: 'aDescription',
       thumbnail: 'thumbnail.png',
       owner: '0x0',
-      urn: 'urn:decentraland:mumbai:collections-thirdparty:thirdparty2:tercer-fiesta-2',
+      urn: 'urn:beland:mumbai:collections-thirdparty:thirdparty2:tercer-fiesta-2',
       rarity: ItemRarity.LEGENDARY,
       type: ItemType.WEARABLE,
       totalSupply: 0,
@@ -71,7 +71,7 @@ describe('when converting a RemoteItem into an Item', () => {
         category: WearableCategory.HAT,
         representations: [
           {
-            bodyShapes: [WearableBodyShape.MALE],
+            bodyShapes: [WearableBodyShape.MALE as any],
             mainFile: 'model.glb',
             contents: ['model.glb'],
             overrideHides: [WearableCategory.FEET],

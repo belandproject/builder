@@ -3,14 +3,14 @@ import { CatalystWearable } from 'modules/editor/types'
 import { WearableBodyShape, WearableCategory } from 'modules/item/types'
 
 export const wearable: Wearable = {
-  id: 'urn:decentraland:off-chain:base-avatars:aviatorstyle',
+  id: 'urn:beland:off-chain:base-avatars:aviatorstyle',
   type: 'wearable',
   category: 'eyewear',
   baseUrl: 'https://peer-ec1.decentraland.org/content/contents/',
   tags: ['accesories', 'male', 'man', 'base-wearable'],
   representations: [
     {
-      bodyShapes: ['urn:decentraland:off-chain:base-avatars:BaseMale'],
+      bodyShapes: ['urn:beland:off-chain:base-avatars:BaseMale'],
       mainFile: 'M_Eyewear_AviatorStyle.glb',
       contents: [
         {
@@ -27,14 +27,14 @@ export const wearable: Wearable = {
 }
 
 export const anotherWearable: Wearable = {
-  id: 'urn:decentraland:off-chain:base-avatars:baggy_pullover',
+  id: 'urn:beland:off-chain:base-avatars:baggy_pullover',
   type: 'wearable',
   category: 'upper_body',
   baseUrl: 'https://peer-ec1.decentraland.org/content/contents/',
   tags: ['top', 'female', 'woman', 'base-wearable'],
   representations: [
     {
-      bodyShapes: ['urn:decentraland:off-chain:base-avatars:BaseFemale'],
+      bodyShapes: ['urn:beland:off-chain:base-avatars:BaseFemale'],
       mainFile: 'F_uBody_SolidPullover.glb',
       contents: [
         { file: 'AvatarWearables_TX.png', hash: 'QmYktkLr5rnn9zPPARkavhVowvTNTih8uWq8BVscTGxtZD' },
@@ -49,7 +49,7 @@ export const anotherWearable: Wearable = {
 }
 
 export const catalystWearable: CatalystWearable = {
-  id: 'urn:decentraland:off-chain:base-avatars:aviatorstyle',
+  id: 'urn:beland:off-chain:base-avatars:aviatorstyle',
   description: '',
   thumbnail: 'https://peer-ec1.decentraland.org/content/contents/QmWEr5ttPDezxMjDHU1UKPPukHjLiNEi1EjznmaUXiaHgn',
   rarity: '',
@@ -58,7 +58,7 @@ export const catalystWearable: CatalystWearable = {
     category: WearableCategory.EYEWEAR,
     representations: [
       {
-        bodyShapes: ['urn:decentraland:off-chain:base-avatars:BaseMale' as WearableBodyShape],
+        bodyShapes: ['urn:beland:off-chain:base-avatars:BaseMale' as WearableBodyShape],
         mainFile: 'M_Eyewear_AviatorStyle.glb',
         overrideReplaces: [],
         overrideHides: [],

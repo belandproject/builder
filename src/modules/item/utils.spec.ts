@@ -16,7 +16,7 @@ describe('when transforming third party items to be sent to a contract method', 
           category: WearableCategory.EARRING,
           representations: [{ bodyShapes: [WearableBodyShape.MALE] }]
         },
-        urn: 'urn:decentraland:mumbai:collections-thirdparty:thirdparty2:collection-id1:token-id2',
+        urn: 'urn:beland:mumbai:collections-thirdparty:thirdparty2:collection-id1:token-id2',
         contents: {}
       },
       {
@@ -28,7 +28,7 @@ describe('when transforming third party items to be sent to a contract method', 
           category: WearableCategory.EYEBROWS,
           representations: [{ bodyShapes: [WearableBodyShape.MALE, WearableBodyShape.FEMALE] }]
         },
-        urn: 'urn:decentraland:mumbai:collections-thirdparty:thirdparty2:collection-id2:token-idb',
+        urn: 'urn:beland:mumbai:collections-thirdparty:thirdparty2:collection-id2:token-idb',
         contents: {}
       },
       {
@@ -40,7 +40,7 @@ describe('when transforming third party items to be sent to a contract method', 
           category: WearableCategory.FEET,
           representations: [{ bodyShapes: [WearableBodyShape.FEMALE] }]
         },
-        urn: 'urn:decentraland:mumbai:collections-thirdparty:thirdparty2:collection-id1:token-id1',
+        urn: 'urn:beland:mumbai:collections-thirdparty:thirdparty2:collection-id1:token-id1',
         contents: {}
       }
     ] as Item[]

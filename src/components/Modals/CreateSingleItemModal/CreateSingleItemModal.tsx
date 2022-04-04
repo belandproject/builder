@@ -284,7 +284,8 @@ export default class CreateSingleItemModal extends React.PureComponent<Props, St
             replaces: [],
             hides: [],
             tags: [],
-            representations: [...this.buildRepresentations(bodyShape, model, sortedContents)]
+            representations: [...this.buildRepresentations(bodyShape, model, sortedContents)],
+            __type: ItemType.WEARABLE
           },
           owner: address!,
           metrics,

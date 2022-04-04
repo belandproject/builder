@@ -69,8 +69,8 @@ export enum BodyShapeType {
 }
 
 export enum WearableBodyShape {
-  MALE = 'urn:decentraland:off-chain:base-avatars:BaseMale',
-  FEMALE = 'urn:decentraland:off-chain:base-avatars:BaseFemale'
+  MALE = 'urn:beland:off-chain:base-avatars:BaseMale',
+  FEMALE = 'urn:beland:off-chain:base-avatars:BaseFemale'
 }
 
 export enum WearableBodyShapeType {
@@ -126,6 +126,7 @@ export type EmoteData = {
   category?: EmoteCategory
   representations: WearableRepresentation[]
   tags: string[]
+  __type: ItemType
 }
 
 export type WearableData = {
@@ -134,6 +135,7 @@ export type WearableData = {
   replaces: WearableCategory[]
   hides: WearableCategory[]
   tags: string[]
+  __type: ItemType
 }
 
 type BaseItem = {

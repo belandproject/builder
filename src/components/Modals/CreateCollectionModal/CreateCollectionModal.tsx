@@ -9,17 +9,19 @@ import { Props, State } from './CreateCollectionModal.types'
 
 export default class CreateCollectionModal extends React.PureComponent<Props, State> {
   state: State = {
-    collectionName: ''
+    collectionName: '',
+    collectionSymbol: ''
   }
 
   handleSubmit = () => {
     const { address, onSubmit } = this.props
-    const { collectionName } = this.state
+    const { collectionName, collectionSymbol } = this.state
     if (collectionName) {
       const now = Date.now()
       const collection: Collection = {
         id: uuid.v4(),
         name: collectionName,
+        symbol: collectionSymbol,
         urn: buildDefaultCatalystCollectionURN(),
         owner: address!,
         isPublished: false,
@@ -37,9 +39,14 @@ export default class CreateCollectionModal extends React.PureComponent<Props, St
     this.setState({ collectionName: data.value })
   }
 
+  handleSymbolChange = (_event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+    this.setState({ collectionSymbol: data.value })
+  }
+
+
   render() {
     const { name, onClose, isLoading, error } = this.props
-    const { collectionName } = this.state
+    const { collectionName, collectionSymbol} = this.state
     const isDisabled = !collectionName || isLoading
 
     let errorMessage = error
@@ -57,6 +64,15 @@ export default class CreateCollectionModal extends React.PureComponent<Props, St
               placeholder={t('create_collection_modal.placeholder')}
               value={collectionName}
               onChange={this.handleNameChange}
+              error={!!errorMessage}
+              message={errorMessage ? errorMessage : t('create_collection_modal.message', { maxLength: COLLECTION_NAME_MAX_LENGTH })}
+              maxLength={COLLECTION_NAME_MAX_LENGTH}
+            ></Field>
+            <Field
+              label='Symbol'
+              placeholder='Symbol'
+              value={collectionSymbol}
+              onChange={this.handleSymbolChange}
               error={!!errorMessage}
               message={errorMessage ? errorMessage : t('create_collection_modal.message', { maxLength: COLLECTION_NAME_MAX_LENGTH })}
               maxLength={COLLECTION_NAME_MAX_LENGTH}
