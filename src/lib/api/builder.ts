@@ -20,6 +20,8 @@ import { Authorization } from './auth'
 import { ItemCuration } from 'modules/curations/itemCuration/types'
 
 export const BUILDER_SERVER_URL = env.get('REACT_APP_BUILDER_SERVER_URL', '')
+export const HUB_SERVER_URL = env.get('REACT_APP_MARKETPLACE_URL', '')
+
 
 export const getContentsStorageUrl = (hash: string = '') => `https://builder-api.decentraland.org/v1/storage/contents/${hash}`
 export const getAssetPackStorageUrl = (hash: string = '') => `${BUILDER_SERVER_URL}/storage/assetPacks/${hash}`

@@ -5,7 +5,6 @@ import { createLogger } from 'redux-logger'
 import { createBrowserHistory } from 'history'
 import { BuilderClient } from '@dcl/builder-client'
 
-import { CatalystClient } from 'dcl-catalyst-client'
 import { env } from 'decentraland-commons'
 import { DataByKey } from 'decentraland-dapps/dist/lib/types'
 import { createTransactionMiddleware } from 'decentraland-dapps/dist/modules/transaction/middleware'
@@ -30,12 +29,12 @@ import { DISMISS_SIGN_IN_TOAST, DISMISS_SYNCED_TOAST, SET_SYNC } from 'modules/u
 import { GENERATE_IDENTITY_SUCCESS, DESTROY_IDENTITY, LOGIN_SUCCESS, LOGIN_FAILURE } from 'modules/identity/actions'
 import { fetchTilesRequest } from 'modules/tile/actions'
 import { isDevelopment } from 'lib/environment'
-import { BuilderAPI, BUILDER_SERVER_URL } from 'lib/api/builder'
+import { BuilderAPI, BUILDER_SERVER_URL, HUB_SERVER_URL } from 'lib/api/builder'
 import { Authorization } from 'lib/api/auth'
-import { PEER_URL } from 'lib/api/peer'
 import { createRootReducer } from './reducer'
 import { rootSaga } from './sagas'
 import { RootState, RootStore } from './types'
+import { HubAPI } from 'lib/api/hub'
 
 const builderVersion = require('../../../package.json').version
 
@@ -143,7 +142,7 @@ const enhancer = composeEnhancers(middleware)
 const store = createStore(rootReducer, enhancer) as RootStore
 
 const builderAPI = new BuilderAPI(BUILDER_SERVER_URL, new Authorization(store))
-const catalystClient = new CatalystClient(PEER_URL, 'Builder')
+const hubAPI = new HubAPI(HUB_SERVER_URL, new Authorization(store))
 
 const getClientAddress = () => getAddress(store.getState())!
 const getClientAuthAuthority = () => {
@@ -158,7 +157,7 @@ const builderClientUrl: string = BUILDER_SERVER_URL.replace('/v1', '')
 
 const newBuilderClient = new BuilderClient(builderClientUrl, getClientAuthAuthority, getClientAddress, fetch)
 
-sagasMiddleware.run(rootSaga, builderAPI, newBuilderClient, catalystClient)
+sagasMiddleware.run(rootSaga, builderAPI, newBuilderClient, hubAPI)
 loadStorageMiddleware(store)
 
 if (isDevelopment) {

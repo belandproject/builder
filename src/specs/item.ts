@@ -64,7 +64,6 @@ export const mockedLocalItem: LocalItem = {
   },
   contents: mockedItem.contents,
   data: {
-    __type: ItemType.WEARABLE as any,
     category: LocalItemWearableCategory.HAT,
     representations: [
       {
@@ -119,7 +118,6 @@ export const mockedRemoteItem: RemoteItem = {
     replaces: [LocalItemWearableCategory.HELMET],
     hides: [LocalItemWearableCategory.HAIR],
     tags: ['aHat'],
-    __type: ItemType.WEARABLE as any
   },
   is_published: false,
   is_approved: false,

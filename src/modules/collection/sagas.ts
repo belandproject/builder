@@ -1,7 +1,7 @@
 import { Contract, providers, constants, ethers } from 'ethers'
 import { push, replace } from 'connected-react-router'
 import { select, take, takeEvery, call, put, takeLatest, race, retry, delay, CallEffect, all } from 'redux-saga/effects'
-import { CatalystClient, DeploymentPreparationData } from 'dcl-catalyst-client'
+import { DeploymentPreparationData } from 'dcl-catalyst-client'
 import { ChainId } from '@dcl/schemas'
 import { generateTree } from '@dcl/content-hash-tree'
 import { MerkleDistributorInfo } from '@dcl/content-hash-tree/dist/types'
@@ -90,17 +90,16 @@ import {
   FETCH_COLLECTION_ITEMS_SUCCESS,
   FETCH_COLLECTION_ITEMS_FAILURE
 } from 'modules/item/actions'
-import { areSynced, isValidText, toInitializeItems } from 'modules/item/utils'
+import { isValidText, toInitializeItems } from 'modules/item/utils'
 import { locations } from 'routing/locations'
 import { getCollectionId } from 'modules/location/selectors'
 import { BuilderAPI } from 'lib/api/builder'
 import { closeModal, CloseModalAction, CLOSE_MODAL, openModal } from 'modules/modal/actions'
 import { Item, ItemApprovalData } from 'modules/item/types'
 import { Slot } from 'modules/thirdParty/types'
-import { getEntityByItemId, getItems, getCollectionItems, getWalletItems, getData as getItemsById } from 'modules/item/selectors'
+import { getItems, getCollectionItems, getWalletItems, getData as getItemsById } from 'modules/item/selectors'
 import { getName } from 'modules/profile/selectors'
 import { LoginSuccessAction, LOGIN_SUCCESS } from 'modules/identity/actions'
-import { buildItemEntity, buildTPItemEntity } from 'modules/item/export'
 import { getCurationsByCollectionId } from 'modules/curations/collectionCuration/selectors'
 import {
   ApproveCollectionCurationFailureAction,
@@ -132,8 +131,9 @@ import {
   UNSYNCED_COLLECTION_ERROR_PREFIX,
   isTPCollection
 } from './utils'
+import { HubAPI } from 'lib/api/hub'
 
-export function* collectionSaga(builder: BuilderAPI, catalyst: CatalystClient) {
+export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
   yield takeEvery(FETCH_COLLECTIONS_REQUEST, handleFetchCollectionsRequest)
   yield takeEvery(FETCH_COLLECTION_REQUEST, handleFetchCollectionRequest)
   yield takeLatest(FETCH_COLLECTIONS_SUCCESS, handleRequestCollectionSuccess)
@@ -560,38 +560,19 @@ export function* collectionSaga(builder: BuilderAPI, catalyst: CatalystClient) {
     return newItemCuration
   }
 
-  function* getStandardItemsAndEntitiesToDeploy(collection: Collection) {
-    const itemsToDeploy: Item[] = []
-    const entitiesToDeploy: DeploymentPreparationData[] = []
-    const entitiesByItemId: ReturnType<typeof getEntityByItemId> = yield select(getEntityByItemId)
-    const itemsOfCollection: Item[] = yield getItemsFromCollection(collection)
-    for (const item of itemsOfCollection) {
-      const deployedEntity = entitiesByItemId[item.id]
-      if (!deployedEntity || !areSynced(item, deployedEntity)) {
-        const entity: DeploymentPreparationData = yield call(buildItemEntity, catalyst, collection, item)
-
-        itemsToDeploy.push(item)
-        entitiesToDeploy.push(entity)
-      }
-    }
-    return { itemsToDeploy, entitiesToDeploy }
+  function* getStandardItemsAndEntitiesToDeploy(_collection: Collection) {
   }
 
   function* getTPItemsAndEntitiesToDeploy(
-    collection: Collection,
-    items: Item[],
-    tree: MerkleDistributorInfo,
-    hashes: Record<string, string>
+    _collection: Collection,
+    _items: Item[],
+    _tree: MerkleDistributorInfo,
+    _hashes: Record<string, string>
   ) {
+    return;
     const itemsToDeploy: Item[] = []
     const entitiesToDeploy: DeploymentPreparationData[] = []
-    for (const item of items) {
-      if (item.catalystContentHash !== item.currentContentHash) {
-        const entity: DeploymentPreparationData = yield call(buildTPItemEntity, catalyst, collection, item, tree, hashes[item.id])
-        itemsToDeploy.push(item)
-        entitiesToDeploy.push(entity)
-      }
-    }
+    
     return { itemsToDeploy, entitiesToDeploy }
   }
 
