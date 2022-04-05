@@ -1,5 +1,5 @@
 import { BodyShapeRespresentation, Wearable } from 'decentraland-ecs'
-import { CatalystWearable, EditorScene, UnityKeyboardEvent } from 'modules/editor/types'
+import { EditorScene, UnityKeyboardEvent } from 'modules/editor/types'
 import { Project } from 'modules/project/types'
 import { getSceneDefinition } from 'modules/project/export'
 import { getContentsStorageUrl } from 'lib/api/builder'
@@ -12,6 +12,7 @@ import { Scene, EntityDefinition, ComponentDefinition, ComponentType } from 'mod
 import { getMetrics } from 'components/AssetImporter/utils'
 import { Item, WearableBodyShape, WearableCategory } from 'modules/item/types'
 import { base64ArrayBuffer } from './base64'
+import { IPFS_GATEWAY } from 'lib/api/peer'
 
 const script = require('raw-loader!../../ecsScene/scene.js')
 
@@ -304,19 +305,19 @@ export function extractHash(url: string): string {
  *
  * @param catalystWearable - The catalyst wearable to convert.
  */
-export function fromCatalystWearableToWearable(catalystWearable: CatalystWearable): Wearable {
+export function fromCatalystWearableToWearable(catalystWearable: any): Wearable {
   return {
     id: catalystWearable.id,
     type: 'wearable',
-    category: catalystWearable.data.category,
-    baseUrl: extractBaseUrl(catalystWearable.thumbnail),
-    tags: catalystWearable.data.tags,
-    representations: catalystWearable.data.representations.map(representation => ({
+    category: catalystWearable.traits.find((t: { name: string }) => t.name == 'category').value,
+    baseUrl: IPFS_GATEWAY,
+    tags: catalystWearable.traits.filter((t: { name: string }) => t.name === 'tags').map((t: { value: any }) => t.value),
+    representations: catalystWearable.data.representations.map((representation: { bodyShapes: any; mainFile: any; contents: any[] }) => ({
       bodyShapes: representation.bodyShapes,
       mainFile: representation.mainFile,
       contents: representation.contents.map(content => ({
-        file: content.key,
-        hash: extractHash(content.url)
+        file: content.path,
+        hash: content.hash.replace('ipfs://', '')
       }))
     }))
   }

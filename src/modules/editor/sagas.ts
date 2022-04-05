@@ -89,7 +89,7 @@ import { getCurrentProject, getCurrentBounds } from 'modules/project/selectors'
 import { Scene, ComponentType, ComponentDefinition, ComponentData } from 'modules/scene/types'
 import { ModelMetrics, Vector3, Quaternion } from 'modules/models/types'
 import { Project } from 'modules/project/types'
-import { AvatarAnimation, CatalystWearable, EditorScene, Gizmo, PreviewType } from 'modules/editor/types'
+import { AvatarAnimation, EditorScene, Gizmo, PreviewType } from 'modules/editor/types'
 import { getLoading } from 'modules/assetPack/selectors'
 import { GROUND_CATEGORY } from 'modules/asset/types'
 import { RootState } from 'modules/common/types'
@@ -109,7 +109,6 @@ import { AssetPackState } from 'modules/assetPack/reducer'
 import { getBodyShapes, hasBodyShape } from 'modules/item/utils'
 import { getContentsStorageUrl } from 'lib/api/builder'
 import { PEER_URL } from 'lib/api/peer'
-import { toLegacyURN } from 'lib/urnLegacy'
 import {
   getGizmo,
   getSelectedEntityIds,
@@ -659,27 +658,17 @@ function handleEntitiesOutOfBoundaries(args: { entities: string[] }) {
 function* getDefaultWearables() {
   const bodyShape: WearableBodyShape = yield select(getBodyShape)
   const baseWearables: Wearable[] = yield select(getBaseWearables)
-
   const selectedBaseWearables: ReturnType<typeof getSelectedBaseWearables> = yield select(getSelectedBaseWearables)
   if (!selectedBaseWearables) {
     throw new Error('No base wearables selected')
   }
+  let wearables = Object.values(selectedBaseWearables[bodyShape]).filter(wearable => !!wearable) as Wearable[]
 
-  let wearables = Object.values(selectedBaseWearables[bodyShape]).filter(wearable => wearable !== null) as Wearable[]
   const extras = baseWearables
     .filter(wearable => extraAvatarWearablesIds[bodyShape].includes(wearable.id))
     .filter(extraWearable => !wearables.some(wearable => wearable.category === extraWearable.category))
   wearables = wearables.concat(extras)
-
-  // @TODO: remove this when unity build accepts urn
-  return wearables.map(w => ({
-    ...w,
-    id: toLegacyURN(w.id),
-    representations: w.representations.map(r => ({
-      ...r,
-      bodyShapes: r.bodyShapes.map(toLegacyURN)
-    }))
-  }))
+  return wearables;
 }
 
 function* renderAvatar() {
@@ -726,22 +715,13 @@ function* handleSetAvatarAnimation(_action: SetAvatarAnimationAction) {
 
 function* handleFetchBaseWearables() {
   try {
-    const response: Response = yield call(
-      fetch,
-      `${PEER_URL}/lambdas/collections/wearables?collectionId=urn:beland:off-chain:base-avatars`
-    )
+    const response: Response = yield call(fetch, `${PEER_URL}/collection-items?tokenAddress=urn:beland:off-chain:base-avatars`)
     if (!response.ok) {
       throw new Error('Failed to fetch base wearables')
     }
-    const json: { wearables: CatalystWearable[] } = yield response.json()
+    const json: { rows: any[] } = yield response.json()
     // Filter wearables that hide or replace others, preventing issues with the previewed
-    const wearables: Wearable[] = json.wearables
-      .filter(wearable => {
-        const hidesWearables = wearable.data.hides && wearable.data.hides.length > 0
-        const replacesWearables = wearable.data.replaces && wearable.data.replaces.length > 0
-        return !hidesWearables && !replacesWearables
-      })
-      .map(fromCatalystWearableToWearable)
+    const wearables: Wearable[] = json.rows.map(fromCatalystWearableToWearable)
     yield put(fetchBaseWearablesSuccess(wearables))
   } catch (e) {
     yield put(fetchBaseWearablesFailure(e.message))
