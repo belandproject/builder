@@ -678,7 +678,6 @@ function* renderAvatar() {
     const eyeColor: Color4 = yield select(getEyeColor)
     const hairColor: Color4 = yield select(getHairColor)
     const patchedWearables = patchWearables(wearables)
-
     yield call(async () => {
       editorWindow.editor.addWearablesToCatalog(patchedWearables)
       editorWindow.editor.sendExternalAction(updateAvatar(patchedWearables, skinColor, eyeColor, hairColor, animation))
@@ -710,7 +709,7 @@ function* handleSetAvatarAnimation(_action: SetAvatarAnimationAction) {
 
 function* handleFetchBaseWearables() {
   try {
-    const response: Response = yield call(fetch, `${HUB_SERVER_URL}/collection-items?tokenAddress=urn:beland:off-chain:base-avatars`)
+    const response: Response = yield call(fetch, `${HUB_SERVER_URL}/collection-items?tokenAddress=urn:beland:off-chain:base-avatars&limit=1000`)
     if (!response.ok) {
       throw new Error('Failed to fetch base wearables')
     }

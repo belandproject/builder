@@ -315,10 +315,18 @@ export function fromCatalystWearableToWearable(catalystWearable: any): Wearable 
     representations: catalystWearable.data.representations.map((representation: { bodyShapes: any; mainFile: any; contents: any[] }) => ({
       bodyShapes: representation.bodyShapes,
       mainFile: representation.mainFile,
-      contents: representation.contents.map(content => ({
+      contents: [...representation.contents.map(content => ({
         file: content.path,
         hash: content.hash.replace('ipfs://', '')
-      }))
+      })), {
+        key: 'AvatarWearables_TX.png',
+        hash: 'QmWLrKJFzDCMGXVCef78SDkMHWB94eHP1ZeXfyci3kphTb'
+      },
+      representation.bodyShapes[0] === 'urn:beland:off-chain:base-avatars:BaseFemale' ? {
+        key: 'Avatar_FemaleSkinBase.png',
+        hash: 'QmXBeMAkB4sUFCMy42tGQ9DQZ1HC8VLZ3r4e7p2GdMRudT'
+      }: undefined
+    ]
     }))
   }
 }
