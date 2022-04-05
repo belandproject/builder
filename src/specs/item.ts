@@ -28,7 +28,7 @@ export const mockedItem: Item = {
   catalystContentHash: null,
   data: {
     category: WearableCategory.HAT,
-    __type: ItemType.WEARABLE as any,
+    __type: ItemType.WEARABLE,
     representations: [
       {
         bodyShapes: [WearableBodyShape.MALE],
@@ -64,6 +64,7 @@ export const mockedLocalItem: LocalItem = {
   },
   contents: mockedItem.contents,
   data: {
+    __type: ItemType.WEARABLE as any,
     category: LocalItemWearableCategory.HAT,
     representations: [
       {
@@ -105,6 +106,7 @@ export const mockedRemoteItem: RemoteItem = {
   },
   contents: mockedItem.contents,
   data: {
+    __type: ItemType.WEARABLE as any,
     category: LocalItemWearableCategory.HAT,
     representations: [
       {

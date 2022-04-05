@@ -18,12 +18,13 @@ import { CollectionCuration } from 'modules/curations/collectionCuration/types'
 import { CurationStatus } from 'modules/curations/types'
 import { Authorization } from './auth'
 import { ItemCuration } from 'modules/curations/itemCuration/types'
+import { IPFS_GATEWAY } from './peer'
 
 export const BUILDER_SERVER_URL = env.get('REACT_APP_BUILDER_SERVER_URL', '')
-export const HUB_SERVER_URL = env.get('REACT_APP_MARKETPLACE_URL', '')
+export const HUB_SERVER_URL = env.get('REACT_APP_HUB_SERVER_URL', '')
 
 
-export const getContentsStorageUrl = (hash: string = '') => `${hash.replace('ipfs://', 'https://ipfs-test.beland.io/ipfs/')}`
+export const getContentsStorageUrl = (hash: string = '') => `${hash.replace('ipfs://', IPFS_GATEWAY)}`
 export const getAssetPackStorageUrl = (hash: string = '') => `${BUILDER_SERVER_URL}/storage/assetPacks/${hash}`
 export const getPreviewUrl = (projectId: string) => `${BUILDER_SERVER_URL}/projects/${projectId}/media/preview.png`
 
@@ -616,9 +617,9 @@ export class BuilderAPI extends BaseAPI {
     return fromRemoteItem(remoteItem)
   }
 
-  async fetchCollectionItems(collectionId: string) {
-    const remoteItems: RemoteItem[] = await this.request('get', `/collections/${collectionId}/items`)
-    return remoteItems.map(fromRemoteItem)
+  async fetchCollectionItems(collection_id: string) {
+    const res: {rows: RemoteItem[]} = await this.request('get', `/items`, { collection_id})
+    return res.rows.map(fromRemoteItem)
   }
 
   saveItem = async (item: Item) => {

@@ -32,14 +32,14 @@ export function getNewEditorScene(project: Project): EditorScene {
 
   return {
     ...getSceneDefinition(project, { x: 0, y: 0 }, 'east', null, null),
-    baseUrl: getContentsStorageUrl(),
+    baseUrl: IPFS_GATEWAY,
     display: {
       title: project.title
     },
-    owner: 'Decentraland',
+    owner: 'Beland',
     contact: {
-      name: 'Decentraland',
-      email: 'support@decentraland.org'
+      name: 'Beland',
+      email: 'support@beland.io'
     },
     communications: {
       type: 'webrtc',

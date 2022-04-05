@@ -107,8 +107,7 @@ import { Item, WearableBodyShape } from 'modules/item/types'
 import { getItems } from 'modules/item/selectors'
 import { AssetPackState } from 'modules/assetPack/reducer'
 import { getBodyShapes, hasBodyShape } from 'modules/item/utils'
-import { getContentsStorageUrl } from 'lib/api/builder'
-import { PEER_URL } from 'lib/api/peer'
+import { getContentsStorageUrl, HUB_SERVER_URL } from 'lib/api/builder'
 import {
   getGizmo,
   getSelectedEntityIds,
@@ -217,7 +216,6 @@ function* handleCreateEditorScene(action: CreateEditorSceneAction) {
 
 function* createNewEditorScene(project: Project) {
   const newScene: EditorScene = getNewEditorScene(project)
-
   const msg = {
     type: 'update',
     payload: {
@@ -360,7 +358,6 @@ function* handleOpenEditor(action: OpenEditorAction) {
     const itemId = new URLSearchParams(search).get('item')
     const items: Item[] = yield select(getItems)
     const item = items.find(item => item.id === itemId)
-
     yield put(setEditorReadOnly(true))
     yield call(createNewEditorScene, createAvatarProject())
 
@@ -445,7 +442,6 @@ function* handleOpenEditor(action: OpenEditorAction) {
 
       // Set the remote url for scripts
       yield call(() => editorWindow.editor.sendExternalAction(setScriptUrl(getContentsStorageUrl())))
-
       // Spawns the assets
       yield renderScene(scene)
 
@@ -681,7 +677,6 @@ function* renderAvatar() {
     const skinColor: Color4 = yield select(getSkinColor)
     const eyeColor: Color4 = yield select(getEyeColor)
     const hairColor: Color4 = yield select(getHairColor)
-
     const patchedWearables = patchWearables(wearables)
 
     yield call(async () => {
@@ -715,7 +710,7 @@ function* handleSetAvatarAnimation(_action: SetAvatarAnimationAction) {
 
 function* handleFetchBaseWearables() {
   try {
-    const response: Response = yield call(fetch, `${PEER_URL}/collection-items?tokenAddress=urn:beland:off-chain:base-avatars`)
+    const response: Response = yield call(fetch, `${HUB_SERVER_URL}/collection-items?tokenAddress=urn:beland:off-chain:base-avatars`)
     if (!response.ok) {
       throw new Error('Failed to fetch base wearables')
     }
