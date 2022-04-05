@@ -2,7 +2,6 @@ import { BodyShapeRespresentation, Wearable } from 'decentraland-ecs'
 import { EditorScene, UnityKeyboardEvent } from 'modules/editor/types'
 import { Project } from 'modules/project/types'
 import { getSceneDefinition } from 'modules/project/export'
-import { getContentsStorageUrl } from 'lib/api/builder'
 import { capitalize } from 'lib/text'
 import { Vector3 } from 'modules/models/types'
 import { getSkinHiddenCategories } from 'modules/item/utils'
@@ -190,7 +189,7 @@ export function toWearable(item: Item) {
     id: toLegacyURN(item.id) + '/' + item.updatedAt, // we add the updatedAt suffix to bust the cache
     type: 'wearable',
     category: item.data.category!,
-    baseUrl: getContentsStorageUrl(),
+    baseUrl: IPFS_GATEWAY,
     representations: item.data.representations.map<BodyShapeRespresentation>(representation => ({
       bodyShapes: representation.bodyShapes.map(toLegacyURN),
       mainFile: representation.mainFile,
@@ -319,11 +318,11 @@ export function fromCatalystWearableToWearable(catalystWearable: any): Wearable 
         file: content.path,
         hash: content.hash.replace('ipfs://', '')
       })), {
-        key: 'AvatarWearables_TX.png',
+        file: 'AvatarWearables_TX.png',
         hash: 'QmWLrKJFzDCMGXVCef78SDkMHWB94eHP1ZeXfyci3kphTb'
       },
       representation.bodyShapes[0] === 'urn:beland:off-chain:base-avatars:BaseFemale' ? {
-        key: 'Avatar_FemaleSkinBase.png',
+        file: 'Avatar_FemaleSkinBase.png',
         hash: 'QmXBeMAkB4sUFCMy42tGQ9DQZ1HC8VLZ3r4e7p2GdMRudT'
       }: undefined
     ]

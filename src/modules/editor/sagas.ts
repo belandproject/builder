@@ -146,6 +146,7 @@ import {
   patchWearables
 } from './utils'
 import { extraAvatarWearablesIds, getEyeColors, getHairColors, getSkinColors } from './avatar'
+import { toLegacyURN } from 'lib/urnLegacy'
 
 const editorWindow = window as EditorWindow
 
@@ -664,7 +665,15 @@ function* getDefaultWearables() {
     .filter(wearable => extraAvatarWearablesIds[bodyShape].includes(wearable.id))
     .filter(extraWearable => !wearables.some(wearable => wearable.category === extraWearable.category))
   wearables = wearables.concat(extras)
-  return wearables;
+   // @TODO: remove this when unity build accepts urn
+   return wearables.map(w => ({
+    ...w,
+    id: toLegacyURN(w.id),
+    representations: w.representations.map(r => ({
+      ...r,
+      bodyShapes: r.bodyShapes.map(toLegacyURN)
+    }))
+  }))
 }
 
 function* renderAvatar() {
