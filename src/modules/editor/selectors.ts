@@ -49,7 +49,7 @@ export const getVisibleItemIds = (state: RootState) => getState(state).visibleIt
 export const getSceneMappings = createSelector<RootState, DataByKey<Asset>, Record<string, string>>(getAssets, assets => {
   const mappings = Object.values(assets).reduce<Record<string, string>>((mappings, asset) => {
     for (const path of Object.keys(asset.contents)) {
-      mappings[`${asset.id}/${path}`] = asset.contents[path]
+      mappings[`${asset.id}/${path}`] = asset.contents[path].replace("ipfs://", '')
     }
     return mappings
   }, {})

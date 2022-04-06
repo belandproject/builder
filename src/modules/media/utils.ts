@@ -33,7 +33,7 @@ export async function blobToCID(blob: Blob, path: string) {
 }
 
 export function isRemoteURL(url: string) {
-  return url.startsWith('http')
+  return url.startsWith('http') || url.startsWith("ipfs://")
 }
 
 export async function blobToDataURL(blob: Blob): Promise<string> {

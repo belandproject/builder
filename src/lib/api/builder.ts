@@ -1,7 +1,6 @@
 import { AxiosRequestConfig, AxiosError } from 'axios'
 import { env } from 'decentraland-commons'
 import { BaseAPI, APIParam } from 'decentraland-dapps/dist/lib/api'
-import { Omit } from 'decentraland-dapps/dist/lib/types'
 import { runMigrations } from 'modules/migrations/utils'
 import { Project, Manifest } from 'modules/project/types'
 import { Asset, AssetAction, AssetParameter } from 'modules/asset/types'
@@ -24,8 +23,8 @@ export const BUILDER_SERVER_URL = env.get('REACT_APP_BUILDER_SERVER_URL', '')
 export const HUB_SERVER_URL = env.get('REACT_APP_HUB_SERVER_URL', '')
 
 
-export const getContentsStorageUrl = (hash: string = '') => `${hash.replace('ipfs://', IPFS_GATEWAY)}`
-export const getAssetPackStorageUrl = (hash: string = '') => `${hash.replace('ipfs://', IPFS_GATEWAY)}`
+export const getContentsStorageUrl = (hash: string = '') => `${!hash ? IPFS_GATEWAY: hash.replace('ipfs://', IPFS_GATEWAY)}`
+export const getAssetPackStorageUrl = (hash: string = '') => `${!hash ? IPFS_GATEWAY: hash.replace('ipfs://', IPFS_GATEWAY)}`
 export const getPreviewUrl = (projectId: string) => `${BUILDER_SERVER_URL}/projects/${projectId}/media/preview.png`
 
 export type RemoteItem = {
@@ -171,7 +170,7 @@ export type RemoteItemCuration = {
  * Transforms a Project into a RemoteProject for saving purposes only.
  * The `thumbnail` is omitted.
  */
-function toRemoteProject(project: Project): Omit<RemoteProject, 'thumbnail'> {
+function toRemoteProject(project: Project): RemoteProject {
   return {
     id: project.id,
     name: project.title,
@@ -181,7 +180,8 @@ function toRemoteProject(project: Project): Omit<RemoteProject, 'thumbnail'> {
     rows: project.layout.rows,
     cols: project.layout.cols,
     created_at: project.createdAt,
-    updated_at: project.updatedAt
+    updated_at: project.updatedAt,
+    thumbnail: project.thumbnail.replace(getContentsStorageUrl(), "ipfs://")
   }
 }
 
@@ -190,7 +190,7 @@ function fromRemoteProject(remoteProject: RemoteProject): Project {
     id: remoteProject.id,
     title: remoteProject.name,
     description: remoteProject.description,
-    thumbnail: `${BUILDER_SERVER_URL}/projects/${remoteProject.id}/media/thumbnail.png`,
+    thumbnail: getContentsStorageUrl(remoteProject.thumbnail),
     isPublic: !!remoteProject.is_public,
     sceneId: remoteProject.id,
     ethAddress: remoteProject.owner,
@@ -231,6 +231,7 @@ function toRemoteAssetPack(assetPack: FullAssetPack): RemoteAssetPack {
     id: assetPack.id,
     name: assetPack.title,
     owner: assetPack.ethAddress!,
+    thumbnail: assetPack.thumbnail.replace(getContentsStorageUrl(), 'ipfs://'),
     assets: assetPack.assets.map(asset => toRemoteAsset(asset))
   }
 }
@@ -255,7 +256,7 @@ function toRemoteAsset(asset: Asset): RemoteAsset {
     name: asset.name,
     model: asset.model.replace(`${asset.assetPackId}/`, ''),
     script: asset.script,
-    thumbnail: asset.thumbnail.replace(getContentsStorageUrl(), ''),
+    thumbnail: asset.thumbnail.replace(getContentsStorageUrl(), 'ipfs://'),
     tags: asset.tags,
     category: asset.category,
     contents: asset.contents,
@@ -515,7 +516,7 @@ export class BuilderAPI extends BaseAPI {
     return []
   }
 
-  async saveProject(project: Project, scene: Scene) {
+  async saveProject(project: Project, scene?: Scene) {
     await this.request('post', `/projects/${project.id}`, {
       ...toRemoteProject(project),
       scene: scene

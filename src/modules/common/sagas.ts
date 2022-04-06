@@ -68,7 +68,7 @@ export function* rootSaga(builderAPI: BuilderAPI, newBuilderClient: BuilderClien
     projectSaga(builderAPI),
     sceneSaga(),
     statsSaga(),
-    syncSaga(builderAPI),
+    syncSaga(builderAPI, hubAPI),
     thirdPartySaga(builderAPI),
     tileSaga(),
     toastSaga(),

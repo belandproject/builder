@@ -19,8 +19,9 @@ import {
 } from 'modules/assetPack/actions'
 import { FullAssetPack, ProgressStage } from 'modules/assetPack/types'
 import { selectAssetPack, selectCategory } from 'modules/ui/sidebar/actions'
-import { BuilderAPI } from 'lib/api/builder'
+import { BuilderAPI, getAssetPackStorageUrl } from 'lib/api/builder'
 import { HubAPI } from 'lib/api/hub'
+import { dataURLToBlob, isRemoteURL } from 'modules/media/utils'
 
 export function* assetPackSaga(builder: BuilderAPI, hub: HubAPI) {
   yield takeLatest(LOAD_ASSET_PACKS_REQUEST, handleLoadAssetPacks)
@@ -54,7 +55,6 @@ export function* assetPackSaga(builder: BuilderAPI, hub: HubAPI) {
 
   function* handleSaveAssetPack(action: SaveAssetPackRequestAction) {
     const { assetPack, contents } = action.payload
-
     try {
       const updatableAssets = assetPack.assets.filter(asset => Object.keys(contents[asset.id]).length > 0)
       for (const asset of updatableAssets) {
@@ -62,8 +62,16 @@ export function* assetPackSaga(builder: BuilderAPI, hub: HubAPI) {
           const res: any[] = yield call([hub, 'uploadMedia'], contents[asset.id][asset.contents[path]], path)
           asset.contents[path] = res[0].hash;
         }
-        const thumbRes: any[] = yield call([hub, 'uploadMedia'], contents[asset.id][asset.thumbnail], 'thumbnail')
-        asset.thumbnail = thumbRes[0].hash;
+
+        if (!isRemoteURL(asset.thumbnail)) {
+          const thumbRes: any[] = yield call([hub, 'uploadMedia'], contents[asset.id][asset.thumbnail], 'thumbnail')
+          asset.thumbnail = getAssetPackStorageUrl(thumbRes[0].hash);
+        }
+      }
+
+      if (!isRemoteURL(assetPack.thumbnail)) {
+        const thumbRes: any[] = yield call([hub, 'uploadMedia'], dataURLToBlob(assetPack.thumbnail) as Blob, 'thumbnail')
+        assetPack.thumbnail = getAssetPackStorageUrl(thumbRes[0].hash);
       }
 
       yield put(setProgress(ProgressStage.CREATE_ASSET_PACK, 0))

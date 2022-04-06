@@ -64,7 +64,6 @@ export const mockedLocalItem: LocalItem = {
   },
   contents: mockedItem.contents,
   data: {
-    __type: ItemType.WEARABLE as any,
     category: LocalItemWearableCategory.HAT,
     representations: [
       {
@@ -106,7 +105,6 @@ export const mockedRemoteItem: RemoteItem = {
   },
   contents: mockedItem.contents,
   data: {
-    __type: ItemType.WEARABLE as any,
     category: LocalItemWearableCategory.HAT,
     representations: [
       {

@@ -36,12 +36,14 @@ import {
   SaveProjectSuccessAction
 } from './actions'
 import { getLocalProjectIds, getFailedProjectIds } from './selectors'
-import { forEach, saveProject, saveThumbnail } from './utils'
-import { BuilderAPI } from 'lib/api/builder'
+import { forEach, saveProject } from './utils'
+import { BuilderAPI, getContentsStorageUrl } from 'lib/api/builder'
 import { isLoggedIn } from 'modules/identity/selectors'
 import { LOGIN_SUCCESS, LoginSuccessAction } from 'modules/identity/actions'
+import { HubAPI } from 'lib/api/hub'
+import { dataURLToBlob } from 'modules/media/utils'
 
-export function* syncSaga(builder: BuilderAPI) {
+export function* syncSaga(builder: BuilderAPI, hub: HubAPI) {
   yield takeLatest(LOGIN_SUCCESS, handleLoginSuccess)
   yield takeLatest(SYNC, handleSync)
   yield takeLatest(RETRY_SYNC, handleRetrySync)
@@ -97,7 +99,9 @@ export function* syncSaga(builder: BuilderAPI) {
       }
     }
     try {
-      saveThumbnail(project.id, project, builder)
+      const res : any[] = yield call([hub, "uploadMedia"], dataURLToBlob(project.thumbnail) as Blob, "thumbnail.png")
+      project.thumbnail = getContentsStorageUrl(res[0].hash);
+      yield call(() => builder.saveProject(project))
     } catch (e) {
       console.error(e)
     }
