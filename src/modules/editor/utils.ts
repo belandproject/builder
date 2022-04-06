@@ -195,7 +195,7 @@ export function toWearable(item: Item) {
       mainFile: representation.mainFile,
       contents: Object.values(representation.contents).map(path => ({
         file: path,
-        hash: item.contents[path].replace("ipfs://", '')
+        hash: item.contents[path].replace('ipfs://', '')
       })),
       overrideReplaces: representation.overrideReplaces,
       overrideHides: representation.overrideHides
@@ -311,22 +311,29 @@ export function fromCatalystWearableToWearable(catalystWearable: any): Wearable 
     category: catalystWearable.traits.find((t: { name: string }) => t.name == 'category').value,
     baseUrl: IPFS_GATEWAY,
     tags: catalystWearable.traits.filter((t: { name: string }) => t.name === 'tags').map((t: { value: any }) => t.value),
-    representations: catalystWearable.data.representations.map((representation: { bodyShapes: any; mainFile: any; contents: any[] }) => ({
-      bodyShapes: representation.bodyShapes,
-      mainFile: representation.mainFile,
-      contents: [...representation.contents.map(content => ({
+    representations: catalystWearable.data.representations.map((representation: { bodyShapes: any; mainFile: any; contents: any[] }) => {
+      let contents = representation.contents.map(content => ({
         file: content.path,
         hash: content.hash.replace('ipfs://', '')
-      })), {
+      }))
+      contents.push({
         file: 'AvatarWearables_TX.png',
         hash: 'QmWLrKJFzDCMGXVCef78SDkMHWB94eHP1ZeXfyci3kphTb'
-      },
-      representation.bodyShapes[0] === 'urn:beland:off-chain:base-avatars:BaseFemale' ? {
-        file: 'Avatar_FemaleSkinBase.png',
-        hash: 'QmXBeMAkB4sUFCMy42tGQ9DQZ1HC8VLZ3r4e7p2GdMRudT'
-      }: undefined
-    ]
-    }))
+      })
+
+      if (representation.bodyShapes[0] === WearableBodyShape.FEMALE) {
+        contents.push({
+          file: 'Avatar_FemaleSkinBase.png',
+          hash: 'QmXBeMAkB4sUFCMy42tGQ9DQZ1HC8VLZ3r4e7p2GdMRudT'
+        })
+      }
+
+      return {
+        bodyShapes: representation.bodyShapes,
+        mainFile: representation.mainFile,
+        contents
+      }
+    })
   }
 }
 

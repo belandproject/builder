@@ -663,8 +663,10 @@ function* getDefaultWearables() {
 
   const extras = baseWearables
     .filter(wearable => extraAvatarWearablesIds[bodyShape].includes(wearable.id))
-    .filter(extraWearable => !wearables.some(wearable => wearable.category === extraWearable.category))
+    .filter(extraWearable => !wearables.some(wearable => wearable.category === extraWearable.category))  
   wearables = wearables.concat(extras)
+
+
    // @TODO: remove this when unity build accepts urn
    return wearables.map(w => ({
     ...w,
@@ -724,7 +726,13 @@ function* handleFetchBaseWearables() {
     }
     const json: { rows: any[] } = yield response.json()
     // Filter wearables that hide or replace others, preventing issues with the previewed
-    const wearables: Wearable[] = json.rows.map(fromCatalystWearableToWearable)
+    const wearables: Wearable[] = json.rows
+    .filter(row => {
+      const hidesWearables = row.traits.filter((t: { name: string }) => t.name === 'hides').length > 0;
+      const replacesWearables = row.traits.filter((t: { name: string }) => t.name === 'replaces').length > 0;
+      return !hidesWearables && !replacesWearables
+    })
+    .map(fromCatalystWearableToWearable)
     yield put(fetchBaseWearablesSuccess(wearables))
   } catch (e) {
     yield put(fetchBaseWearablesFailure(e.message))
