@@ -195,7 +195,7 @@ export function toWearable(item: Item) {
       mainFile: representation.mainFile,
       contents: Object.values(representation.contents).map(path => ({
         file: path,
-        hash: item.contents[path]
+        hash: item.contents[path].replace("ipfs://", '')
       })),
       overrideReplaces: representation.overrideReplaces,
       overrideHides: representation.overrideHides

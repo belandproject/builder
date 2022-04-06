@@ -659,7 +659,7 @@ function* getDefaultWearables() {
   if (!selectedBaseWearables) {
     throw new Error('No base wearables selected')
   }
-  let wearables = Object.values(selectedBaseWearables[bodyShape]).filter(wearable => !!wearable) as Wearable[]
+  let wearables = Object.values(selectedBaseWearables[bodyShape]).filter(wearable => wearable !== null) as Wearable[]
 
   const extras = baseWearables
     .filter(wearable => extraAvatarWearablesIds[bodyShape].includes(wearable.id))
