@@ -45,7 +45,7 @@ const profileSaga = createProfileSaga({ peerUrl: PEER_URL })
 export function* rootSaga(builderAPI: BuilderAPI, newBuilderClient: BuilderClient, hubAPI: HubAPI) {
   yield all([
     analyticsSaga(),
-    assetPackSaga(builderAPI),
+    assetPackSaga(builderAPI, hubAPI),
     assetSaga(newBuilderClient),
     authorizationSaga(),
     collectionSaga(builderAPI, hubAPI),

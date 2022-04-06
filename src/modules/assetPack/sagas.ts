@@ -1,4 +1,4 @@
-import { call, put, takeLatest, all, select } from 'redux-saga/effects'
+import { call, put, takeLatest, select } from 'redux-saga/effects'
 
 import { getData as getWallet } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import {
@@ -17,31 +17,30 @@ import {
   deleteAssetPackFailure,
   deleteAssetPackSuccess
 } from 'modules/assetPack/actions'
-import { getProgress } from 'modules/assetPack/selectors'
 import { FullAssetPack, ProgressStage } from 'modules/assetPack/types'
-import { isRemoteURL } from 'modules/media/utils'
 import { selectAssetPack, selectCategory } from 'modules/ui/sidebar/actions'
 import { BuilderAPI } from 'lib/api/builder'
+import { HubAPI } from 'lib/api/hub'
 
-export function* assetPackSaga(builder: BuilderAPI) {
+export function* assetPackSaga(builder: BuilderAPI, hub: HubAPI) {
   yield takeLatest(LOAD_ASSET_PACKS_REQUEST, handleLoadAssetPacks)
   yield takeLatest(SAVE_ASSET_PACK_REQUEST, handleSaveAssetPack)
   yield takeLatest(DELETE_ASSET_PACK_REQUEST, handleDeleteAssetPack)
 
-  function* handleAssetContentsUploadProgress(total: number) {
-    // Calculate the increment step, it will be truncated
-    const increment = ((1 / total) * 100) | 0
-    // Get the existing progress
-    const existingProgress: ReturnType<typeof getProgress> = yield select(getProgress)
-    // Calculate the current file based on the existing progress
-    const currentFile = existingProgress.value / increment + 1
-    // Calculate the new value based on the existing progress and the increment
-    const newValue = existingProgress.value + increment
-    // If this is the last file, just map it to 100
-    const progress = currentFile !== total ? newValue : 100
+  // function* handleAssetContentsUploadProgress(total: number) {
+  //   // Calculate the increment step, it will be truncated
+  //   const increment = ((1 / total) * 100) | 0
+  //   // Get the existing progress
+  //   const existingProgress: ReturnType<typeof getProgress> = yield select(getProgress)
+  //   // Calculate the current file based on the existing progress
+  //   const currentFile = existingProgress.value / increment + 1
+  //   // Calculate the new value based on the existing progress and the increment
+  //   const newValue = existingProgress.value + increment
+  //   // If this is the last file, just map it to 100
+  //   const progress = currentFile !== total ? newValue : 100
 
-    yield put(setProgress(ProgressStage.UPLOAD_CONTENTS, progress))
-  }
+  //   yield put(setProgress(ProgressStage.UPLOAD_CONTENTS, progress))
+  // }
 
   function* handleLoadAssetPacks(_: LoadAssetPacksRequestAction) {
     try {
@@ -57,29 +56,27 @@ export function* assetPackSaga(builder: BuilderAPI) {
     const { assetPack, contents } = action.payload
 
     try {
+      const updatableAssets = assetPack.assets.filter(asset => Object.keys(contents[asset.id]).length > 0)
+      for (const asset of updatableAssets) {
+        for (const path in asset.contents) {
+          const res: any[] = yield call([hub, 'uploadMedia'], contents[asset.id][asset.contents[path]], path)
+          asset.contents[path] = res[0].hash;
+        }
+        const thumbRes: any[] = yield call([hub, 'uploadMedia'], contents[asset.id][asset.thumbnail], 'thumbnail')
+        asset.thumbnail = thumbRes[0].hash;
+      }
+
       yield put(setProgress(ProgressStage.CREATE_ASSET_PACK, 0))
       yield call(() => builder.saveAssetPack(assetPack))
 
       yield put(setProgress(ProgressStage.CREATE_ASSET_PACK, 50))
 
-      if (!isRemoteURL(assetPack.thumbnail)) {
-        yield call(() => builder.saveAssetPackThumbnail(assetPack))
-      }
-
+     
       yield put(setProgress(ProgressStage.CREATE_ASSET_PACK, 100))
 
       yield put(setProgress(ProgressStage.UPLOAD_CONTENTS, 0))
 
-      const updatableAssets = assetPack.assets.filter(asset => Object.keys(contents[asset.id]).length > 0)
-      const onProgress: void = yield handleAssetContentsUploadProgress(updatableAssets.length)
-      // TODO: there's a bug here (Issue #1792)
-      const uploadEffects = updatableAssets.map(asset => builder.saveAssetContents(asset, contents[asset.id]).then(onProgress as any))
-
-      if (uploadEffects.length > 0) {
-        yield all(uploadEffects)
-      } else {
-        yield put(setProgress(ProgressStage.UPLOAD_CONTENTS, 100))
-      }
+      yield put(setProgress(ProgressStage.UPLOAD_CONTENTS, 100))
 
       yield put(saveAssetPackSuccess(assetPack))
       yield put(setProgress(ProgressStage.NONE, 0))

@@ -25,7 +25,7 @@ export const HUB_SERVER_URL = env.get('REACT_APP_HUB_SERVER_URL', '')
 
 
 export const getContentsStorageUrl = (hash: string = '') => `${hash.replace('ipfs://', IPFS_GATEWAY)}`
-export const getAssetPackStorageUrl = (hash: string = '') => `${BUILDER_SERVER_URL}/storage/assetPacks/${hash}`
+export const getAssetPackStorageUrl = (hash: string = '') => `${hash.replace('ipfs://', IPFS_GATEWAY)}`
 export const getPreviewUrl = (projectId: string) => `${BUILDER_SERVER_URL}/projects/${projectId}/media/preview.png`
 
 export type RemoteItem = {
@@ -110,7 +110,7 @@ export type RemotePool = RemoteProject & {
 
 export type RemoteAssetPack = {
   id: string
-  title: string
+  name: string
   url?: string
   thumbnail?: string
   owner: string
@@ -122,7 +122,7 @@ export type RemoteAssetPack = {
 export type RemoteAsset = {
   id: string
   legacy_id: string | null
-  asset_pack_id: string
+  pack_id: string
   name: string
   model: string
   script: string | null
@@ -229,7 +229,7 @@ function fromRemotePool(remotePool: RemotePool): Pool {
 function toRemoteAssetPack(assetPack: FullAssetPack): RemoteAssetPack {
   return {
     id: assetPack.id,
-    title: assetPack.title,
+    name: assetPack.title,
     owner: assetPack.ethAddress!,
     assets: assetPack.assets.map(asset => toRemoteAsset(asset))
   }
@@ -238,7 +238,7 @@ function toRemoteAssetPack(assetPack: FullAssetPack): RemoteAssetPack {
 function fromRemoteAssetPack(remoteAssetPack: RemoteAssetPack): FullAssetPack {
   return {
     id: remoteAssetPack.id,
-    title: remoteAssetPack.title,
+    title: remoteAssetPack.name,
     thumbnail: getAssetPackStorageUrl(remoteAssetPack.thumbnail),
     ethAddress: remoteAssetPack.owner,
     assets: remoteAssetPack.assets.map(asset => fromRemoteAsset(asset)),
@@ -251,7 +251,7 @@ function toRemoteAsset(asset: Asset): RemoteAsset {
   return {
     id: asset.id,
     legacy_id: asset.legacyId || null,
-    asset_pack_id: asset.assetPackId,
+    pack_id: asset.assetPackId,
     name: asset.name,
     model: asset.model.replace(`${asset.assetPackId}/`, ''),
     script: asset.script,
@@ -269,7 +269,7 @@ function fromRemoteAsset(remoteAsset: RemoteAsset): Asset {
   return {
     id: remoteAsset.id,
     legacyId: remoteAsset.legacy_id,
-    assetPackId: remoteAsset.asset_pack_id,
+    assetPackId: remoteAsset.pack_id,
     name: remoteAsset.name,
     model: remoteAsset.model,
     script: remoteAsset.script,
@@ -551,7 +551,7 @@ export class BuilderAPI extends BaseAPI {
 
   async saveAssetPack(assetPack: FullAssetPack) {
     const remotePack = toRemoteAssetPack(assetPack)
-    await this.request('put', `/asset-packs/${remotePack.id}`, { assetPack: remotePack })
+    await this.request('post', `/asset-packs/${remotePack.id}`, remotePack)
   }
 
   async saveAssetContents(
@@ -589,9 +589,9 @@ export class BuilderAPI extends BaseAPI {
   }
 
   async fetchAssetPacks(address?: string): Promise<FullAssetPack[]> {
-    const promisesOfRemoteAssetPacks: Array<Promise<RemoteAssetPack[]>> = [this.request('get', '/asset-packs', { owner: 'default' })]
+    const promisesOfRemoteAssetPacks: Array<Promise<RemoteAssetPack[]>> = [this.request('get', '/asset-packs', { owner: 'default' }).then(res => res.rows)]
     if (address) {
-      promisesOfRemoteAssetPacks.push(this.request('get', '/asset-packs', { owner: address }))
+      promisesOfRemoteAssetPacks.push(this.request('get', '/asset-packs', { owner: address }).then(res => res.rows))
     }
 
     const assetPacks: RemoteAssetPack[][] = await Promise.all(promisesOfRemoteAssetPacks)
