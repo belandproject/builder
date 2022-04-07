@@ -21,7 +21,7 @@ import { FullAssetPack, ProgressStage } from 'modules/assetPack/types'
 import { selectAssetPack, selectCategory } from 'modules/ui/sidebar/actions'
 import { BuilderAPI, getAssetPackStorageUrl } from 'lib/api/builder'
 import { HubAPI } from 'lib/api/hub'
-import { dataURLToBlob, isRemoteURL } from 'modules/media/utils'
+import { isRemoteURL } from 'modules/media/utils'
 
 export function* assetPackSaga(builder: BuilderAPI, hub: HubAPI) {
   yield takeLatest(LOAD_ASSET_PACKS_REQUEST, handleLoadAssetPacks)
@@ -69,13 +69,13 @@ export function* assetPackSaga(builder: BuilderAPI, hub: HubAPI) {
         }
       }
 
-      if (!isRemoteURL(assetPack.thumbnail)) {
-        const thumbRes: any[] = yield call([hub, 'uploadMedia'], dataURLToBlob(assetPack.thumbnail) as Blob, 'thumbnail')
-        assetPack.thumbnail = getAssetPackStorageUrl(thumbRes[0].hash);
-      }
-
       yield put(setProgress(ProgressStage.CREATE_ASSET_PACK, 0))
       yield call(() => builder.saveAssetPack(assetPack))
+
+      if (!isRemoteURL(assetPack.thumbnail)) {
+        yield call(() => builder.saveAssetPackThumbnail(assetPack))
+      }
+
 
       yield put(setProgress(ProgressStage.CREATE_ASSET_PACK, 50))
 

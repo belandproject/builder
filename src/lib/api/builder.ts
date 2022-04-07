@@ -21,7 +21,7 @@ import { IPFS_GATEWAY } from './peer'
 
 export const BUILDER_SERVER_URL = env.get('REACT_APP_BUILDER_SERVER_URL', '')
 export const HUB_SERVER_URL = env.get('REACT_APP_HUB_SERVER_URL', '')
-
+export const CONTENT_SERVER_URL =  env.get('REACT_CONTENT_SERVER_URL', 'https://beland-builder.sgp1.digitaloceanspaces.com');
 
 export const getContentsStorageUrl = (hash: string = '') => `${!hash ? IPFS_GATEWAY: hash.replace('ipfs://', IPFS_GATEWAY)}`
 export const getAssetPackStorageUrl = (hash: string = '') => `${!hash ? IPFS_GATEWAY: hash.replace('ipfs://', IPFS_GATEWAY)}`
@@ -170,7 +170,7 @@ export type RemoteItemCuration = {
  * Transforms a Project into a RemoteProject for saving purposes only.
  * The `thumbnail` is omitted.
  */
-function toRemoteProject(project: Project): RemoteProject {
+function toRemoteProject(project: Project): Omit<RemoteProject, 'thumbnail'> {
   return {
     id: project.id,
     name: project.title,
@@ -181,7 +181,6 @@ function toRemoteProject(project: Project): RemoteProject {
     cols: project.layout.cols,
     created_at: project.createdAt,
     updated_at: project.updatedAt,
-    thumbnail: project.thumbnail.replace(getContentsStorageUrl(), "ipfs://")
   }
 }
 
@@ -190,7 +189,7 @@ function fromRemoteProject(remoteProject: RemoteProject): Project {
     id: remoteProject.id,
     title: remoteProject.name,
     description: remoteProject.description,
-    thumbnail: getContentsStorageUrl(remoteProject.thumbnail),
+    thumbnail: `${CONTENT_SERVER_URL}/projects/${remoteProject.id}/${remoteProject.thumbnail}`,
     isPublic: !!remoteProject.is_public,
     sceneId: remoteProject.id,
     ethAddress: remoteProject.owner,
@@ -231,7 +230,6 @@ function toRemoteAssetPack(assetPack: FullAssetPack): RemoteAssetPack {
     id: assetPack.id,
     name: assetPack.title,
     owner: assetPack.ethAddress!,
-    thumbnail: assetPack.thumbnail.replace(getContentsStorageUrl(), 'ipfs://'),
     assets: assetPack.assets.map(asset => toRemoteAsset(asset))
   }
 }
@@ -240,7 +238,7 @@ function fromRemoteAssetPack(remoteAssetPack: RemoteAssetPack): FullAssetPack {
   return {
     id: remoteAssetPack.id,
     title: remoteAssetPack.name,
-    thumbnail: getAssetPackStorageUrl(remoteAssetPack.thumbnail),
+    thumbnail: `${CONTENT_SERVER_URL}/asset-packs/${remoteAssetPack.id}/${remoteAssetPack.thumbnail}`,
     ethAddress: remoteAssetPack.owner,
     assets: remoteAssetPack.assets.map(asset => fromRemoteAsset(asset)),
     createdAt: remoteAssetPack.created_at,
@@ -493,7 +491,7 @@ export class BuilderAPI extends BaseAPI {
     formData.append('south', shots.south)
     formData.append('west', shots.west)
 
-    await this.request('post', `/projects/${projectId}/media`, formData, {
+    await this.request('post', `/projects/${projectId}/upload`, formData, {
       onUploadProgress
     })
   }
@@ -528,7 +526,7 @@ export class BuilderAPI extends BaseAPI {
     const formData = new FormData()
     if (blob) {
       formData.append('thumbnail', blob)
-      await this.request('post', `/projects/${project.id}/media`, formData)
+      await this.request('post', `/projects/${project.id}/upload`, formData)
     }
   }
 
@@ -585,7 +583,7 @@ export class BuilderAPI extends BaseAPI {
     const formData = new FormData()
     if (blob) {
       formData.append('thumbnail', blob)
-      await this.request('post', `/assetPacks/${assetPack.id}/thumbnail`, formData)
+      await this.request('post', `/asset-packs/${assetPack.id}/upload`, formData)
     }
   }
 

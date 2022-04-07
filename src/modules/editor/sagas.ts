@@ -312,7 +312,6 @@ function handleGizmoSelected(args: { gizmoType: Gizmo; entities: string[] }) {
   }
   const selectedEntityId = getSelectedEntityIds(state)
   let newSelectedEntities = selectedEntityId
-
   if (entities.length === 0) {
     if (!multiselectionEnabled && selectedEntityId.length > 0) {
       newSelectedEntities = []
@@ -426,7 +425,6 @@ function* handleOpenEditor(action: OpenEditorAction) {
       yield put(fixLegacyNamespacesRequest(scene))
       const fixSuccessAction: FixLegacyNamespacesSuccessAction = yield take(FIX_LEGACY_NAMESPACES_SUCCESS)
       scene = fixSuccessAction.payload.scene
-
       // if assets packs are being loaded wait for them to finish
       const loading: AssetPackState['loading'] = yield select(getLoading)
       if (isLoadingType(loading, LOAD_ASSET_PACKS_REQUEST)) {
