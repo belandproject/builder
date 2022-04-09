@@ -8,7 +8,7 @@ export default class Profile extends React.PureComponent<ProfileProps> {
   render() {
     const newProps = { ...this.props }
     if (isEqual(newProps.address, LAND_POOL_ADDRESS)) {
-      newProps.isDecentraland = true
+      newProps.isBeland = true
     }
 
     return <BaseProfile {...newProps} />

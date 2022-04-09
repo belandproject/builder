@@ -1,6 +1,5 @@
 import { env, utils } from 'decentraland-commons'
 import { ChainId } from '@beland/schemas'
-import { ContractName, getContract } from '@beland/transactions'
 import { Wallet } from '@beland/dapps/dist/modules/wallet/types'
 import { locations } from 'routing/locations'
 import { isEqual, includes } from 'lib/address'
@@ -31,8 +30,8 @@ export function isLocked(collection: Collection) {
   return deadline.getTime() > Date.now()
 }
 
-export function getSaleAddress(chainId: ChainId) {
-  return getContract(ContractName.CollectionStore, chainId).address.toLowerCase()
+export function getSaleAddress(_chainId: ChainId) {
+  return ''
 }
 
 export function getCollectionEditorURL(collection: Collection, items: Item[]): string {

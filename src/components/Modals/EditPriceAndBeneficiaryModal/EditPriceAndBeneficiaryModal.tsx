@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Address } from 'web3x/address'
 import { fromWei, toWei } from 'web3x/utils'
 import { Network } from '@beland/schemas'
-import { ModalNavigation, ModalContent, ModalActions, Form, Field, Button, InputOnChangeData, FieldProps, Mana } from '@beland/uikit'
+import { ModalNavigation, ModalContent, ModalActions, Form, Field, Button, InputOnChangeData, FieldProps, Bean } from '@beland/uikit'
 import { NetworkButton } from '@beland/dapps/dist/containers'
 import Modal from '@beland/dapps/dist/containers/Modal'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
@@ -131,7 +131,7 @@ export default class EditPriceAndBeneficiaryModal extends React.PureComponent<Pr
                 disabled={isFree}
                 error={!!price && !this.isValidPrice()}
               />
-              <Mana network={Network.MATIC} inline />
+              <Bean network={Network.MATIC} inline />
             </div>
             <Field
               label={

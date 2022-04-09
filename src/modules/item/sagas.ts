@@ -1,14 +1,9 @@
-import { Contract } from 'ethers'
 import { replace } from 'connected-react-router'
-import { takeEvery, call, put, takeLatest, select, take, delay, fork, race, cancelled } from 'redux-saga/effects'
-import { ChainId, Network } from '@beland/schemas'
-import { ContractName, getContract } from '@beland/transactions'
+import { takeEvery, call, put, takeLatest, select, take, delay, fork, cancelled } from 'redux-saga/effects'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { closeModal } from '@beland/dapps/dist/modules/modal/actions'
-import { sendTransaction } from '@beland/dapps/dist/modules/wallet/utils'
-import { getChainIdByNetwork } from '@beland/dapps/dist/lib/eth'
 import { BuilderClient, RemoteItem } from '@dcl/builder-client'
-import { Entity, EntityType } from 'dcl-catalyst-commons'
+import { EntityType } from 'dcl-catalyst-commons'
 import {
   FetchItemsRequestAction,
   fetchItemsSuccess,
@@ -25,7 +20,6 @@ import {
   SAVE_ITEM_REQUEST,
   SAVE_ITEM_SUCCESS,
   SetPriceAndBeneficiaryRequestAction,
-  setPriceAndBeneficiarySuccess,
   setPriceAndBeneficiaryFailure,
   SET_PRICE_AND_BENEFICIARY_REQUEST,
   DeleteItemRequestAction,
@@ -52,15 +46,10 @@ import {
   FETCH_ITEMS_SUCCESS,
   RESCUE_ITEMS_REQUEST,
   RescueItemsRequestAction,
-  rescueItemsSuccess,
   rescueItemsFailure,
   ResetItemRequestAction,
   RESET_ITEM_REQUEST,
-  resetItemSuccess,
   resetItemFailure,
-  SAVE_ITEM_FAILURE,
-  SaveItemSuccessAction,
-  SaveItemFailureAction,
   DOWNLOAD_ITEM_REQUEST,
   DownloadItemRequestAction,
   downloadItemFailure,
@@ -71,7 +60,6 @@ import {
   CANCEL_SAVE_MULTIPLE_ITEMS,
   saveMultipleItemsCancelled,
   saveMultipleItemsFailure,
-  rescueItemsChunkSuccess,
   FETCH_COLLECTION_ITEMS_SUCCESS,
   FetchItemsSuccessAction,
   FetchCollectionItemsSuccessAction,
@@ -86,18 +74,14 @@ import { BuilderAPI as LegacyBuilderAPI } from 'lib/api/builder'
 import { getCollection, getCollections } from 'modules/collection/selectors'
 import { getItemId } from 'modules/location/selectors'
 import { Collection } from 'modules/collection/types'
-import { MAX_ITEMS } from 'modules/collection/constants'
 import { fetchEntitiesByPointersRequest } from 'modules/entity/actions'
 import { takeLatestCancellable } from 'modules/common/utils'
-import { waitForTx } from 'modules/transaction/utils'
-import { getMethodData } from 'modules/wallet/utils'
-import { getCatalystContentUrl } from 'lib/api/peer'
 import { downloadZip } from 'lib/zip'
 import { calculateFinalSize } from './export'
-import { Item, Rarity, CatalystItem, BodyShapeType, IMAGE_PATH, THUMBNAIL_PATH, WearableData } from './types'
-import { getData as getItemsById, getItems, getEntityByItemId, getCollectionItems, getItem } from './selectors'
+import { Item, Rarity, BodyShapeType, IMAGE_PATH, THUMBNAIL_PATH } from './types'
+import { getData as getItemsById, getItems, getCollectionItems, getItem } from './selectors'
 import { ItemTooBigError } from './errors'
-import { buildZipContents, getMetadata, groupsOf, isValidText, generateCatalystImage, MAX_FILE_SIZE } from './utils'
+import { buildZipContents, isValidText, generateCatalystImage, MAX_FILE_SIZE } from './utils'
 
 import { LoginSuccessAction, LOGIN_SUCCESS } from 'modules/identity/actions'
 import { HubAPI } from 'lib/api/hub'
@@ -271,16 +255,16 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
         throw new Error(yield call(t, 'sagas.item.not_published'))
       }
 
-      const newItem = { ...item, price, beneficiary, updatedAt: Date.now() }
+      //const newItem = { ...item, price, beneficiary, updatedAt: Date.now() }
 
-      const metadata = getMetadata(newItem)
-      const chainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
-      const contract = { ...getContract(ContractName.ERC721CollectionV2, chainId), address: collection.contractAddress! }
-      const txHash: string = yield call(sendTransaction, contract, collection =>
-        collection.editItemsData([newItem.tokenId!], [newItem.price!], [newItem.beneficiary!], [metadata])
-      )
+      // const metadata = getMetadata(newItem)
+      // const chainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
+      // const contract = { ...getContract(ContractName.ERC721CollectionV2, chainId), address: collection.contractAddress! }
+      // const txHash: string = yield call(sendTransaction, contract, collection =>
+      //   collection.editItemsData([newItem.tokenId!], [newItem.price!], [newItem.beneficiary!], [metadata])
+      // )
 
-      yield put(setPriceAndBeneficiarySuccess(newItem, chainId, txHash))
+      // yield put(setPriceAndBeneficiarySuccess(newItem, chainId, txHash))
     } catch (error) {
       yield put(setPriceAndBeneficiaryFailure(itemId, price, beneficiary, error.message))
     }
@@ -365,40 +349,40 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
     const { collection, items, contentHashes } = action.payload
 
     try {
-      const chainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
-      const tokenIds = items.map(item => item.tokenId!)
-      const metadatas = items.map(item => getMetadata(item))
+      // const chainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
+      // const tokenIds = items.map(item => item.tokenId!)
+      // const metadatas = items.map(item => getMetadata(item))
 
-      const contract = getContract(ContractName.Committee, chainId)
-      const { abi } = getContract(ContractName.ERC721CollectionV2, chainId)
-      const implementation = new Contract(collection.contractAddress!, abi)
+      // const contract = getContract(ContractName.Committee, chainId)
+      // const { abi } = getContract(ContractName.ERC721CollectionV2, chainId)
+      // const implementation = new Contract(collection.contractAddress!, abi)
 
-      const manager = getContract(ContractName.CollectionManager, chainId)
-      const forwarder = getContract(ContractName.Forwarder, chainId)
+      // const manager = getContract(ContractName.CollectionManager, chainId)
+      // const forwarder = getContract(ContractName.Forwarder, chainId)
 
-      const tokenIdsChunks = groupsOf(tokenIds, MAX_ITEMS)
-      const itemsChunks = groupsOf(items, MAX_ITEMS)
-      const metadatasChunks = groupsOf(metadatas, MAX_ITEMS)
-      const contentHashesChunks = groupsOf(contentHashes, MAX_ITEMS)
-      const txHashes: string[] = []
+      // const tokenIdsChunks = groupsOf(tokenIds, MAX_ITEMS)
+      // const itemsChunks = groupsOf(items, MAX_ITEMS)
+      // const metadatasChunks = groupsOf(metadatas, MAX_ITEMS)
+      // const contentHashesChunks = groupsOf(contentHashes, MAX_ITEMS)
+      // const txHashes: string[] = []
 
-      for (let i = 0; i < tokenIdsChunks.length; i++) {
-        const data: string = yield call(
-          getMethodData,
-          implementation.populateTransaction.rescueItems(tokenIdsChunks[i], contentHashesChunks[i], metadatasChunks[i])
-        )
+      // for (let i = 0; i < tokenIdsChunks.length; i++) {
+      //   const data: string = yield call(
+      //     getMethodData,
+      //     implementation.populateTransaction.rescueItems(tokenIdsChunks[i], contentHashesChunks[i], metadatasChunks[i])
+      //   )
 
-        const txHash: string = yield call(sendTransaction, contract, committee =>
-          committee.manageCollection(manager.address, forwarder.address, collection.contractAddress!, [data])
-        )
+      //   const txHash: string = yield call(sendTransaction, contract, committee =>
+      //     committee.manageCollection(manager.address, forwarder.address, collection.contractAddress!, [data])
+      //   )
 
-        txHashes.push(txHash)
-        yield put(rescueItemsChunkSuccess(collection, itemsChunks[i], contentHashesChunks[i], chainId, txHash))
+      //   txHashes.push(txHash)
+      //   yield put(rescueItemsChunkSuccess(collection, itemsChunks[i], contentHashesChunks[i], chainId, txHash))
 
-        yield call(waitForTx, txHash)
-      }
-      const newItems = items.map<Item>((item, index) => ({ ...item, blockchainContentHash: contentHashes[index] }))
-      yield put(rescueItemsSuccess(collection, newItems, contentHashes, chainId, txHashes))
+      //   yield call(waitForTx, txHash)
+      // }
+      // const newItems = items.map<Item>((item, index) => ({ ...item, blockchainContentHash: contentHashes[index] }))
+      // yield put(rescueItemsSuccess(collection, newItems, contentHashes, chainId, txHashes))
     } catch (error) {
       yield put(rescueItemsFailure(collection, items, contentHashes, error.message))
     }
@@ -448,61 +432,61 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
 
 export function* handleResetItemRequest(action: ResetItemRequestAction) {
   const { itemId } = action.payload
-  const itemsById: Record<string, Item> = yield select(getItemsById)
-  const entitiesByItemId: Record<string, Entity> = yield select(getEntityByItemId)
+  // const itemsById: Record<string, Item> = yield select(getItemsById)
+  // const entitiesByItemId: Record<string, Entity> = yield select(getEntityByItemId)
 
-  const item = itemsById[itemId]
-  const entity = entitiesByItemId[itemId]
+  // const item = itemsById[itemId]
+  // const entity = entitiesByItemId[itemId]
 
   try {
-    const catalystItem = entity.metadata as CatalystItem
+    // const catalystItem = entity.metadata as CatalystItem
 
-    if (!entity.content) {
-      throw new Error('Entity does not have content')
-    }
+    // if (!entity.content) {
+    //   throw new Error('Entity does not have content')
+    // }
 
-    const entityContentsAsMap = entity.content.reduce<Record<string, string>>((contents, { file, hash }) => {
-      contents[file] = hash
-      return contents
-    }, {})
+    // const entityContentsAsMap = entity.content.reduce<Record<string, string>>((contents, { file, hash }) => {
+    //   contents[file] = hash
+    //   return contents
+    // }, {})
 
-    // Fetch blobs from the catalyst so they can be reuploaded to the item
-    const newContents: Record<string, Blob> = yield Promise.all(
-      Object.entries(entityContentsAsMap).map<Promise<[string, Blob]>>(async ([key, hash]) => [
-        key,
-        await fetch(getCatalystContentUrl(hash)).then(res => res.blob())
-      ])
-    ).then(res =>
-      res.reduce<Record<string, Blob>>((contents, [key, blob]) => {
-        contents[key] = blob
-        return contents
-      }, {})
-    )
+    // // Fetch blobs from the catalyst so they can be reuploaded to the item
+    // const newContents: Record<string, Blob> = yield Promise.all(
+    //   Object.entries(entityContentsAsMap).map<Promise<[string, Blob]>>(async ([key, hash]) => [
+    //     key,
+    //     await fetch(getCatalystContentUrl(hash)).then(res => res.blob())
+    //   ])
+    // ).then(res =>
+    //   res.reduce<Record<string, Blob>>((contents, [key, blob]) => {
+    //     contents[key] = blob
+    //     return contents
+    //   }, {})
+    // )
 
-    // Replace the current item with values from the item in the catalyst
-    const newItem: Item = {
-      ...item,
-      name: catalystItem.name,
-      description: catalystItem.description,
-      contents: entityContentsAsMap,
-      data: catalystItem.data as WearableData
-    }
+    // // Replace the current item with values from the item in the catalyst
+    // const newItem: Item = {
+    //   ...item,
+    //   name: catalystItem.name,
+    //   description: catalystItem.description,
+    //   contents: entityContentsAsMap,
+    //   data: catalystItem.data as WearableData
+    // }
 
-    yield put(saveItemRequest(newItem, newContents))
+    // yield put(saveItemRequest(newItem, newContents))
 
-    const saveItemResult: {
-      success: SaveItemSuccessAction
-      failure: SaveItemFailureAction
-    } = yield race({
-      success: take(SAVE_ITEM_SUCCESS),
-      failure: take(SAVE_ITEM_FAILURE)
-    })
+    // const saveItemResult: {
+    //   success: SaveItemSuccessAction
+    //   failure: SaveItemFailureAction
+    // } = yield race({
+    //   success: take(SAVE_ITEM_SUCCESS),
+    //   failure: take(SAVE_ITEM_FAILURE)
+    // })
 
-    if (saveItemResult.success) {
-      yield put(resetItemSuccess(itemId))
-    } else if (saveItemResult.failure) {
-      yield put(resetItemFailure(itemId, saveItemResult.failure.payload.error))
-    }
+    // if (saveItemResult.success) {
+    //   yield put(resetItemSuccess(itemId))
+    // } else if (saveItemResult.failure) {
+    //   yield put(resetItemFailure(itemId, saveItemResult.failure.payload.error))
+    // }
   } catch (error) {
     yield put(resetItemFailure(itemId, error.message))
   }

@@ -17,7 +17,6 @@ import {
 } from '@beland/uikit'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'
 import { hasAuthorization } from '@beland/dapps/dist/modules/authorization/utils'
-import { ContractName } from '@beland/transactions'
 import { locations } from 'routing/locations'
 import { isUserManagerOfThirdParty } from 'modules/thirdParty/utils'
 import { Item } from 'modules/item/types'
@@ -65,7 +64,7 @@ export default class ThirdPartyCollectionDetailPage extends React.PureComponent<
 
   getManaAuthorization = () => {
     const { wallet } = this.props
-    return buildManaAuthorization(wallet.address, wallet.networks.MATIC.chainId, ContractName.ThirdPartyRegistry)
+    return buildManaAuthorization(wallet.address, wallet.networks.MATIC.chainId, '' as any)
   }
 
   handleNewItems = () => {

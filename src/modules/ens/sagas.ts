@@ -2,17 +2,13 @@ import { Eth, SendTx } from 'web3x/eth'
 import { Address } from 'web3x/address'
 import { TransactionReceipt } from 'web3x/formatters'
 import { Personal } from 'web3x/personal'
-import { Contract, providers } from 'ethers'
 import { namehash } from '@ethersproject/hash'
 import { call, put, select, takeEvery, takeLatest } from 'redux-saga/effects'
 import * as contentHash from 'content-hash'
 import { CatalystClient, DeploymentBuilder, DeploymentPreparationData } from 'dcl-catalyst-client'
 import { Entity, EntityType } from 'dcl-catalyst-commons'
 import { Authenticator } from 'beland-crypto'
-import { Network, Avatar } from '@beland/schemas'
-import { ContractName, getContract } from '@beland/transactions'
-import { getAddress } from '@beland/dapps/dist/modules/wallet/selectors'
-import { getChainIdByNetwork, getNetworkProvider } from '@beland/dapps/dist/lib/eth'
+import { Avatar } from '@beland/schemas'
 import { Profile } from '@beland/dapps/dist/modules/profile/types'
 import { changeProfile } from '@beland/dapps/dist/modules/profile/actions'
 import { Wallet } from '@beland/dapps/dist/modules/wallet/types'
@@ -46,8 +42,6 @@ import {
   FETCH_ENS_AUTHORIZATION_REQUEST,
   FetchENSAuthorizationRequestAction,
   fetchENSAuthorizationRequest,
-  fetchENSAuthorizationSuccess,
-  fetchENSAuthorizationFailure,
   FETCH_ENS_LIST_REQUEST,
   FetchENSListRequestAction,
   fetchENSListRequest,
@@ -66,7 +60,7 @@ import {
   allowClaimManaSuccess,
   allowClaimManaFailure
 } from './actions'
-import { ENS, ENSOrigin, ENSError, Authorization } from './types'
+import { ENS, ENSOrigin, ENSError } from './types'
 import { getDefaultProfileEntity, getDomainFromName, setProfileFromEntity } from './utils'
 
 export function* ensSaga() {
@@ -270,20 +264,20 @@ function* handleSetENSContentRequest(action: SetENSContentRequestAction) {
 }
 
 function* handleFetchAuthorizationRequest(_action: FetchENSAuthorizationRequestAction) {
-  try {
-    const from: string = yield select(getAddress)
-    const chainId = getChainIdByNetwork(Network.ETHEREUM)
-    const contract = getContract(ContractName.MANAToken, chainId)
-    const provider: Awaited<ReturnType<typeof getNetworkProvider>> = yield call(getNetworkProvider, chainId)
-    const mana = new Contract(contract.address, contract.abi, new providers.Web3Provider(provider))
-    const allowance: string = yield call(mana.allowance, from, CONTROLLER_ADDRESS)
-    const authorization: Authorization = { allowance }
+  // try {
+  //   const from: string = yield select(getAddress)
+  //   const chainId = getChainIdByNetwork(Network.ETHEREUM)
+  //   const contract = getContract(ContractName.MANAToken, chainId)
+  //   const provider: Awaited<ReturnType<typeof getNetworkProvider>> = yield call(getNetworkProvider, chainId)
+  //   const mana = new Contract(contract.address, contract.abi, new providers.Web3Provider(provider))
+  //   const allowance: string = yield call(mana.allowance, from, CONTROLLER_ADDRESS)
+  //   const authorization: Authorization = { allowance }
 
-    yield put(fetchENSAuthorizationSuccess(authorization, from.toString()))
-  } catch (error) {
-    const allowError: ENSError = { message: error.message }
-    yield put(fetchENSAuthorizationFailure(allowError))
-  }
+  //   yield put(fetchENSAuthorizationSuccess(authorization, from.toString()))
+  // } catch (error) {
+  //   const allowError: ENSError = { message: error.message }
+  //   yield put(fetchENSAuthorizationFailure(allowError))
+  // }
 }
 
 function* handleFetchENSListRequest(_action: FetchENSListRequestAction) {

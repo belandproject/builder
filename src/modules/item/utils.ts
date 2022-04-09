@@ -28,7 +28,6 @@ import {
   IMAGE_CATEGORIES,
   THUMBNAIL_PATH,
   InitializeItem,
-  CatalystItem,
   SyncStatus,
   ThirdPartyContractItem,
   ItemMetadataType,
@@ -427,39 +426,8 @@ export function areEqualRepresentations(a: WearableRepresentation[], b: Wearable
   return true
 }
 
-export function areSynced(item: Item, entity: Entity) {
-  // check if metadata is synced
-  const catalystItem = entity.metadata! as CatalystItem
-  const hasMetadataChanged =
-    item.type === ItemType.WEARABLE
-      ? item.name !== catalystItem.name ||
-        item.description !== catalystItem.description ||
-        item.data.category !== catalystItem.data.category ||
-        item.data.hides.toString() !== catalystItem.data.hides.toString() ||
-        item.data.replaces.toString() !== catalystItem.data.replaces.toString() ||
-        item.data.tags.toString() !== catalystItem.data.tags.toString()
-      : item.name !== catalystItem.name ||
-        item.description !== catalystItem.description ||
-        item.data.category !== catalystItem.data.category ||
-        item.data.tags.toString() !== catalystItem.data.tags.toString()
-  if (hasMetadataChanged) {
-    return false
-  }
-
-  // check if representations are synced
-  if (!areEqualRepresentations(item.data.representations, catalystItem.data.representations)) {
-    return false
-  }
-
-  // check if contents are synced
-  const contents = entity.content!.reduce((map, entry) => map.set(entry.file, entry.hash), new Map<string, string>())
-  for (const path in item.contents) {
-    const hash = item.contents[path]
-    if (contents.get(path) !== hash) {
-      return false
-    }
-  }
-  return true
+export function areSynced(_item: Item, _entity: Entity) {
+  return false
 }
 
 export function isAllowedToPushChanges(item: Item, status: SyncStatus, itemCuration: ItemCuration | undefined) {

@@ -1,5 +1,5 @@
 import { Authenticator, AuthIdentity } from 'beland-crypto'
-import { Locale, Rarity, ThirdPartyWearable, WearableCategory, WearableRepresentation } from '@beland/schemas'
+import { Locale, Rarity, WearableCategory, WearableRepresentation } from '@beland/schemas'
 import { CatalystClient, DeploymentPreparationData } from 'dcl-catalyst-client'
 import { MerkleDistributorInfo } from '@dcl/content-hash-tree/dist/types'
 import { EntityContentItemReference, EntityMetadata, EntityType, Hashing } from 'dcl-catalyst-commons'
@@ -102,46 +102,20 @@ function calculateFilesSize(files: Array<Blob>) {
   return files.reduce((total, blob) => blob.size + total, 0)
 }
 
-function getMerkleProof(tree: MerkleDistributorInfo, entityHash: string, entityValues: Omit<ThirdPartyWearable, 'merkleProof'>) {
-  const hashingKeys = Object.keys(entityValues)
-  const { index, proof } = tree.proofs[entityHash]
-  return {
-    index,
-    proof,
-    hashingKeys,
-    entityHash
-  }
-}
+// function getMerkleProof(tree: MerkleDistributorInfo, entityHash: string, entityValues: any) {
+//   const hashingKeys = Object.keys(entityValues)
+//   const { index, proof } = tree.proofs[entityHash]
+//   return {
+//     index,
+//     proof,
+//     hashingKeys,
+//     entityHash
+//   }
+// }
 
-function buildTPItemEntityMetadata(item: Item, itemHash: string, tree: MerkleDistributorInfo): ThirdPartyWearable {
-  if (!item.urn) {
-    throw new Error('Item does not have URN')
-  }
-
-  // The order of the metadata properties can't be changed. Changing it will result in a different content hash.
-  const baseEntityData = {
-    id: item.urn,
-    name: item.name,
-    description: item.description,
-    i18n: [{ code: Locale.EN, text: item.name }],
-    data: {
-      replaces: item.data.replaces as WearableCategory[],
-      hides: item.data.hides as WearableCategory[],
-      tags: item.data.tags,
-      category: item.data.category as WearableCategory,
-      representations: item.data.representations as WearableRepresentation[]
-    },
-    image: IMAGE_PATH,
-    thumbnail: THUMBNAIL_PATH,
-    metrics: item.metrics,
-    content: item.contents
-  }
-
-  return {
-    ...baseEntityData,
-    merkleProof: getMerkleProof(tree, itemHash, baseEntityData)
-  }
-}
+// function buildTPItemEntityMetadata(item: Item, itemHash: string, tree: MerkleDistributorInfo) {
+//   throw new Error('Item does not have URN')
+// }
 
 function buildItemEntityMetadata(collection: Collection, item: Item): StandardCatalystItem {
   if (!collection.contractAddress || !item.tokenId) {
@@ -151,11 +125,10 @@ function buildItemEntityMetadata(collection: Collection, item: Item): StandardCa
   // The order of the metadata properties can't be changed. Changing it will result in a different content hash.
   const catalystItem: StandardCatalystItem = {
     id: buildCatalystItemURN(collection.contractAddress!, item.tokenId!),
-    name: item.name,
-    description: item.description,
+    names: [{code: Locale.EN, text: item.name}],
+    descriptions: [{code: Locale.EN, text: item.description}],
     collectionAddress: collection.contractAddress!,
     rarity: (item.rarity! as unknown) as Rarity,
-    i18n: [{ code: Locale.EN, text: item.name }],
     data: {
       replaces: item.data.replaces as WearableCategory[],
       hides: item.data.hides as WearableCategory[],
@@ -196,13 +169,11 @@ async function buildItemEntityBlobs(item: Item): Promise<Record<string, Blob>> {
 export async function buildItemEntity(
   client: CatalystClient,
   collection: Collection,
-  item: Item,
-  tree?: MerkleDistributorInfo,
-  itemHash?: string
+  item: Item
 ): Promise<DeploymentPreparationData> {
   const blobs = await buildItemEntityBlobs(item)
   const files = await makeContentFiles(blobs)
-  const metadata = tree && itemHash ? buildTPItemEntityMetadata(item, itemHash, tree) : buildItemEntityMetadata(collection, item)
+  const metadata = buildItemEntityMetadata(collection, item)
   return client.buildEntity({
     type: EntityType.WEARABLE,
     pointers: [metadata.id],
@@ -224,10 +195,10 @@ export async function buildTPItemEntity(
   client: CatalystClient,
   collection: Collection,
   item: Item,
-  tree: MerkleDistributorInfo,
-  itemHash: string
+  _tree: MerkleDistributorInfo,
+  _itemHash: string
 ): Promise<DeploymentPreparationData> {
-  return buildItemEntity(client, collection, item, tree, itemHash)
+  return buildItemEntity(client, collection, item)
 }
 
 export async function buildItemContentHash(collection: Collection, item: Item): Promise<string> {

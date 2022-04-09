@@ -6,7 +6,6 @@ import { Button, Popup } from '@beland/uikit'
 import { env } from 'decentraland-commons'
 import { Authorization } from '@beland/dapps/dist/modules/authorization/types'
 import { hasAuthorization } from '@beland/dapps/dist/modules/authorization/utils'
-import { ContractName } from '@beland/transactions'
 import { AuthorizationModal } from 'components/AuthorizationModal'
 import { MAX_ITEMS } from 'modules/collection/constants'
 import { isComplete } from 'modules/item/utils'
@@ -30,7 +29,7 @@ const CollectionPublishButton = (props: Props) => {
   )
 
   const getAuthorization = (): Authorization => {
-    return buildManaAuthorization(wallet.address, wallet.networks.MATIC.chainId, ContractName.CollectionManager)
+    return buildManaAuthorization(wallet.address, wallet.networks.MATIC.chainId, "" as any)
   }
 
   const handlePublish = () => {

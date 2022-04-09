@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Network } from '@beland/schemas'
 import { env } from 'decentraland-commons'
-import { ModalNavigation, Button, Mana, Loader, Field, InputOnChangeData, Form } from '@beland/uikit'
+import { ModalNavigation, Button, Bean, Loader, Field, InputOnChangeData, Form } from '@beland/uikit'
 import Modal from '@beland/dapps/dist/containers/Modal'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'
 import { fromWei } from 'web3x/utils'
@@ -95,14 +95,14 @@ export default class PublishCollectionModal extends React.PureComponent<Props, S
                       {itemByRarity.count} {itemByRarity.name}
                     </div>
                     <div>
-                      <Mana network={Network.MATIC}>{itemByRarity.price}</Mana>
+                      <Bean network={Network.MATIC}>{itemByRarity.price}</Bean>
                     </div>
                   </div>
                 ))}
                 <div className="item total">
                   <div>{t('global.total')}</div>
                   <div>
-                    <Mana network={Network.MATIC}>{totalPrice}</Mana>
+                    <Bean network={Network.MATIC}>{totalPrice}</Bean>
                   </div>
                 </div>
               </div>
@@ -116,7 +116,7 @@ export default class PublishCollectionModal extends React.PureComponent<Props, S
                     values={{
                       symbol: (
                         <span>
-                          <Mana network={Network.MATIC} inline /> MANA
+                          <Bean network={Network.MATIC} inline /> BEAN
                         </span>
                       )
                     }}

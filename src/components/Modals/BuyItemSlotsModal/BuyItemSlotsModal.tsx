@@ -2,7 +2,7 @@ import * as React from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { env } from 'decentraland-commons'
 import { Network } from '@beland/schemas'
-import { Button, ModalDescription, ModalHeader, Mana, Loader, Message, Field } from '@beland/uikit'
+import { Button, ModalDescription, ModalHeader, Bean, Loader, Message, Field } from '@beland/uikit'
 import { T, t } from '@beland/dapps/dist/modules/translation/utils'
 import { Modal, NetworkButton } from '@beland/dapps/dist/containers'
 import { applySlotBuySlippage } from 'modules/thirdParty/utils'
@@ -99,14 +99,14 @@ export default class BuyItemSlotsModal extends React.PureComponent<Props, State>
                 </div>
                 <div className={styles.slotValue}>
                   {t('buy_item_slots_modal.slots_value', {
-                    symbol: <Mana network={Network.MATIC} size="small" />,
+                    symbol: <Bean network={Network.MATIC} size="small" />,
                     slot_cost: slotPrice,
                     total_cost: slotPrice && this.isValidSlotAmount() ? slotPrice * Number(slotsToBuy) : 0
                   })}
                 </div>
                 <div className={styles.slotValue}>
                   {t('buy_item_slots_modal.total_cost', {
-                    symbol: <Mana network={Network.MATIC} size="small" />,
+                    symbol: <Bean network={Network.MATIC} size="small" />,
                     total_cost: slotPrice && this.isValidSlotAmount() ? this.applySlotBuySlippage() : 0
                   })}
                 </div>
@@ -122,7 +122,7 @@ export default class BuyItemSlotsModal extends React.PureComponent<Props, State>
                   values={{
                     symbol: (
                       <span>
-                        <Mana className={styles.manaLogo} network={Network.MATIC} inline /> MANA
+                        <Bean className={styles.manaLogo} network={Network.MATIC} inline /> BEAN
                       </span>
                     )
                   }}

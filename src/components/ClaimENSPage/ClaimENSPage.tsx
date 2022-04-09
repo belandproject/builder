@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Row, Column, Section, Narrow, InputOnChangeData, Header, Form, Field, Button, Mana, Radio, Popup } from '@beland/uikit'
+import { Row, Column, Section, Narrow, InputOnChangeData, Header, Form, Field, Button, Bean, Radio, Popup } from '@beland/uikit'
 import { Network } from '@beland/schemas'
 import { T, t } from '@beland/dapps/dist/modules/translation/utils'
 import { getTokenAmountToApprove } from '@beland/dapps/dist/modules/authorization/utils'
@@ -124,7 +124,7 @@ export default class ClaimENSPage extends React.PureComponent<Props, State> {
                           {t('claim_ens_page.world')}
                         </a>
                       ),
-                      symbol: <Mana size="small" />
+                      symbol: <Bean size="small" />
                     }}
                   />
                 </span>
@@ -176,7 +176,7 @@ export default class ClaimENSPage extends React.PureComponent<Props, State> {
                       trigger={
                         <div className="popup-button">
                           <NetworkButton type="submit" primary disabled={isDisabled} loading={isLoading} network={Network.ETHEREUM}>
-                            {t('claim_ens_page.claim_button')} <Mana inline>{PRICE.toLocaleString()}</Mana>
+                            {t('claim_ens_page.claim_button')} <Bean inline>{PRICE.toLocaleString()}</Bean>
                           </NetworkButton>
                         </div>
                       }
@@ -186,7 +186,7 @@ export default class ClaimENSPage extends React.PureComponent<Props, State> {
                     />
                   ) : (
                     <NetworkButton type="submit" primary disabled={isDisabled} loading={isLoading} network={Network.ETHEREUM}>
-                      {t('claim_ens_page.claim_button')} <Mana inline>{PRICE.toLocaleString()}</Mana>
+                      {t('claim_ens_page.claim_button')} <Bean inline>{PRICE.toLocaleString()}</Bean>
                     </NetworkButton>
                   )}
                 </Row>

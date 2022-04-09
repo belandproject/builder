@@ -1,7 +1,7 @@
 import React from 'react'
 import { Network } from '@beland/schemas'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
-import { Grid, Dropdown, Icon, Button, Bean } from 'decentraland-ui'
+import { Grid, Dropdown, Icon, Button, Bean } from '@beland/uikit'
 import { Link } from 'react-router-dom'
 import { fromWei } from 'web3x/utils'
 import { locations } from 'routing/locations'
