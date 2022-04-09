@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown } from 'decentraland-ui'
+import { Dropdown } from '@beland/uikit'
 import classnames from 'classnames'
 import { preventDefault } from 'lib/preventDefault'
 import { Props } from './OptionsDropdown.types'

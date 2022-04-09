@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { DragSource } from 'react-dnd'
 import { Link } from 'react-router-dom'
-import { Button, Card, Confirm } from 'decentraland-ui'
+import { Button, Card, Confirm } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 
 import { OptionsDropdown } from '../../OptionsDropdown'

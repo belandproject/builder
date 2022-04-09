@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Close } from 'decentraland-ui'
+import { Close } from '@beland/uikit'
 import { ModalProps } from '@beland/dapps/dist/providers/ModalProvider/ModalProvider.types'
 import Modal from '@beland/dapps/dist/containers/Modal'
 import { t } from '@beland/dapps/dist/modules/translation/utils'

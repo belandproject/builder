@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Badge, Row, Section, Header } from 'decentraland-ui'
+import { Badge, Row, Section, Header } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { LandType } from 'modules/land/types'
 import Profile from 'components/Profile'

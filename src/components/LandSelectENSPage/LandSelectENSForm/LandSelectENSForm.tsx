@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, Row, Button, Section, Header, Dropdown, DropdownProps } from 'decentraland-ui'
+import { Form, Row, Button, Section, Header, Dropdown, DropdownProps } from '@beland/uikit'
 import { Network } from '@beland/schemas'
 import { NetworkButton } from '@beland/dapps/dist/containers'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'

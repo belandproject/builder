@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Field, FieldProps } from 'decentraland-ui'
+import { Field, FieldProps } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 
 import { MIN_TITLE_LENGTH, MAX_TITLE_LENGTH } from 'modules/project/constants'

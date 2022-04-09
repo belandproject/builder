@@ -1,4 +1,4 @@
-import { AtlasTile } from 'decentraland-ui'
+import { AtlasTile } from '@beland/uikit'
 import { LoadingState, loadingReducer } from '@beland/dapps/dist/modules/loading/reducer'
 import {
   FetchTilesRequestAction,

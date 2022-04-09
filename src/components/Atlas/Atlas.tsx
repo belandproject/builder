@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState, useEffect, useRef } from 'react'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
-import { Atlas as AtlasComponent, Layer } from 'decentraland-ui'
+import { Atlas as AtlasComponent, Layer } from '@beland/uikit'
 import { coordsToId, isCoords, idToCoords, getCenter, selectionBorderColorByRole } from 'modules/land/utils'
 import { RoleType, Land, LandTile } from 'modules/land/types'
 import { locations } from 'routing/locations'

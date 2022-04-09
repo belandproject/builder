@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button } from 'decentraland-ui'
+import { Button } from '@beland/uikit'
 import JSZip from 'jszip'
 import uuidv4 from 'uuid/v4'
 

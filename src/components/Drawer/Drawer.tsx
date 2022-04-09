@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Icon } from 'decentraland-ui'
+import { Icon } from '@beland/uikit'
 import { Props, State } from './Drawer.types'
 
 import './Drawer.css'

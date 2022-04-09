@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Button } from 'decentraland-ui'
+import { Button } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 
 import { ShareModalMetadata, ShareModalType } from 'components/Modals/ShareModal/ShareModal.types'

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Header } from 'decentraland-ui'
+import { Header } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 
 import Icon from 'components/Icon'

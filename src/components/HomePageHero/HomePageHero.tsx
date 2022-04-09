@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Hero, Button } from 'decentraland-ui'
+import { Hero, Button } from '@beland/uikit'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'
 import { env } from 'decentraland-commons'
 

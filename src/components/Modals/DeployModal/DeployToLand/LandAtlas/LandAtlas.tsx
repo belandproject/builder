@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Layer, Button, Popup, Icon as DCLIcon } from 'decentraland-ui'
+import { Layer, Button, Popup, Icon as DCLIcon } from '@beland/uikit'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'
 import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'
 

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Field, Header, Button, Icon as SemanticIcon } from 'decentraland-ui'
+import { Field, Header, Button, Icon as SemanticIcon } from '@beland/uikit'
 import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { MAX_TITLE_LENGTH, MAX_THUMBNAIL_SIZE, MIN_TITLE_LENGTH } from 'modules/assetPack/utils'

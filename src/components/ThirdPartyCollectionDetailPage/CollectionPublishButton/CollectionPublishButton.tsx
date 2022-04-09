@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from 'react'
-import { Button, Popup } from 'decentraland-ui'
+import { Button, Popup } from '@beland/uikit'
 import { Network } from '@beland/schemas'
 import { NetworkButton } from '@beland/dapps/dist/containers'
 import { t } from '@beland/dapps/dist/modules/translation/utils'

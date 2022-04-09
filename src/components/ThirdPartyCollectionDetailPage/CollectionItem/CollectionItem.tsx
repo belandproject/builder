@@ -1,6 +1,6 @@
 import React from 'react'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
-import { Grid, Dropdown, Icon, Button, Checkbox, CheckboxProps, Popup } from 'decentraland-ui'
+import { Grid, Dropdown, Icon, Button, Checkbox, CheckboxProps, Popup } from '@beland/uikit'
 import { Link } from 'react-router-dom'
 import { locations } from 'routing/locations'
 import { preventDefault } from 'lib/preventDefault'

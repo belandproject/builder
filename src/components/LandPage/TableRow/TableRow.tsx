@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Table, Column, Row } from 'decentraland-ui'
+import { Table, Column, Row } from '@beland/uikit'
 
 import { Atlas } from 'components/Atlas'
 import Profile from 'components/Profile'

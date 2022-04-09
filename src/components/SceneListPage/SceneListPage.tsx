@@ -13,7 +13,7 @@ import {
   Narrow,
   Section,
   Header
-} from 'decentraland-ui'
+} from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 
 import Footer from 'components/Footer'

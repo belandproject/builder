@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ModalNavigation } from 'decentraland-ui'
+import { ModalNavigation } from '@beland/uikit'
 import Modal from '@beland/dapps/dist/containers/Modal'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { Props } from './CreateItemsModal.types'

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Dropdown, Row } from 'decentraland-ui'
+import { Dropdown, Row } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { locations } from 'routing/locations'
 import { isEqual } from 'lib/address'

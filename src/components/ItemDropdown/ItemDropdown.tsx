@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Dropdown, DropdownItemProps, DropdownProps, Row } from 'decentraland-ui'
+import { Dropdown, DropdownItemProps, DropdownProps, Row } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { getThumbnailURL } from 'modules/item/utils'
 import { Props } from './ItemDropdown.types'

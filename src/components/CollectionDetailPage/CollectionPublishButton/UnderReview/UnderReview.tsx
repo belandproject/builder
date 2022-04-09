@@ -1,6 +1,6 @@
 import React from 'react'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
-import { Button, Popup } from 'decentraland-ui'
+import { Button, Popup } from '@beland/uikit'
 import { Props } from './UnderReview.types'
 
 const UnderReview = ({ type }: Props) => (

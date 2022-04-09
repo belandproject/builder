@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from 'components/Navbar'
-import { Page } from 'decentraland-ui'
+import { Page } from '@beland/uikit'
 import { ProviderType } from '@beland/schemas'
 import Footer from 'components/Footer'
 import { default as SignIn } from '@beland/dapps/dist/containers/SignInPage'

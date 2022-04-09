@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from 'react'
-import { Loader, Icon, Layer } from 'decentraland-ui'
+import { Loader, Icon, Layer } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { isPending, getTransactionHref } from '@beland/dapps/dist/modules/transaction/utils'
 import { TransactionStatus, Transaction } from '@beland/dapps/dist/modules/transaction/types'

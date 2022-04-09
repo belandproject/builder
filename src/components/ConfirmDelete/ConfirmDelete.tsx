@@ -1,5 +1,5 @@
 import React from 'react'
-import { Confirm } from 'decentraland-ui'
+import { Confirm } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 
 import { Props, State } from './ConfirmDelete.types'

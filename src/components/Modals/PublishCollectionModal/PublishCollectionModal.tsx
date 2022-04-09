@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Network } from '@beland/schemas'
 import { env } from 'decentraland-commons'
-import { ModalNavigation, Button, Mana, Loader, Field, InputOnChangeData, Form } from 'decentraland-ui'
+import { ModalNavigation, Button, Mana, Loader, Field, InputOnChangeData, Form } from '@beland/uikit'
 import Modal from '@beland/dapps/dist/containers/Modal'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'
 import { fromWei } from 'web3x/utils'

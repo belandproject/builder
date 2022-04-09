@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Color4, Wearable } from 'decentraland-ecs'
-import { Dropdown, DropdownProps, Popup, Icon } from 'decentraland-ui'
+import { Dropdown, DropdownProps, Popup, Icon } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import ViewPort from 'components/ViewPort'
 import { AvatarAnimation, PreviewType } from 'modules/editor/types'

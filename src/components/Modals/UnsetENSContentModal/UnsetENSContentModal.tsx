@@ -1,7 +1,7 @@
 import React from 'react'
 import { T, t } from '@beland/dapps/dist/modules/translation/utils'
 import Modal from '@beland/dapps/dist/containers/Modal'
-import { Button } from 'decentraland-ui'
+import { Button } from '@beland/uikit'
 import { Props } from './UnsetENSContentModal.types'
 
 export default class UnsetENSContentModal extends React.PureComponent<Props> {

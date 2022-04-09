@@ -14,7 +14,7 @@ import {
   Pagination,
   PaginationProps,
   Checkbox
-} from 'decentraland-ui'
+} from '@beland/uikit'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'
 import { hasAuthorization } from '@beland/dapps/dist/modules/authorization/utils'
 import { ContractName } from '@beland/transactions'

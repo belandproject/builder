@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Center } from 'decentraland-ui'
+import { Center } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 
 export default function NotFound() {

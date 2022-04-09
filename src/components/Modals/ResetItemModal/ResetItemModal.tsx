@@ -1,6 +1,6 @@
 import React from 'react'
 import Modal from '@beland/dapps/dist/containers/Modal'
-import { Button, ModalNavigation } from 'decentraland-ui'
+import { Button, ModalNavigation } from '@beland/uikit'
 import { T, t } from '@beland/dapps/dist/modules/translation/utils'
 import { Props } from './ResetItemModal.types'
 

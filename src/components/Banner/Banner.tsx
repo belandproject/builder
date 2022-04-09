@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Close } from 'decentraland-ui'
+import { Close } from '@beland/uikit'
 
 import { Props, State, LocalStorageState } from './Banner.types'
 import './Banner.css'

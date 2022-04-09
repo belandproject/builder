@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Loader } from 'decentraland-ui'
+import { Loader } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { Collection, CollectionType } from 'modules/collection/types'
 import { ItemCuration } from 'modules/curations/itemCuration/types'

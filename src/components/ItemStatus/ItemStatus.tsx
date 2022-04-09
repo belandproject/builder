@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
-import { Popup } from 'decentraland-ui'
+import { Popup } from '@beland/uikit'
 import { SyncStatus } from 'modules/item/types'
 import { Props } from './ItemStatus.types'
 

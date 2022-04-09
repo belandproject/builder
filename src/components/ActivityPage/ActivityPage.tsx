@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { Page, Header, Button, Modal } from 'decentraland-ui'
+import { Page, Header, Button, Modal } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'

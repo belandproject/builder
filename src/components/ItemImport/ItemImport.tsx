@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'
-import { Loader, Row } from 'decentraland-ui'
+import { Loader, Row } from '@beland/uikit'
 import FileImport from 'components/FileImport'
 import { InfoIcon } from 'components/InfoIcon'
 import { Props } from './ItemImport.types'

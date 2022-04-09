@@ -1,6 +1,6 @@
 import * as React from 'react'
 import classNames from 'classnames'
-import { Popup } from 'decentraland-ui'
+import { Popup } from '@beland/uikit'
 import { InfoIcon } from 'components/InfoIcon'
 import { Props } from './Info.types'
 import './Info.css'

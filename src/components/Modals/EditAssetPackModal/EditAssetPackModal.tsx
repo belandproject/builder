@@ -1,6 +1,6 @@
 import * as React from 'react'
 import uuidv4 from 'uuid/v4'
-import { Button, ModalNavigation, Row } from 'decentraland-ui'
+import { Button, ModalNavigation, Row } from '@beland/uikit'
 import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'
 import { RawAsset, Asset } from 'modules/asset/types'
 import { t } from '@beland/dapps/dist/modules/translation/utils'

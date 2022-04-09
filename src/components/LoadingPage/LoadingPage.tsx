@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Loader, Page } from 'decentraland-ui'
+import { Loader, Page } from '@beland/uikit'
 // import Ad from 'decentraland-ad/lib/Ad/Ad'
 
 import Navbar from 'components/Navbar'

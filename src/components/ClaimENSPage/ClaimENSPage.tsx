@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Row, Column, Section, Narrow, InputOnChangeData, Header, Form, Field, Button, Mana, Radio, Popup } from 'decentraland-ui'
+import { Row, Column, Section, Narrow, InputOnChangeData, Header, Form, Field, Button, Mana, Radio, Popup } from '@beland/uikit'
 import { Network } from '@beland/schemas'
 import { T, t } from '@beland/dapps/dist/modules/translation/utils'
 import { getTokenAmountToApprove } from '@beland/dapps/dist/modules/authorization/utils'

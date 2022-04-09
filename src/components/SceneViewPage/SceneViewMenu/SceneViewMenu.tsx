@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Responsive } from 'decentraland-ui'
+import { Button, Responsive } from '@beland/uikit'
 
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import UserMenu from 'components/UserMenu'

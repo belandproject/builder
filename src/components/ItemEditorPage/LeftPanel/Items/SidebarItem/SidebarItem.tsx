@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { DragSource } from 'react-dnd'
-import { Popup } from 'decentraland-ui'
+import { Popup } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import ItemImage from 'components/ItemImage'
 import ItemStatus from 'components/ItemStatus'

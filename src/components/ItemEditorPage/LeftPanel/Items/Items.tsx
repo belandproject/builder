@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Header, Section } from 'decentraland-ui'
+import { Header, Section } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { sortByName } from 'lib/sort'
 import { Item } from 'modules/item/types'

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { DropTarget } from 'react-dnd'
 import { Link } from 'react-router-dom'
-import { Button, Card, Confirm } from 'decentraland-ui'
+import { Button, Card, Confirm } from '@beland/uikit'
 import classNames from 'classnames'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import CollectionStatus from 'components/CollectionStatus'

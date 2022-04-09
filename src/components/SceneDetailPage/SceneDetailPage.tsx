@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Props } from './SceneDetailPage.types'
-import { Page, Center, Loader, Section, Row, Narrow, Column, Header, Button, Dropdown, Icon, Empty } from 'decentraland-ui'
+import { Page, Center, Loader, Section, Row, Narrow, Column, Header, Button, Dropdown, Icon, Empty } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { locations } from 'routing/locations'
 import Navbar from 'components/Navbar'

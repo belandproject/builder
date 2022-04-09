@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ModalNavigation, ModalContent, ModalActions, Button } from 'decentraland-ui'
+import { ModalNavigation, ModalContent, ModalActions, Button } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import Modal from '@beland/dapps/dist/containers/Modal'
 import { Item } from 'modules/item/types'

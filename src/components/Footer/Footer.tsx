@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { FooterProps } from 'decentraland-ui'
+import { FooterProps } from '@beland/uikit'
 
 export default class Footer extends React.PureComponent<FooterProps> {
   render() {

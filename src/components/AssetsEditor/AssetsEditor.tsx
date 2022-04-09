@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button } from 'decentraland-ui'
+import { Button } from '@beland/uikit'
 import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import SingleAssetEditor from 'components/AssetsEditor/SingleAssetEditor'

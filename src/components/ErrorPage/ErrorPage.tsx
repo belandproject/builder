@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Page } from 'decentraland-ui'
+import { Button, Page } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'
 import { IntercomWidget } from '@beland/dapps/dist/components/Intercom/IntercomWidget'

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { Modal, Button, Form, CheckboxProps, Radio, Loader, Popup } from 'decentraland-ui'
+import { Modal, Button, Form, CheckboxProps, Radio, Loader, Popup } from '@beland/uikit'
 import { getContractName } from '@beland/transactions'
 import { ChainCheck, TransactionLink } from '@beland/dapps/dist/containers'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'

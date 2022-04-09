@@ -1,7 +1,7 @@
 import { action } from 'typesafe-actions'
 import { ChainId } from '@beland/schemas'
 import { buildTransactionPayload } from '@beland/dapps/dist/modules/transaction/utils'
-import { Coord } from 'decentraland-ui'
+import { Coord } from '@beland/uikit'
 import { Land, LandType, Authorization } from './types'
 import { getSelection } from './utils'
 

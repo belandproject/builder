@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { Confirm, Button } from 'decentraland-ui'
+import { Confirm, Button } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 
 import { locations } from 'routing/locations'

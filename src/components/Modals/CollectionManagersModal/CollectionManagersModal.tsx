@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ModalNavigation, ModalActions } from 'decentraland-ui'
+import { ModalNavigation, ModalActions } from '@beland/uikit'
 import { Network } from '@beland/schemas'
 import { NetworkButton } from '@beland/dapps/dist/containers'
 import { t } from '@beland/dapps/dist/modules/translation/utils'

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Popup } from 'decentraland-ui'
+import { Popup } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { DeploymentStatus as Status } from 'modules/deployment/types'
 import { getDeployment, getStatus } from 'modules/deployment/utils'

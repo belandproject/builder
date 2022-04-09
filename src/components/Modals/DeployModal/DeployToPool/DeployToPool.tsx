@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Header, Loader } from 'decentraland-ui'
+import { Button, Header, Loader } from '@beland/uikit'
 import Modal from '@beland/dapps/dist/containers/Modal'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'

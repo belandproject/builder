@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Field, TagField, SelectField, DropdownProps, Radio } from 'decentraland-ui'
+import { Field, TagField, SelectField, DropdownProps, Radio } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { rawMappingsToObjectURL, revokeMappingsObjectURL, isGround } from 'modules/asset/utils'
 import { getContentsStorageUrl } from 'lib/api/builder'

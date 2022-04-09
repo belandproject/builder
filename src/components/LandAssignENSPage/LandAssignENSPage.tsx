@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { Loader } from 'decentraland-ui'
+import { Loader } from '@beland/uikit'
 import { T, t } from '@beland/dapps/dist/modules/translation/utils'
 import { locations } from 'routing/locations'
 import LandProviderPage from 'components/LandProviderPage'

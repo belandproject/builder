@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Loader, Page, Responsive, Container } from 'decentraland-ui'
+import { Loader, Page, Responsive, Container } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 
 import Chip from 'components/Chip'

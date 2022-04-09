@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Table, Row, Radio, Column, Header, Pagination, Section, Container, Popup } from 'decentraland-ui'
+import { Table, Row, Radio, Column, Header, Pagination, Section, Container, Popup } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import Chip from 'components/Chip'
 import { Atlas } from 'components/Atlas'

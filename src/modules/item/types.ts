@@ -1,5 +1,5 @@
 import { BuiltItem, Content } from '@dcl/builder-client'
-import { ThirdPartyWearable, StandardWearable } from '@beland/schemas'
+import { Wearable } from '@beland/schemas'
 import { ModelMetrics } from 'modules/models/types'
 import { Cheque } from 'modules/thirdParty/types'
 
@@ -149,11 +149,11 @@ type BaseItem = {
   updatedAt: number
 }
 
-export type StandardCatalystItem = StandardWearable & {
+export type StandardCatalystItem = Wearable & {
   emoteDataV0?: { loop: boolean }
 }
 
-export type CatalystItem = StandardCatalystItem | ThirdPartyWearable
+export type CatalystItem = StandardCatalystItem
 
 export type ItemApprovalData = {
   cheque: Cheque

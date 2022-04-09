@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Button, Column, Header, Popup } from 'decentraland-ui'
+import { Button, Column, Header, Popup } from '@beland/uikit'
 import { T, t } from '@beland/dapps/dist/modules/translation/utils'
 import { env } from 'decentraland-commons'
 import { Props, State } from './IntroPopup.types'

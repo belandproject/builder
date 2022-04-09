@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { Coord } from 'decentraland-ui'
+import { Coord } from '@beland/uikit'
 import { ModalProps } from '@beland/dapps/dist/providers/ModalProvider/ModalProvider.types'
 import { Land, LandTile } from 'modules/land/types'
 import { createEstateRequest, editEstateRequest, CreateEstateRequestAction, EditEstateRequestAction } from 'modules/land/actions'

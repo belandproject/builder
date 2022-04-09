@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Loader } from 'decentraland-ui'
+import { Button, Loader } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { locations } from 'routing/locations'
 import { Collection, CollectionType } from 'modules/collection/types'

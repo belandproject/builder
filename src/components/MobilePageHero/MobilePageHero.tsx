@@ -1,6 +1,6 @@
 import * as React from 'react'
 import isMobile from 'ismobilejs'
-import { Hero, Button, Form, Field } from 'decentraland-ui'
+import { Hero, Button, Form, Field } from '@beland/uikit'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'
 import { env } from 'decentraland-commons'
 

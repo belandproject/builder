@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown } from 'decentraland-ui'
+import { Dropdown } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { Props } from './ResetItemButton.types'
 

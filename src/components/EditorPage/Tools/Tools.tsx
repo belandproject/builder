@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Popup, Row, Close } from 'decentraland-ui'
+import { Popup, Row, Close } from '@beland/uikit'
 import { getLocalStorage } from '@beland/dapps/dist/lib/localStorage'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 

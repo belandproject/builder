@@ -1,6 +1,6 @@
 import * as React from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import { Section, Row, Narrow, Column, Header, Button, Dropdown, Icon } from 'decentraland-ui'
+import { Section, Row, Narrow, Column, Header, Button, Dropdown, Icon } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { Link } from 'react-router-dom'
 import { fromWei } from 'web3x/utils'

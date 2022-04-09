@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Popup } from 'decentraland-ui'
+import { Popup } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { CategoryName } from 'modules/ui/sidebar/utils'
 import Icon from 'components/Icon'

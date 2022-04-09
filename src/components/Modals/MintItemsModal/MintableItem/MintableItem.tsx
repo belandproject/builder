@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Row, Column, Field, Section, InputOnChangeData } from 'decentraland-ui'
+import { Row, Column, Field, Section, InputOnChangeData } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 
 import { isValid } from 'lib/address'

@@ -1,5 +1,5 @@
 import { put, takeLatest, select } from 'redux-saga/effects'
-import { Locale } from 'decentraland-ui'
+import { Locale } from '@beland/uikit'
 import { getLocale } from '@beland/dapps/dist/modules/translation/selectors'
 import { changeLocale } from '@beland/dapps/dist/modules/translation/actions'
 import { STORAGE_LOAD } from '@beland/dapps/dist/modules/storage/actions'

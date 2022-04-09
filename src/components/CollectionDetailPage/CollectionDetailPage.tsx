@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { Network } from '@beland/schemas'
-import { Section, Row, Narrow, Column, Header, Button, Icon, Popup, Radio, CheckboxProps } from 'decentraland-ui'
+import { Section, Row, Narrow, Column, Header, Button, Icon, Popup, Radio, CheckboxProps } from '@beland/uikit'
 import { NetworkCheck } from '@beland/dapps/dist/containers'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'
 import { locations } from 'routing/locations'

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import equal from 'fast-deep-equal'
 import { utils } from 'decentraland-commons'
-import { Loader, Dropdown, Button } from 'decentraland-ui'
+import { Loader, Dropdown, Button } from '@beland/uikit'
 import { Network } from '@beland/schemas'
 import { NetworkButton } from '@beland/dapps/dist/containers'
 import { t } from '@beland/dapps/dist/modules/translation/utils'

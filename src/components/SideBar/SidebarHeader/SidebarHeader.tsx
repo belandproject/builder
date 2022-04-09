@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Icon, Button, Popup } from 'decentraland-ui'
+import { Header, Icon, Button, Popup } from '@beland/uikit'
 import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import OwnIcon from 'components/Icon'

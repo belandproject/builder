@@ -15,7 +15,7 @@ import {
   InputOnChangeData,
   SelectField,
   DropdownProps
-} from 'decentraland-ui'
+} from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import Modal from '@beland/dapps/dist/containers/Modal'
 import { cleanAssetName } from 'modules/asset/utils'

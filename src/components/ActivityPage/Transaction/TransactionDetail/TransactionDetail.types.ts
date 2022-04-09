@@ -1,4 +1,4 @@
-import { Coord } from 'decentraland-ui'
+import { Coord } from '@beland/uikit'
 import { Transaction } from '@beland/dapps/dist/modules/transaction/types'
 import { Item } from 'modules/item/types'
 

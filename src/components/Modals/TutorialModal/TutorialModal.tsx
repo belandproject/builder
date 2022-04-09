@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { env } from 'decentraland-commons'
-import { Button, Close } from 'decentraland-ui'
+import { Button, Close } from '@beland/uikit'
 import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'
 import Modal from '@beland/dapps/dist/containers/Modal'
 import { getLocalStorage } from '@beland/dapps/dist/lib/localStorage'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from 'decentraland-ui'
+import { Grid } from '@beland/uikit'
 
 import Drawer from 'components/Drawer'
 import AssetCard from 'components/AssetCard'

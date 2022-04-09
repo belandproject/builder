@@ -1,6 +1,6 @@
 import * as React from 'react'
 import isMobile from 'ismobilejs'
-import { Button, Hero, Header, Page } from 'decentraland-ui'
+import { Button, Hero, Header, Page } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { getLocalStorage } from '@beland/dapps/dist/lib/localStorage'
 import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'

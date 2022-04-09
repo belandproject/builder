@@ -3,7 +3,7 @@ import { basename } from 'path'
 import * as crypto from 'crypto'
 import uuidv4 from 'uuid/v4'
 import JSZip from 'jszip'
-import { Button, Loader } from 'decentraland-ui'
+import { Button, Loader } from '@beland/uikit'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'
 import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'
 

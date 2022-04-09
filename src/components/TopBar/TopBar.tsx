@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Header, Grid, Icon } from 'decentraland-ui'
+import { Header, Grid, Icon } from '@beland/uikit'
 import { IntercomWidget } from '@beland/dapps/dist/components/Intercom/IntercomWidget'
 
 import DeploymentStatus from 'components/DeploymentStatus'

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Page } from 'decentraland-ui'
+import { Button, Page } from '@beland/uikit'
 import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { locations } from 'routing/locations'

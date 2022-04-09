@@ -1,6 +1,6 @@
 import * as React from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import { Grid, Blockie, Loader, Row, Field, InputOnChangeData, Dropdown, Button, Section, DropdownProps, Header } from 'decentraland-ui'
+import { Grid, Blockie, Loader, Row, Field, InputOnChangeData, Dropdown, Button, Section, DropdownProps, Header } from '@beland/uikit'
 import { isMobile } from '@beland/dapps/dist/lib/utils'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'
 

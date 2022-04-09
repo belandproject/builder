@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Modal } from '@beland/dapps/dist/containers'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
-import { Button, Center, Loader, Message, ModalActions, ModalContent, ModalNavigation, Table } from 'decentraland-ui'
+import { Button, Center, Loader, Message, ModalActions, ModalContent, ModalNavigation, Table } from '@beland/uikit'
 import ItemImage from 'components/ItemImage'
 import { formatBytes } from 'lib/number'
 import { extractThirdPartyId } from 'lib/urn'

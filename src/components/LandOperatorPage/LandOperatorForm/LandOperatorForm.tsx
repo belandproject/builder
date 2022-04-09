@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Network } from '@beland/schemas'
-import { Form, Field, Row, Button, InputOnChangeData } from 'decentraland-ui'
+import { Form, Field, Row, Button, InputOnChangeData } from '@beland/uikit'
 import { NetworkButton } from '@beland/dapps/dist/containers'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { Link } from 'react-router-dom'

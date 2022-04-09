@@ -1,6 +1,6 @@
 import { Coord } from 'react-tile-map'
 import { env } from 'decentraland-commons'
-import { Color } from 'decentraland-ui'
+import { Color } from '@beland/uikit'
 import { Eth } from 'web3x/eth'
 import { Address } from 'web3x/address'
 import { getEth } from 'modules/wallet/utils'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { StarWalletIcon, Button } from 'decentraland-ui'
+import { StarWalletIcon, Button } from '@beland/uikit'
 import { T, t } from '@beland/dapps/dist/modules/translation/utils'
 
 import { Props, State } from './WalletSignIn.types'

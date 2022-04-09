@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { Center, Page, Responsive } from 'decentraland-ui'
+import { Center, Page, Responsive } from '@beland/uikit'
 import { env } from 'decentraland-commons'
 import Intercom from '@beland/dapps/dist/components/Intercom'
 import { t } from '@beland/dapps/dist/modules/translation/utils'

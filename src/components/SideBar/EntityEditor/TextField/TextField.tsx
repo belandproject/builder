@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Field, InputOnChangeData } from 'decentraland-ui'
+import { Field, InputOnChangeData } from '@beland/uikit'
 import { Props, State } from './TextField.types'
 import './TextField.css'
 

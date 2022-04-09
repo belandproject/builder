@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Grid } from 'decentraland-ui'
+import { Grid } from '@beland/uikit'
 import { getLocalStorage } from '@beland/dapps/dist/lib/localStorage'
 import experiments, { EXPERIMENT_TUTORIAL_OPEN } from 'experiments'
 

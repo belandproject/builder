@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { Popup, Button, Table, Row, Column, Header, Section, Container, Pagination, Dropdown, Empty } from 'decentraland-ui'
+import { Popup, Button, Table, Row, Column, Header, Section, Container, Pagination, Dropdown, Empty } from '@beland/uikit'
 import { T, t } from '@beland/dapps/dist/modules/translation/utils'
 import { locations } from 'routing/locations'
 import { isCoords } from 'modules/land/utils'

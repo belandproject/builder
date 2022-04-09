@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { AtlasTile, Coord } from 'decentraland-ui'
+import { AtlasTile, Coord } from '@beland/uikit'
 import { getAddress } from '@beland/dapps/dist/modules/wallet/selectors'
 import { isLoadingType } from '@beland/dapps/dist/modules/loading/selectors'
 import { RootState } from 'modules/common/types'

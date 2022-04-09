@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { SignInProps } from 'decentraland-ui'
+import { SignInProps } from '@beland/uikit'
 import { ConnectWalletRequestAction } from '@beland/dapps/dist/modules/wallet/actions'
 import { openModal, OpenModalAction } from 'modules/modal/actions'
 

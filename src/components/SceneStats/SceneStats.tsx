@@ -3,7 +3,7 @@ import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { formatTime } from 'lib/date'
 import Stats from './Stats'
 import { Props } from './SceneStats.types'
-import { Loader } from 'decentraland-ui'
+import { Loader } from '@beland/uikit'
 
 export default class SceneStats extends React.PureComponent<Props> {
   componentWillMount() {

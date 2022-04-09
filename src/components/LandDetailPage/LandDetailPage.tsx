@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Row, Badge, Section, Narrow, Column, Button, Dropdown, Icon, Header, Empty, Layer, Stats } from 'decentraland-ui'
+import { Row, Badge, Section, Narrow, Column, Button, Dropdown, Icon, Header, Empty, Layer, Stats } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { env } from 'decentraland-commons'
 import { LandType, Land, RoleType } from 'modules/land/types'

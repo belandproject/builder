@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Layer, Dropdown, Button, Icon } from 'decentraland-ui'
+import { Layer, Dropdown, Button, Icon } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { idToCoords, coordsToId, hoverStrokeByRole, hoverFillByRole } from 'modules/land/utils'
 import { locations } from 'routing/locations'

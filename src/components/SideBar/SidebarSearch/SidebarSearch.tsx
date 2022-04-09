@@ -1,6 +1,6 @@
 import React from 'react'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
-import { Icon, Input } from 'decentraland-ui'
+import { Icon, Input } from '@beland/uikit'
 import { default as BuilderIcon } from 'components/Icon'
 import { debounce } from 'lib/debounce'
 

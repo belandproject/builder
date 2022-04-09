@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Close, Button } from 'decentraland-ui'
+import { Close, Button } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import Modal from '@beland/dapps/dist/containers/Modal'
 import WalletLoginModal from '../WalletLoginModal'

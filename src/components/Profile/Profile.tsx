@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ProfileProps } from 'decentraland-ui'
+import { ProfileProps } from '@beland/uikit'
 import { Profile as BaseProfile } from '@beland/dapps/dist/containers'
 import { isEqual } from 'lib/address'
 import { LAND_POOL_ADDRESS } from 'modules/land/utils'

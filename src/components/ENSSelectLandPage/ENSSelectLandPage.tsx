@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Loader, Row, Column, Section, Header, Button, Narrow } from 'decentraland-ui'
+import { Loader, Row, Column, Section, Header, Button, Narrow } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import LoggedInDetailPage from 'components/LoggedInDetailPage'
 import { locations } from 'routing/locations'

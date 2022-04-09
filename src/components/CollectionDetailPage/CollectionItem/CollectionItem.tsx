@@ -1,7 +1,7 @@
 import React from 'react'
 import { Network } from '@beland/schemas'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
-import { Grid, Dropdown, Icon, Button, Mana } from 'decentraland-ui'
+import { Grid, Dropdown, Icon, Button, Bean } from 'decentraland-ui'
 import { Link } from 'react-router-dom'
 import { fromWei } from 'web3x/utils'
 import { locations } from 'routing/locations'
@@ -45,9 +45,9 @@ export default class CollectionItem extends React.PureComponent<Props> {
           {isFree(item) ? (
             t('global.free')
           ) : (
-            <Mana className={styles.mana} network={Network.MATIC}>
+            <Bean className={styles.mana} network={Network.MATIC}>
               {fromWei(item.price, 'ether')}
-            </Mana>
+            </Bean>
           )}
         </div>
         <div className={styles.subtitle}>{t('item.price')}</div>
