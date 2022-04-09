@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
-import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
+import { getAddress } from '@beland/dapps/dist/modules/wallet/selectors'
+import { isLoadingType } from '@beland/dapps/dist/modules/loading/selectors'
 import { RootState } from 'modules/common/types'
 import { getAliases, getLoading } from 'modules/ens/selectors'
 import { setAliasRequest, SET_ALIAS_REQUEST } from 'modules/ens/actions'

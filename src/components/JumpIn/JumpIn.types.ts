@@ -1,4 +1,4 @@
-import { ChainId } from '@dcl/schemas'
+import { ChainId } from '@beland/schemas'
 import { Collection } from 'modules/collection/types'
 import { Land } from 'modules/land/types'
 

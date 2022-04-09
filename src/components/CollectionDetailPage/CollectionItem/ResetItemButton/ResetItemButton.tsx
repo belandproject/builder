@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dropdown } from 'decentraland-ui'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { Props } from './ResetItemButton.types'
 
 const ResetItemButton = ({ isEnabled, onClick }: Props) => {

@@ -1,5 +1,5 @@
 import { action } from 'typesafe-actions'
-import { ModelById } from 'decentraland-dapps/dist/lib/types'
+import { ModelById } from '@beland/dapps/dist/lib/types'
 
 import { PoolGroup } from './types'
 

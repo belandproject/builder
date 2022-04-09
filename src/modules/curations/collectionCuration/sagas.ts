@@ -1,5 +1,5 @@
 import { call, takeEvery } from '@redux-saga/core/effects'
-import { CONNECT_WALLET_SUCCESS } from 'decentraland-dapps/dist/modules/wallet/actions'
+import { CONNECT_WALLET_SUCCESS } from '@beland/dapps/dist/modules/wallet/actions'
 import { BuilderAPI } from 'lib/api/builder'
 import { put } from 'redux-saga-test-plan/matchers'
 import { CurationStatus } from '../types'

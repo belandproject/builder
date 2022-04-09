@@ -16,8 +16,8 @@ import {
   SelectField,
   DropdownProps
 } from 'decentraland-ui'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import Modal from 'decentraland-dapps/dist/containers/Modal'
+import { t } from '@beland/dapps/dist/modules/translation/utils'
+import Modal from '@beland/dapps/dist/containers/Modal'
 import { cleanAssetName } from 'modules/asset/utils'
 import { blobToDataURL, dataURLToBlob } from 'modules/media/utils'
 import {

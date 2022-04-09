@@ -1,5 +1,5 @@
 import { Coord } from 'decentraland-ui'
-import { Transaction } from 'decentraland-dapps/dist/modules/transaction/types'
+import { Transaction } from '@beland/dapps/dist/modules/transaction/types'
 import { Item } from 'modules/item/types'
 
 export type Props = {

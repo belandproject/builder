@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
+import { ModalProps } from '@beland/dapps/dist/providers/ModalProvider/ModalProvider.types'
 import { ThirdParty } from 'modules/thirdParty/types'
 import { fetchThirdPartyItemSlotPriceRequest } from 'modules/thirdParty/actions'
 import {

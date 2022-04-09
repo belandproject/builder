@@ -1,5 +1,5 @@
 import { delay, call } from 'redux-saga/effects'
-import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
+import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'
 import { env } from 'decentraland-commons'
 
 const DELIGHTED_DELAY = 180 * 1000

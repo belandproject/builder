@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'
+import { t } from '@beland/dapps/dist/modules/translation/utils'
 
 import SquaresGrid from 'components/SquaresGrid'
 import Icon from 'components/Icon'

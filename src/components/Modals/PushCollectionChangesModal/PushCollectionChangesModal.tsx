@@ -1,8 +1,8 @@
 import * as React from 'react'
-import Modal from 'decentraland-dapps/dist/containers/Modal'
+import Modal from '@beland/dapps/dist/containers/Modal'
 import { Button } from 'decentraland-ui'
 import { Props } from './PushCollectionChangesModal.types'
-import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { T, t } from '@beland/dapps/dist/modules/translation/utils'
 import './PushCollectionChangesModal.css'
 
 const PushCollectionChangesModal = ({ isLoading, onClose, onProceed }: Props) => {

@@ -3,9 +3,9 @@ import { PopulatedTransaction } from 'ethers'
 import { Eth } from 'web3x/eth'
 import { LegacyProviderAdapter } from 'web3x/providers'
 import { env } from 'decentraland-commons'
-import { getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
-import { Wallet, Provider } from 'decentraland-dapps/dist/modules/wallet/types'
-import { getData as getBaseWallet } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { getConnectedProvider } from '@beland/dapps/dist/lib/eth'
+import { Wallet, Provider } from '@beland/dapps/dist/modules/wallet/types'
+import { getData as getBaseWallet } from '@beland/dapps/dist/modules/wallet/selectors'
 
 export const TRANSACTIONS_API_URL = env.get<string | undefined>('REACT_APP_TRANSACTIONS_API_URL')
 

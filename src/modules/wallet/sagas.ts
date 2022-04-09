@@ -1,8 +1,8 @@
 import { all, takeEvery, put } from 'redux-saga/effects'
-import { ChainId } from '@dcl/schemas'
-import { ContractName } from 'decentraland-transactions'
+import { ChainId } from '@beland/schemas'
+import { ContractName } from '@beland/transactions'
 import { env } from 'decentraland-commons'
-import { createWalletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
+import { createWalletSaga } from '@beland/dapps/dist/modules/wallet/sagas'
 import {
   CHANGE_ACCOUNT,
   CHANGE_NETWORK,
@@ -10,9 +10,9 @@ import {
   ChangeAccountAction,
   ChangeNetworkAction,
   ConnectWalletSuccessAction
-} from 'decentraland-dapps/dist/modules/wallet/actions'
-import { fetchAuthorizationsRequest } from 'decentraland-dapps/dist/modules/authorization/actions'
-import { Authorization } from 'decentraland-dapps/dist/modules/authorization/types'
+} from '@beland/dapps/dist/modules/wallet/actions'
+import { fetchAuthorizationsRequest } from '@beland/dapps/dist/modules/authorization/actions'
+import { Authorization } from '@beland/dapps/dist/modules/authorization/types'
 import { buildManaAuthorization } from 'lib/mana'
 import { TRANSACTIONS_API_URL } from './utils'
 

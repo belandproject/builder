@@ -1,5 +1,5 @@
-import { ChainId } from '@dcl/schemas'
-import * as dappsEth from 'decentraland-dapps/dist/lib/eth'
+import { ChainId } from '@beland/schemas'
+import * as dappsEth from '@beland/dapps/dist/lib/eth'
 import { buildCatalystItemURN, buildThirdPartyURN } from 'lib/urn'
 import { Item, WearableBodyShape } from 'modules/item/types'
 import { Collection, CollectionType } from 'modules/collection/types'

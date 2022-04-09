@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Close } from 'decentraland-ui'
-import { getLocalStorage } from 'decentraland-dapps/dist/lib/localStorage'
-import { t, T } from 'decentraland-dapps/dist/modules/translation/utils'
-import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
+import { getLocalStorage } from '@beland/dapps/dist/lib/localStorage'
+import { t, T } from '@beland/dapps/dist/modules/translation/utils'
+import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'
 
 import { Props, State } from './LocalStorageToast.types'
 

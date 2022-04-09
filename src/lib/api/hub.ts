@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, AxiosError } from 'axios'
-import { APIParam, BaseAPI } from 'decentraland-dapps/dist/lib/api'
+import { APIParam, BaseAPI } from '@beland/dapps/dist/lib/api'
 import { Authorization } from './auth'
 
 export class HubAPI extends BaseAPI {

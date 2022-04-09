@@ -1,5 +1,5 @@
 import { RemoteItem } from '@dcl/builder-client'
-import { Rarity } from '@dcl/schemas'
+import { Rarity } from '@beland/schemas'
 import { Item, ItemRarity, WearableData } from 'modules/item/types'
 
 export function fromRemoteItem(remoteItem: RemoteItem): Item {

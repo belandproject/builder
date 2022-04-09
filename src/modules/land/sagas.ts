@@ -5,8 +5,8 @@ import {
   CHANGE_ACCOUNT,
   ConnectWalletSuccessAction,
   ChangeAccountAction
-} from 'decentraland-dapps/dist/modules/wallet/actions'
-import { Wallet } from 'decentraland-dapps/dist/modules/wallet/types'
+} from '@beland/dapps/dist/modules/wallet/actions'
+import { Wallet } from '@beland/dapps/dist/modules/wallet/types'
 import { takeLatest, call, put, takeEvery, all } from 'redux-saga/effects'
 import {
   FETCH_LANDS_REQUEST,

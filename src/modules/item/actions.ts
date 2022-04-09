@@ -1,6 +1,6 @@
 import { action } from 'typesafe-actions'
-import { ChainId } from '@dcl/schemas'
-import { buildTransactionPayload } from 'decentraland-dapps/dist/modules/transaction/utils'
+import { ChainId } from '@beland/schemas'
+import { buildTransactionPayload } from '@beland/dapps/dist/modules/transaction/utils'
 import { Collection } from 'modules/collection/types'
 import { BuiltFile, Item, Rarity } from './types'
 

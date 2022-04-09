@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { getAddress } from '@beland/dapps/dist/modules/wallet/selectors'
 import { env } from 'decentraland-commons'
 import { RootState } from 'modules/common/types'
 import { COLLECTIBLE_ASSET_PACK_ID } from 'modules/ui/sidebar/utils'

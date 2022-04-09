@@ -1,5 +1,5 @@
 import { Authenticator } from 'beland-crypto'
-import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { getAddress } from '@beland/dapps/dist/modules/wallet/selectors'
 import { RootStore } from 'modules/common/types'
 import { getData } from 'modules/identity/selectors'
 

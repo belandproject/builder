@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
-import { getData as getWallet } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { isLoadingType } from '@beland/dapps/dist/modules/loading/selectors'
+import { getData as getWallet } from '@beland/dapps/dist/modules/wallet/selectors'
 import { RootState } from 'modules/common/types'
 import { getCollection, getLoading as getCollectionLoading, getUnsyncedCollectionError } from 'modules/collection/selectors'
 import { getLoading as getItemLoading, getCollectionItems } from 'modules/item/selectors'

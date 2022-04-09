@@ -1,5 +1,5 @@
 import { BuiltItem, Content } from '@dcl/builder-client'
-import { ThirdPartyWearable, StandardWearable } from '@dcl/schemas'
+import { ThirdPartyWearable, StandardWearable } from '@beland/schemas'
 import { ModelMetrics } from 'modules/models/types'
 import { Cheque } from 'modules/thirdParty/types'
 

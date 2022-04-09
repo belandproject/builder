@@ -1,10 +1,10 @@
-import { ChainId, Network } from '@dcl/schemas'
+import { ChainId, Network } from '@beland/schemas'
 import { call } from 'redux-saga/effects'
 import { utils } from 'ethers'
 import { BigNumber } from '@ethersproject/bignumber'
-import { getChainIdByNetwork, getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
-import { Provider } from 'decentraland-dapps/dist/modules/wallet/types'
-import { ContractData, ContractName, getContract } from 'decentraland-transactions'
+import { getChainIdByNetwork, getConnectedProvider } from '@beland/dapps/dist/lib/eth'
+import { Provider } from '@beland/dapps/dist/modules/wallet/types'
+import { ContractData, ContractName, getContract } from '@beland/transactions'
 import { extractThirdPartyId } from 'lib/urn'
 import { Collection } from 'modules/collection/types'
 import { Item } from 'modules/item/types'
@@ -57,7 +57,7 @@ export function* getPublishItemsSignature(thirdPartyId: string, qty: number) {
     ]
   }
 
-  // TODO: expose this as a function in decentraland-transactions
+  // TODO: expose this as a function in @beland/transactions
   const msgString = JSON.stringify({ domain, message: dataToSign, types: domainTypes, primaryType: 'ConsumeSlots' })
 
   const accounts: string[] = yield call([provider, 'request'], { method: 'eth_requestAccounts', params: [], jsonrpc: '2.0' })

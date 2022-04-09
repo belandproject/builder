@@ -4,7 +4,7 @@ import Lottie from 'react-lottie'
 import { env } from 'decentraland-commons'
 
 import { PreviewType } from 'modules/editor/types'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { ASSET_TYPE } from 'components/AssetCard/AssetCard.dnd'
 import { convertToUnityKeyboardEvent } from 'modules/editor/utils'
 import { previewTarget, collect, CollectedProps } from './Preview.dnd'

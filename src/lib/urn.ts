@@ -1,5 +1,5 @@
-import { getURNProtocol, Network } from '@dcl/schemas'
-import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
+import { getURNProtocol, Network } from '@beland/schemas'
+import { getChainIdByNetwork } from '@beland/dapps/dist/lib/eth'
 
 /**
  * urn:beland:

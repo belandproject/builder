@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { t, T } from 'decentraland-dapps/dist/modules/translation/utils'
+import { t, T } from '@beland/dapps/dist/modules/translation/utils'
 import { Loader, Row } from 'decentraland-ui'
 import FileImport from 'components/FileImport'
 import { InfoIcon } from 'components/InfoIcon'

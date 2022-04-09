@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { Loader } from 'decentraland-ui'
-import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { T, t } from '@beland/dapps/dist/modules/translation/utils'
 import { locations } from 'routing/locations'
 import LandProviderPage from 'components/LandProviderPage'
 import LandAssignENSForm from './LandAssignENSForm/LandAssignENSForm'

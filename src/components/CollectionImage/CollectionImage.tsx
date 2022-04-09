@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Loader } from 'decentraland-ui'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { Item } from 'modules/item/types'
 import ItemImage from 'components/ItemImage'
 import { Props } from './CollectionImage.types'

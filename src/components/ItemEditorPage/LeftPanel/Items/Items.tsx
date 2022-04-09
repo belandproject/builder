@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Header, Section } from 'decentraland-ui'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { sortByName } from 'lib/sort'
 import { Item } from 'modules/item/types'
 import { hasBodyShape } from 'modules/item/utils'

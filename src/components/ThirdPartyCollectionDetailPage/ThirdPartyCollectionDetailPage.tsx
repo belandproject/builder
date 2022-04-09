@@ -15,9 +15,9 @@ import {
   PaginationProps,
   Checkbox
 } from 'decentraland-ui'
-import { t, T } from 'decentraland-dapps/dist/modules/translation/utils'
-import { hasAuthorization } from 'decentraland-dapps/dist/modules/authorization/utils'
-import { ContractName } from 'decentraland-transactions'
+import { t, T } from '@beland/dapps/dist/modules/translation/utils'
+import { hasAuthorization } from '@beland/dapps/dist/modules/authorization/utils'
+import { ContractName } from '@beland/transactions'
 import { locations } from 'routing/locations'
 import { isUserManagerOfThirdParty } from 'modules/thirdParty/utils'
 import { Item } from 'modules/item/types'

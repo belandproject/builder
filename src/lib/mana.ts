@@ -1,6 +1,6 @@
-import { ChainId } from '@dcl/schemas'
-import { Authorization, AuthorizationType } from 'decentraland-dapps/dist/modules/authorization/types'
-import { ContractName, getContract } from 'decentraland-transactions'
+import { ChainId } from '@beland/schemas'
+import { Authorization, AuthorizationType } from '@beland/dapps/dist/modules/authorization/types'
+import { ContractName, getContract } from '@beland/transactions'
 
 const MANA_SYMBOL = '⏣'
 

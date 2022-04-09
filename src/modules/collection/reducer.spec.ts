@@ -1,4 +1,4 @@
-import { fetchTransactionSuccess } from 'decentraland-dapps/dist/modules/transaction/actions'
+import { fetchTransactionSuccess } from '@beland/dapps/dist/modules/transaction/actions'
 import { PUBLISH_COLLECTION_SUCCESS } from './actions'
 import { collectionReducer as reducer } from './reducer'
 

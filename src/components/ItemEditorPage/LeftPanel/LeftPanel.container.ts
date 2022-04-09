@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { RootState } from 'modules/common/types'
-import { isConnected } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { isConnected } from '@beland/dapps/dist/modules/wallet/selectors'
 import { getSelectedCollectionId, getSelectedItemId, isReviewing } from 'modules/location/selectors'
 import { getBodyShape, getVisibleItems } from 'modules/editor/selectors'
 import { getItems, getWalletOrphanItems } from 'modules/item/selectors'

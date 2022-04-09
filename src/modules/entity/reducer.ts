@@ -1,5 +1,5 @@
 import { Entity } from 'dcl-catalyst-commons'
-import { loadingReducer, LoadingState } from 'decentraland-dapps/dist/modules/loading/reducer'
+import { loadingReducer, LoadingState } from '@beland/dapps/dist/modules/loading/reducer'
 import {
   DeployEntitiesFailureAction,
   DeployEntitiesRequestAction,

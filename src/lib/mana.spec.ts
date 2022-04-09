@@ -1,6 +1,6 @@
-import { ChainId } from '@dcl/schemas'
-import { AuthorizationType } from 'decentraland-dapps/dist/modules/authorization/types'
-import { ContractName } from 'decentraland-transactions'
+import { ChainId } from '@beland/schemas'
+import { AuthorizationType } from '@beland/dapps/dist/modules/authorization/types'
+import { ContractName } from '@beland/transactions'
 import { buildManaAuthorization } from './mana'
 
 describe('when building the MANA authorization', () => {

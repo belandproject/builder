@@ -4,9 +4,9 @@ import {
   FetchTransactionFailureAction,
   FETCH_TRANSACTION_SUCCESS,
   FETCH_TRANSACTION_FAILURE
-} from 'decentraland-dapps/dist/modules/transaction/actions'
+} from '@beland/dapps/dist/modules/transaction/actions'
 
-// TODO: Move to a lib like decentraland-dapps
+// TODO: Move to a lib like @beland/dapps
 // Function that blocks the execution and waits until a tx is mined or it fails
 export function* waitForTx(txHash: string) {
   while (true) {

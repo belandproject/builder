@@ -1,5 +1,5 @@
-import { loadingReducer, LoadingState } from 'decentraland-dapps/dist/modules/loading/reducer'
-import { ModelById } from 'decentraland-dapps/dist/lib/types'
+import { loadingReducer, LoadingState } from '@beland/dapps/dist/modules/loading/reducer'
+import { ModelById } from '@beland/dapps/dist/lib/types'
 import { Asset } from 'modules/asset/types'
 import {
   LOAD_ASSET_PACKS_REQUEST,

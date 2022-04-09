@@ -1,5 +1,5 @@
 import { env } from 'decentraland-commons'
-import { BaseAPI } from 'decentraland-dapps/dist/lib/api'
+import { BaseAPI } from '@beland/dapps/dist/lib/api'
 
 export enum EMAIL_INTEREST {
   MOBILE = 'builder-app-mobile',

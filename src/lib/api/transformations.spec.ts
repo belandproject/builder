@@ -1,5 +1,5 @@
 import { ItemType, RemoteItem } from '@dcl/builder-client'
-import { Rarity, WearableBodyShape, WearableCategory } from '@dcl/schemas'
+import { Rarity, WearableBodyShape, WearableCategory } from '@beland/schemas'
 import { Item, ItemRarity } from 'modules/item/types'
 import { fromRemoteItem } from './transformations'
 

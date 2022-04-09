@@ -2,7 +2,7 @@ import * as React from 'react'
 import { DragSource } from 'react-dnd'
 import { Link } from 'react-router-dom'
 import { Button, Card, Confirm } from 'decentraland-ui'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { t } from '@beland/dapps/dist/modules/translation/utils'
 
 import { OptionsDropdown } from '../../OptionsDropdown'
 import { locations } from 'routing/locations'

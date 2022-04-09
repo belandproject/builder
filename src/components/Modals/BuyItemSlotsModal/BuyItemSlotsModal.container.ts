@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { Network } from '@dcl/schemas'
+import { Network } from '@beland/schemas'
 import { RootState } from 'modules/common/types'
 import { getManaBalanceForNetwork } from 'modules/wallet/selectors'
 import { ThirdParty } from 'modules/thirdParty/types'

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Table, Row, Radio, Column, Header, Pagination, Section, Container, Popup } from 'decentraland-ui'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { t } from '@beland/dapps/dist/modules/translation/utils'
 import Chip from 'components/Chip'
 import { Atlas } from 'components/Atlas'
 import { NavigationTab } from 'components/Navigation/Navigation.types'

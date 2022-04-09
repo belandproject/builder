@@ -7,7 +7,7 @@ import { Account } from 'web3x/account'
 import { replace, getLocation } from 'connected-react-router'
 import { Authenticator, AuthIdentity } from 'beland-crypto'
 import { env } from 'decentraland-commons'
-import { getData as getWallet, isConnected, getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { getData as getWallet, isConnected, getAddress } from '@beland/dapps/dist/modules/wallet/selectors'
 import {
   CONNECT_WALLET_SUCCESS,
   CONNECT_WALLET_FAILURE,
@@ -20,7 +20,7 @@ import {
   disconnectWallet,
   CHANGE_ACCOUNT,
   ChangeAccountAction
-} from 'decentraland-dapps/dist/modules/wallet/actions'
+} from '@beland/dapps/dist/modules/wallet/actions'
 import { locations } from 'routing/locations'
 import { clearAssetPacks } from 'modules/assetPack/actions'
 import { closeModal } from 'modules/modal/actions'

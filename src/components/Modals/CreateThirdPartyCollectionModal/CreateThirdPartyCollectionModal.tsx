@@ -12,8 +12,8 @@ import {
   SelectField,
   DropdownProps
 } from 'decentraland-ui'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import Modal from 'decentraland-dapps/dist/containers/Modal'
+import { t } from '@beland/dapps/dist/modules/translation/utils'
+import Modal from '@beland/dapps/dist/containers/Modal'
 import { buildThirdPartyURN, decodeURN } from 'lib/urn'
 import { Collection, TP_COLLECTION_NAME_MAX_LENGTH } from 'modules/collection/types'
 import { Props, State } from './CreateThirdPartyCollectionModal.types'

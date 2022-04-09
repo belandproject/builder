@@ -1,5 +1,5 @@
 import React from 'react'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { Button, Popup } from 'decentraland-ui'
 import { Props } from './UnderReview.types'
 

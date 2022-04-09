@@ -1,5 +1,5 @@
 import { Authenticator, AuthIdentity } from 'beland-crypto'
-import { Locale, Rarity, ThirdPartyWearable, WearableCategory, WearableRepresentation } from '@dcl/schemas'
+import { Locale, Rarity, ThirdPartyWearable, WearableCategory, WearableRepresentation } from '@beland/schemas'
 import { CatalystClient, DeploymentPreparationData } from 'dcl-catalyst-client'
 import { MerkleDistributorInfo } from '@dcl/content-hash-tree/dist/types'
 import { EntityContentItemReference, EntityMetadata, EntityType, Hashing } from 'dcl-catalyst-commons'

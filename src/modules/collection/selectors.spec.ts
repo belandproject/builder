@@ -1,5 +1,5 @@
-import { ChainId, WearableCategory } from '@dcl/schemas'
-import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
+import { ChainId, WearableCategory } from '@beland/schemas'
+import { getChainIdByNetwork } from '@beland/dapps/dist/lib/eth'
 import { RootState } from 'modules/common/types'
 import { SyncStatus } from 'modules/item/types'
 import { ThirdParty } from 'modules/thirdParty/types'
@@ -7,7 +7,7 @@ import { getAuthorizedCollections, getStatusByCollectionId, getUnsyncedCollectio
 import { Collection } from './types'
 import { UNSYNCED_COLLECTION_ERROR_PREFIX } from './utils'
 
-jest.mock('decentraland-dapps/dist/lib/eth')
+jest.mock('@beland/dapps/dist/lib/eth')
 const mockGetChainIdByNetwork = getChainIdByNetwork as jest.Mock
 
 describe('when getting the unsynced error message', () => {

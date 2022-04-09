@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Dropdown, Row } from 'decentraland-ui'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { locations } from 'routing/locations'
 import { isEqual } from 'lib/address'
 import ConfirmDelete from 'components/ConfirmDelete'

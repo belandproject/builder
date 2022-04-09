@@ -1,6 +1,6 @@
 import { AxiosRequestConfig, AxiosError } from 'axios'
 import { env } from 'decentraland-commons'
-import { BaseAPI, APIParam } from 'decentraland-dapps/dist/lib/api'
+import { BaseAPI, APIParam } from '@beland/dapps/dist/lib/api'
 import { runMigrations } from 'modules/migrations/utils'
 import { Project, Manifest } from 'modules/project/types'
 import { Asset, AssetAction, AssetParameter } from 'modules/asset/types'

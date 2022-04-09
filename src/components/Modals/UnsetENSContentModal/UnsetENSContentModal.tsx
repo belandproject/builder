@@ -1,6 +1,6 @@
 import React from 'react'
-import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
-import Modal from 'decentraland-dapps/dist/containers/Modal'
+import { T, t } from '@beland/dapps/dist/modules/translation/utils'
+import Modal from '@beland/dapps/dist/containers/Modal'
 import { Button } from 'decentraland-ui'
 import { Props } from './UnsetENSContentModal.types'
 

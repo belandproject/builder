@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import { CallHistoryMethodAction } from 'connected-react-router'
-import { ChainId } from '@dcl/schemas'
+import { ChainId } from '@beland/schemas'
 import {
   initiateApprovalFlow,
   InitiateApprovalFlowAction,

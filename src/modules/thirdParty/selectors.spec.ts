@@ -1,5 +1,5 @@
-import { ChainId } from '@dcl/schemas'
-import { TransactionStatus } from 'decentraland-dapps/dist/modules/transaction/types'
+import { ChainId } from '@beland/schemas'
+import { TransactionStatus } from '@beland/dapps/dist/modules/transaction/types'
 import { Collection } from 'modules/collection/types'
 import { RootState } from 'modules/common/types'
 import {

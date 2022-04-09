@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import { Content } from '@dcl/builder-client'
-import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
+import { ModalProps } from '@beland/dapps/dist/providers/ModalProvider/ModalProvider.types'
 import {
   SaveMultipleItemsRequestAction,
   CancelSaveMultipleItemsAction,

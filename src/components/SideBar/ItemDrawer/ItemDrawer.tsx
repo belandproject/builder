@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Loader } from 'decentraland-ui'
-import { T } from 'decentraland-dapps/dist/modules/translation/utils'
+import { T } from '@beland/dapps/dist/modules/translation/utils'
 import { COLLECTIBLE_ASSET_PACK_ID } from 'modules/ui/sidebar/utils'
 import SidebarHeader from '../SidebarHeader'
 import SidebarSearch from '../SidebarSearch'

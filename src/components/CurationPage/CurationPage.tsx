@@ -1,6 +1,6 @@
 import React from 'react'
 import { Row, Column, Section, Container, Dropdown, Pagination, Empty, TextFilter, Table } from 'decentraland-ui'
-import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { T, t } from '@beland/dapps/dist/modules/translation/utils'
 import { hasReviews } from 'modules/collection/utils'
 import NotFound from 'components/NotFound'
 import LoggedInDetailPage from 'components/LoggedInDetailPage'

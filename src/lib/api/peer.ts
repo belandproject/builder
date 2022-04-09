@@ -1,5 +1,5 @@
 import { env } from 'decentraland-commons'
-import { BaseAPI } from 'decentraland-dapps/dist/lib/api'
+import { BaseAPI } from '@beland/dapps/dist/lib/api'
 import { ContentServiceScene } from 'modules/deployment/types'
 
 export const PEER_URL = env.get('REACT_APP_HUB_URL', '')

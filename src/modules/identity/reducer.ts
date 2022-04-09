@@ -1,5 +1,5 @@
 import { AuthIdentity } from 'beland-crypto'
-import { loadingReducer, LoadingState } from 'decentraland-dapps/dist/modules/loading/reducer'
+import { loadingReducer, LoadingState } from '@beland/dapps/dist/modules/loading/reducer'
 import {
   GenerateIdentityRequestAction,
   GenerateIdentitySuccessAction,
