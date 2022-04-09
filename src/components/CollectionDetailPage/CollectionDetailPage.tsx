@@ -113,7 +113,7 @@ export default class CollectionDetailPage extends React.PureComponent<Props> {
                             }
                             position="top center"
                             trigger={
-                              <NetworkCheck network={Network.MATIC}>
+                              <NetworkCheck network={Network.KAI}>
                                 {isEnabled => (
                                   <Radio
                                     toggle

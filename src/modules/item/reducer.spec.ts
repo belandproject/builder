@@ -115,7 +115,7 @@ describe('when reducing the save collection success action', () => {
         ...sndCollection,
         urn: `urn:beland:matic:collections-thirdparty:tp-id:${newThirdPartyCollectionId}`
       } as Collection
-      getChainIdByNetworkMock.mockReturnValueOnce(ChainId.MATIC_MAINNET as any)
+      getChainIdByNetworkMock.mockReturnValueOnce(ChainId.KAI_MAINNET as any)
       result = itemReducer(state, saveCollectionSuccess(sndCollection))
     })
 

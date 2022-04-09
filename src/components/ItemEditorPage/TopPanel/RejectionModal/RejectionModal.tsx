@@ -116,7 +116,7 @@ const Confirmation = ({
     <Modal.Header>{t(`${i18nKey}.title`)}</Modal.Header>
     <Modal.Content>{t(`${i18nKey}.subtitle`)}</Modal.Content>
     <Modal.Actions>
-      <NetworkButton primary onClick={onConfirm} disabled={isLoading} loading={isLoading} network={Network.MATIC}>
+      <NetworkButton primary onClick={onConfirm} disabled={isLoading} loading={isLoading} network={Network.KAI}>
         {t(`${i18nKey}.action`)}
       </NetworkButton>
       <Button onClick={onClose}>{t('global.cancel')}</Button>

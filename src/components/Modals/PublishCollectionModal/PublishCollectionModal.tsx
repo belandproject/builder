@@ -95,14 +95,14 @@ export default class PublishCollectionModal extends React.PureComponent<Props, S
                       {itemByRarity.count} {itemByRarity.name}
                     </div>
                     <div>
-                      <Bean network={Network.MATIC}>{itemByRarity.price}</Bean>
+                      <Bean network={Network.KAI}>{itemByRarity.price}</Bean>
                     </div>
                   </div>
                 ))}
                 <div className="item total">
                   <div>{t('global.total')}</div>
                   <div>
-                    <Bean network={Network.MATIC}>{totalPrice}</Bean>
+                    <Bean network={Network.KAI}>{totalPrice}</Bean>
                   </div>
                 </div>
               </div>
@@ -116,7 +116,7 @@ export default class PublishCollectionModal extends React.PureComponent<Props, S
                     values={{
                       symbol: (
                         <span>
-                          <Bean network={Network.MATIC} inline /> BEAN
+                          <Bean network={Network.KAI} inline /> BEAN
                         </span>
                       )
                     }}

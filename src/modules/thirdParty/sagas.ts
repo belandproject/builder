@@ -88,7 +88,7 @@ export function* thirdPartySaga(_builder: BuilderAPI) {
 
   function* handleFetchThirdPartyItemSlotPriceRequest() {
     // try {
-    //   const maticChainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
+    //   const maticChainId: ChainId = yield call(getChainIdByNetwork, Network.KAI)
     //   const provider: Provider = yield call(getNetworkProvider, maticChainId)
 
     //   const thirdPartyContractInstance: Contract = yield call(getContractInstance, ContractName.ThirdPartyRegistry, maticChainId, provider)
@@ -106,7 +106,7 @@ export function* thirdPartySaga(_builder: BuilderAPI) {
   function* handleBuyThirdPartyItemSlotRequest(_action: BuyThirdPartyItemSlotRequestAction) {
     // const { slotsToBuy, thirdParty, priceToPay } = action.payload
     // try {
-    //   const maticChainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
+    //   const maticChainId: ChainId = yield call(getChainIdByNetwork, Network.KAI)
     //   const thirdPartyContract: ContractData = yield call(getContract, ContractName.ThirdPartyRegistry, maticChainId)
     //   const costWithSlippage = applySlotBuySlippage(BigNumber.from(priceToPay).mul(BigNumber.from(slotsToBuy)))
     //   const maxPriceInWei = utils.parseEther(costWithSlippage.toString())
@@ -242,7 +242,7 @@ export function* thirdPartySaga(_builder: BuilderAPI) {
   function* handleReviewThirdPartyRequest(_action: ReviewThirdPartyRequestAction) {
     // const { thirdPartyId, slots, merkleTreeRoot } = action.payload
     // try {
-    //   const maticChainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
+    //   const maticChainId: ChainId = yield call(getChainIdByNetwork, Network.KAI)
     //   const thirdPartyContract: ContractData = yield call(getContract, ContractName.ThirdPartyRegistry, maticChainId)
     //   const txHash: string = yield call(
     //     sendTransaction as any,

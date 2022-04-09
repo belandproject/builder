@@ -52,7 +52,7 @@ describe('when getting the unsynced error message', () => {
 
 describe('when getting status by item id', () => {
   it('should return the status for each published item', () => {
-    mockGetChainIdByNetwork.mockReturnValue(ChainId.MATIC_MAINNET)
+    mockGetChainIdByNetwork.mockReturnValue(ChainId.KAI_MAINNET)
     const mockState = {
       collectionCuration: {
         data: {

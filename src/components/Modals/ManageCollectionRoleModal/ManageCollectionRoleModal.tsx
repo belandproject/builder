@@ -155,7 +155,7 @@ export default class ManageCollectionRoleModal extends React.PureComponent<Props
               onClick={this.handleSubmit}
               loading={isLoading}
               disabled={!this.hasRoleChanged()}
-              network={Network.MATIC}
+              network={Network.KAI}
             >
               {t('global.confirm')}
             </NetworkButton>

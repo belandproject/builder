@@ -140,7 +140,7 @@ describe('Item selectors', () => {
   describe('when getting status', () => {
     const itemId = 'anItemId'
     const collectionId = 'aCollectionId'
-    mockGetChainIdByNetwork.mockReturnValue(ChainId.MATIC_MAINNET)
+    mockGetChainIdByNetwork.mockReturnValue(ChainId.KAI_MAINNET)
 
     beforeEach(() => {
       state = {

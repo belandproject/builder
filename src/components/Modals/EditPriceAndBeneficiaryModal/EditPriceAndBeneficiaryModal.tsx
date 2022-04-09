@@ -131,7 +131,7 @@ export default class EditPriceAndBeneficiaryModal extends React.PureComponent<Pr
                 disabled={isFree}
                 error={!!price && !this.isValidPrice()}
               />
-              <Bean network={Network.MATIC} inline />
+              <Bean network={Network.KAI} inline />
             </div>
             <Field
               label={
@@ -151,7 +151,7 @@ export default class EditPriceAndBeneficiaryModal extends React.PureComponent<Pr
             />
           </ModalContent>
           <ModalActions>
-            <NetworkButton primary disabled={this.isDisabled()} loading={isLoading} network={Network.MATIC}>
+            <NetworkButton primary disabled={this.isDisabled()} loading={isLoading} network={Network.KAI}>
               {t('global.submit')}
             </NetworkButton>
           </ModalActions>

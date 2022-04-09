@@ -104,7 +104,7 @@ const CollectionPublishButton = (props: Props) => {
       primary
       compact
       onClick={handleOnClick}
-      network={Network.MATIC}
+      network={Network.KAI}
     >
       {getTPButtonActionLabel(buttonAction)}
     </NetworkButton>

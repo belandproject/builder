@@ -12,7 +12,7 @@ describe('when getting the catalyst item URN', () => {
   let tokenId = 'token-id'
 
   beforeEach(() => {
-    ;(getChainIdByNetwork as jest.Mock).mockReturnValueOnce(ChainId.MATIC_MAINNET)
+    ;(getChainIdByNetwork as jest.Mock).mockReturnValueOnce(ChainId.KAI_MAINNET)
   })
 
   it('should use the supplied data to generate a valid item URN', () => {
@@ -21,7 +21,7 @@ describe('when getting the catalyst item URN', () => {
 
   it('should get the chain id for the matic network', () => {
     buildCatalystItemURN(contractAddress, tokenId)
-    expect(getChainIdByNetwork).toHaveBeenCalledWith(Network.MATIC)
+    expect(getChainIdByNetwork).toHaveBeenCalledWith(Network.KAI)
   })
 })
 
@@ -30,7 +30,7 @@ describe('when building the third party URN', () => {
   let collectionId = 'the-collection-id'
 
   beforeEach(() => {
-    ;(getChainIdByNetwork as jest.Mock).mockReturnValueOnce(ChainId.MATIC_MAINNET)
+    ;(getChainIdByNetwork as jest.Mock).mockReturnValueOnce(ChainId.KAI_MAINNET)
   })
 
   it('should return a valid third party collection urn', () => {
@@ -41,7 +41,7 @@ describe('when building the third party URN', () => {
 
   it('should get the chain id for the matic network', () => {
     buildThirdPartyURN(thirdPartyName, collectionId)
-    expect(getChainIdByNetwork).toHaveBeenCalledWith(Network.MATIC)
+    expect(getChainIdByNetwork).toHaveBeenCalledWith(Network.KAI)
   })
 
   describe('when supplying a token id', () => {
@@ -55,7 +55,7 @@ describe('when building the third party URN', () => {
 
     it('should get the chain id for the matic network', () => {
       buildThirdPartyURN(thirdPartyName, collectionId, tokenId)
-      expect(getChainIdByNetwork).toHaveBeenCalledWith(Network.MATIC)
+      expect(getChainIdByNetwork).toHaveBeenCalledWith(Network.KAI)
     })
   })
 })
@@ -188,7 +188,7 @@ describe('when checking if a collection is a third party', () => {
 
   describe('when checking a collections v2 URN', () => {
     beforeEach(() => {
-      jest.spyOn(dappsEth, 'getChainIdByNetwork').mockReturnValueOnce(ChainId.MATIC_MAINNET)
+      jest.spyOn(dappsEth, 'getChainIdByNetwork').mockReturnValueOnce(ChainId.KAI_MAINNET)
       urn = buildCatalystItemURN('0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8', '22')
     })
 
@@ -200,7 +200,7 @@ describe('when checking if a collection is a third party', () => {
   describe('when checking a third party URN', () => {
     describe("when it's a collection", () => {
       beforeEach(() => {
-        jest.spyOn(dappsEth, 'getChainIdByNetwork').mockReturnValueOnce(ChainId.MATIC_MAINNET)
+        jest.spyOn(dappsEth, 'getChainIdByNetwork').mockReturnValueOnce(ChainId.KAI_MAINNET)
         urn = buildThirdPartyURN('thirdpartyname', 'collection-id')
       })
 
@@ -211,7 +211,7 @@ describe('when checking if a collection is a third party', () => {
 
     describe("when it's an item", () => {
       beforeEach(() => {
-        jest.spyOn(dappsEth, 'getChainIdByNetwork').mockReturnValueOnce(ChainId.MATIC_MAINNET)
+        jest.spyOn(dappsEth, 'getChainIdByNetwork').mockReturnValueOnce(ChainId.KAI_MAINNET)
         urn = buildThirdPartyURN('thirdpartyname', 'collection-id', '22')
       })
 

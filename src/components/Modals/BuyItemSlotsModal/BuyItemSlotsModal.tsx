@@ -99,14 +99,14 @@ export default class BuyItemSlotsModal extends React.PureComponent<Props, State>
                 </div>
                 <div className={styles.slotValue}>
                   {t('buy_item_slots_modal.slots_value', {
-                    symbol: <Bean network={Network.MATIC} size="small" />,
+                    symbol: <Bean network={Network.KAI} size="small" />,
                     slot_cost: slotPrice,
                     total_cost: slotPrice && this.isValidSlotAmount() ? slotPrice * Number(slotsToBuy) : 0
                   })}
                 </div>
                 <div className={styles.slotValue}>
                   {t('buy_item_slots_modal.total_cost', {
-                    symbol: <Bean network={Network.MATIC} size="small" />,
+                    symbol: <Bean network={Network.KAI} size="small" />,
                     total_cost: slotPrice && this.isValidSlotAmount() ? this.applySlotBuySlippage() : 0
                   })}
                 </div>
@@ -122,7 +122,7 @@ export default class BuyItemSlotsModal extends React.PureComponent<Props, State>
                   values={{
                     symbol: (
                       <span>
-                        <Bean className={styles.manaLogo} network={Network.MATIC} inline /> BEAN
+                        <Bean className={styles.manaLogo} network={Network.KAI} inline /> BEAN
                       </span>
                     )
                   }}
@@ -148,7 +148,7 @@ export default class BuyItemSlotsModal extends React.PureComponent<Props, State>
             primary
             disabled={hasInsufficientMANA || isBuyingItemSlots || isFetchingSlotPrice || !this.isValidSlotAmount()}
             loading={isBuyingItemSlots}
-            network={Network.MATIC}
+            network={Network.KAI}
             onClick={this.handleItemSlotsBuy}
           >
             {t('buy_item_slots_modal.buy_slots')}

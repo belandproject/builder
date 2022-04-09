@@ -463,7 +463,7 @@ export default class RightPanel extends React.PureComponent<Props, State> {
                       <Button secondary onClick={this.handleOnResetItem}>
                         {t('global.cancel')}
                       </Button>
-                      <NetworkButton primary onClick={this.handleOnSaveItem} network={Network.MATIC}>
+                      <NetworkButton primary onClick={this.handleOnSaveItem} network={Network.KAI}>
                         {t('global.save')}
                       </NetworkButton>
                     </div>

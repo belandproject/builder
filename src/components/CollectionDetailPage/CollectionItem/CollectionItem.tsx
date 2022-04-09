@@ -45,7 +45,7 @@ export default class CollectionItem extends React.PureComponent<Props> {
           {isFree(item) ? (
             t('global.free')
           ) : (
-            <Bean className={styles.mana} network={Network.MATIC}>
+            <Bean className={styles.mana} network={Network.KAI}>
               {fromWei(item.price, 'ether')}
             </Bean>
           )}

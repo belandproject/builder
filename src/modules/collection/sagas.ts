@@ -203,7 +203,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
       if (getCollectionType(collection) === CollectionType.DECENTRALAND) {
         // const items: Item[] = yield select(state => getCollectionItems(state, collection.id))
         // const from: string = yield select(getAddress)
-        // const maticChainId = getChainIdByNetwork(Network.MATIC)
+        // const maticChainId = getChainIdByNetwork(Network.KAI)
         // const rarities = getContract(ContractName.Rarities, maticChainId)
         // const { abi } = getContract(ContractName.ERC721CollectionV2, maticChainId)
 
@@ -299,7 +299,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
       })
 
       //const from: string = yield select(getAddress)
-      // const maticChainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
+      // const maticChainId: ChainId = yield call(getChainIdByNetwork, Network.KAI)
 
       // const forwarder = getContract(ContractName.Forwarder, maticChainId)
       // const factory = getContract(ContractName.CollectionFactory, maticChainId)
@@ -334,7 +334,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
   function* handleSetCollectionMintersRequest(action: SetCollectionMintersRequestAction) {
     const { collection, accessList } = action.payload
     try {
-      //const maticChainId = getChainIdByNetwork(Network.MATIC)
+      //const maticChainId = getChainIdByNetwork(Network.KAI)
 
       const addresses: string[] = []
       const values: boolean[] = []
@@ -365,7 +365,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
   function* handleSetCollectionManagersRequest(action: SetCollectionManagersRequestAction) {
     const { collection, accessList } = action.payload
     try {
-      //const maticChainId = getChainIdByNetwork(Network.MATIC)
+      //const maticChainId = getChainIdByNetwork(Network.KAI)
 
       const addresses: string[] = []
       const values: boolean[] = []
@@ -396,7 +396,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
   function* handleMintCollectionItemsRequest(action: MintCollectionItemsRequestAction) {
     const { collection, mints } = action.payload
     try {
-      //const maticChainId = getChainIdByNetwork(Network.MATIC)
+      //const maticChainId = getChainIdByNetwork(Network.KAI)
 
       const beneficiaries: string[] = []
       const tokenIds: string[] = []
@@ -424,7 +424,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     const { collection } = action.payload
     try {
       const txHash: string = yield changeCollectionStatus(collection, true)
-      yield put(approveCollectionSuccess(collection, getChainIdByNetwork(Network.MATIC), txHash))
+      yield put(approveCollectionSuccess(collection, getChainIdByNetwork(Network.KAI), txHash))
     } catch (error) {
       yield put(approveCollectionFailure(collection, error.message))
     }
@@ -524,7 +524,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
   }
 
   function* changeCollectionStatus(_collection: Collection, _isApproved: boolean) {
-    // const maticChainId = getChainIdByNetwork(Network.MATIC)
+    // const maticChainId = getChainIdByNetwork(Network.KAI)
     // const contract = getContract(ContractName.Committee, maticChainId)
 
     // const { abi } = getContract(ContractName.ERC721CollectionV2, maticChainId)

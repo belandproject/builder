@@ -123,7 +123,7 @@ export default class CollectionManagersModal extends React.PureComponent<Props, 
           </div>
           {managers.length ? (
             <ModalActions>
-              <NetworkButton primary onClick={this.handleSubmit} loading={isLoading} disabled={this.isDisabled()} network={Network.MATIC}>
+              <NetworkButton primary onClick={this.handleSubmit} loading={isLoading} disabled={this.isDisabled()} network={Network.KAI}>
                 {t('global.add')}
               </NetworkButton>
             </ModalActions>

@@ -13,7 +13,7 @@ const mapState = (state: RootState): MapStateProps => {
     slotPrice: getItemSlotPrice(state),
     isFetchingSlotPrice: isFetchingSlotPrice(state),
     isBuyingItemSlots: isBuyingItemSlots(state),
-    manaBalance: getManaBalanceForNetwork(state, Network.MATIC),
+    manaBalance: getManaBalanceForNetwork(state, Network.KAI),
     error: getError(state)
   }
 }

@@ -66,7 +66,7 @@ const CollectionPublishButton = (props: Props) => {
     }
   } else {
     const publishButton = (
-      <NetworkButton disabled={isPublishDisabled} primary compact onClick={handlePublish} network={Network.MATIC}>
+      <NetworkButton disabled={isPublishDisabled} primary compact onClick={handlePublish} network={Network.KAI}>
         {t('global.publish')}
       </NetworkButton>
     )

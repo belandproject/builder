@@ -135,7 +135,7 @@ export default class MintItemsModal extends React.PureComponent<Props, State> {
                   onClick={this.handleMintItems}
                   loading={isLoading}
                   disabled={isDisabled || !!error}
-                  network={Network.MATIC}
+                  network={Network.KAI}
                 >
                   {t('global.mint')}
                 </NetworkButton>

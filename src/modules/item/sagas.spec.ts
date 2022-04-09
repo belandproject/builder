@@ -368,10 +368,10 @@ describe('when handling the setPriceAndBeneficiaryRequest action', () => {
         .provide([
           [select(getItems), [item]],
           [select(getCollections), [collection]],
-          [call(getChainIdByNetwork, Network.MATIC), ChainId.MATIC_MAINNET],
+          [call(getChainIdByNetwork, Network.KAI), ChainId.KAI_MAINNET],
           [matchers.call.fn(sendTransaction), Promise.resolve('0xhash')]
         ])
-        .put(setPriceAndBeneficiarySuccess({ ...item, price, beneficiary }, ChainId.MATIC_MAINNET, '0xhash'))
+        .put(setPriceAndBeneficiarySuccess({ ...item, price, beneficiary }, ChainId.KAI_MAINNET, '0xhash'))
         .dispatch(setPriceAndBeneficiaryRequest(item.id, price, beneficiary))
         .run({ silenceTimeout: true })
     })
@@ -809,7 +809,7 @@ describe('when handling the rescue items request action', () => {
     it('should dispatch a rescueItemsChunkSuccess per chunk and the rescueItemsSuccess once the transactions finish', () => {
       return expectSaga(itemSaga, builderAPI, builderClient)
         .provide([
-          [call(getChainIdByNetwork, Network.MATIC), ChainId.MATIC_MUMBAI],
+          [call(getChainIdByNetwork, Network.KAI), ChainId.MATIC_MUMBAI],
           [matchers.call.fn(getMethodData), transactionData],
           [matchers.call.fn(sendTransaction), txHash],
           [take(FETCH_TRANSACTION_SUCCESS), { payload: { transaction: { hash: txHash } } }]
@@ -827,7 +827,7 @@ describe('when handling the rescue items request action', () => {
       it('should dispatch the rescueItemsFailure with the information about the error', () => {
         return expectSaga(itemSaga, builderAPI, builderClient)
           .provide([
-            [call(getChainIdByNetwork, Network.MATIC), ChainId.MATIC_MUMBAI],
+            [call(getChainIdByNetwork, Network.KAI), ChainId.MATIC_MUMBAI],
             [matchers.call.fn(getMethodData), transactionData],
             [matchers.call.fn(sendTransaction), Promise.reject(new Error('some-error'))]
           ])
@@ -841,7 +841,7 @@ describe('when handling the rescue items request action', () => {
       it('should dispatch the rescueItemsFailure with the information about the error', () => {
         return expectSaga(itemSaga, builderAPI, builderClient)
           .provide([
-            [call(getChainIdByNetwork, Network.MATIC), ChainId.MATIC_MUMBAI],
+            [call(getChainIdByNetwork, Network.KAI), ChainId.MATIC_MUMBAI],
             [matchers.call.fn(getMethodData), transactionData],
             [matchers.call.fn(sendTransaction), txHash],
             [take(FETCH_TRANSACTION_FAILURE), { payload: { transaction: { hash: txHash } } }]

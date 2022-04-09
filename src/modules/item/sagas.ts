@@ -258,7 +258,7 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
       //const newItem = { ...item, price, beneficiary, updatedAt: Date.now() }
 
       // const metadata = getMetadata(newItem)
-      // const chainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
+      // const chainId: ChainId = yield call(getChainIdByNetwork, Network.KAI)
       // const contract = { ...getContract(ContractName.ERC721CollectionV2, chainId), address: collection.contractAddress! }
       // const txHash: string = yield call(sendTransaction, contract, collection =>
       //   collection.editItemsData([newItem.tokenId!], [newItem.price!], [newItem.beneficiary!], [metadata])
@@ -349,7 +349,7 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
     const { collection, items, contentHashes } = action.payload
 
     try {
-      // const chainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
+      // const chainId: ChainId = yield call(getChainIdByNetwork, Network.KAI)
       // const tokenIds = items.map(item => item.tokenId!)
       // const metadatas = items.map(item => getMetadata(item))
 

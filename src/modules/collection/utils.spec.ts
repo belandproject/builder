@@ -113,7 +113,7 @@ describe('when getting the collection type', () => {
 
   describe('when the collection has a collections v2 URN', () => {
     beforeEach(() => {
-      jest.spyOn(dappsEth, 'getChainIdByNetwork').mockReturnValueOnce(ChainId.MATIC_MAINNET)
+      jest.spyOn(dappsEth, 'getChainIdByNetwork').mockReturnValueOnce(ChainId.KAI_MAINNET)
       collection = { id: 'aCollection', urn: buildCatalystItemURN('0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd8', '22') } as Collection
     })
 
@@ -124,7 +124,7 @@ describe('when getting the collection type', () => {
 
   describe('when the collection has a third party URN', () => {
     beforeEach(() => {
-      jest.spyOn(dappsEth, 'getChainIdByNetwork').mockReturnValueOnce(ChainId.MATIC_MAINNET)
+      jest.spyOn(dappsEth, 'getChainIdByNetwork').mockReturnValueOnce(ChainId.KAI_MAINNET)
       collection = { id: 'aCollection', urn: buildThirdPartyURN('thirdpartyname', 'collection-id', '22') } as Collection
     })
 

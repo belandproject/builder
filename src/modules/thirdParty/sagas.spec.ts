@@ -158,7 +158,7 @@ describe('when handling the request to fetch the third party item slot price', (
     it('should put the action signaling the fetching error with the error message', () => {
       return expectSaga(thirdPartySaga, mockBuilder)
         .provide([
-          [call(getChainIdByNetwork, Network.MATIC), ChainId.MATIC_MUMBAI],
+          [call(getChainIdByNetwork, Network.KAI), ChainId.MATIC_MUMBAI],
           [call(getContract, ContractName.ThirdPartyRegistry, ChainId.MATIC_MUMBAI), Promise.reject(new Error(defaultError))]
         ])
         .put(fetchThirdPartyItemSlotPriceFailure(defaultError))
@@ -187,7 +187,7 @@ describe('when handling the request to fetch the third party item slot price', (
       const mockedProvider = {}
       return expectSaga(thirdPartySaga, mockBuilder)
         .provide([
-          [call(getChainIdByNetwork, Network.MATIC), ChainId.MATIC_MUMBAI],
+          [call(getChainIdByNetwork, Network.KAI), ChainId.MATIC_MUMBAI],
           [call(getNetworkProvider, ChainId.MATIC_MUMBAI), mockedProvider],
           [
             call(getContractInstance, ContractName.ThirdPartyRegistry, ChainId.MATIC_MUMBAI, (mockedProvider as unknown) as Provider),
@@ -210,7 +210,7 @@ describe('when handling the request to buy third party item slots', () => {
   describe("and the chain id couldn't be retrieved", () => {
     it('should put the action signaling the failure of the purchase of item slots with third party id', () => {
       return expectSaga(thirdPartySaga, mockBuilder)
-        .provide([[call(getChainIdByNetwork, Network.MATIC), Promise.reject(new Error(defaultError))]])
+        .provide([[call(getChainIdByNetwork, Network.KAI), Promise.reject(new Error(defaultError))]])
         .put(buyThirdPartyItemSlotFailure(thirdParty.id, 10, defaultError))
         .dispatch(buyThirdPartyItemSlotRequest(thirdParty, 10, 10))
         .run({ silenceTimeout: true })
@@ -221,7 +221,7 @@ describe('when handling the request to buy third party item slots', () => {
     it('should put the action signaling the failure of the purchase of item slots with the slot amount and the third party id', () => {
       return expectSaga(thirdPartySaga, mockBuilder)
         .provide([
-          [call(getChainIdByNetwork, Network.MATIC), ChainId.MATIC_MUMBAI],
+          [call(getChainIdByNetwork, Network.KAI), ChainId.MATIC_MUMBAI],
           [select(getItemSlotPrice), mockedSlotPriceInMANA],
           [matchers.call.fn(sendTransaction), Promise.reject(new Error(defaultError))]
         ])
@@ -235,7 +235,7 @@ describe('when handling the request to buy third party item slots', () => {
     it('should put the action signaling the successful purchase of item slots with the slot amount, the third party and the transaction details', () => {
       return expectSaga(thirdPartySaga, mockBuilder)
         .provide([
-          [call(getChainIdByNetwork, Network.MATIC), ChainId.MATIC_MUMBAI],
+          [call(getChainIdByNetwork, Network.KAI), ChainId.MATIC_MUMBAI],
           [select(getItemSlotPrice), mockedSlotPriceInMANA],
           [matchers.call.fn(sendTransaction), Promise.resolve(txHash)]
         ])

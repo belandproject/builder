@@ -19,7 +19,7 @@ export function applySlotBuySlippage(cost: BigNumber) {
 }
 
 export function* getPublishItemsSignature(_thirdPartyId: string, _qty: number) {
-  // const maticChainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
+  // const maticChainId: ChainId = yield call(getChainIdByNetwork, Network.KAI)
   // const provider: Provider | null = yield call(getConnectedProvider)
   // if (!provider) {
   //   throw new Error('Could not get a valid connected Wallet')

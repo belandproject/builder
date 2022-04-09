@@ -193,7 +193,7 @@ describe('when executing the approval flow', () => {
             contentHashes: [updatedItem.blockchainContentHash]
           } as ApprovalFlowModalMetadata)
         )
-        .dispatch(rescueItemsSuccess(collection, [updatedItem], [updatedItem.blockchainContentHash!], ChainId.MATIC_MAINNET, ['0xhash']))
+        .dispatch(rescueItemsSuccess(collection, [updatedItem], [updatedItem.blockchainContentHash!], ChainId.KAI_MAINNET, ['0xhash']))
         .put(fetchCollectionItemsRequest(collection.id))
         .dispatch(fetchCollectionItemsSuccess(collection.id, [syncedItem, updatedItem]))
         .put(
@@ -211,7 +211,7 @@ describe('when executing the approval flow', () => {
             collection
           } as ApprovalFlowModalMetadata)
         )
-        .dispatch(approveCollectionSuccess({ ...collection, isApproved: true }, ChainId.MATIC_MAINNET, '0xhash2'))
+        .dispatch(approveCollectionSuccess({ ...collection, isApproved: true }, ChainId.KAI_MAINNET, '0xhash2'))
         .put(
           openModal('ApprovalFlowModal', {
             view: ApprovalFlowModalView.SUCCESS,
@@ -265,7 +265,7 @@ describe('when executing the approval flow', () => {
             contentHashes: [updatedItem.blockchainContentHash]
           } as ApprovalFlowModalMetadata)
         )
-        .dispatch(rescueItemsSuccess(collection, [updatedItem], [updatedItem.blockchainContentHash!], ChainId.MATIC_MAINNET, ['0xhash']))
+        .dispatch(rescueItemsSuccess(collection, [updatedItem], [updatedItem.blockchainContentHash!], ChainId.KAI_MAINNET, ['0xhash']))
         .put(fetchCollectionItemsRequest(collection.id))
         .dispatch(fetchCollectionItemsSuccess(collection.id, [syncedItem, updatedItem]))
         .put(
@@ -416,7 +416,7 @@ describe('when executing the approval flow', () => {
             contentHashes: [updatedItem.blockchainContentHash]
           } as ApprovalFlowModalMetadata)
         )
-        .dispatch(rescueItemsSuccess(collection, [updatedItem], [updatedItem.blockchainContentHash!], ChainId.MATIC_MAINNET, ['0xhash']))
+        .dispatch(rescueItemsSuccess(collection, [updatedItem], [updatedItem.blockchainContentHash!], ChainId.KAI_MAINNET, ['0xhash']))
         .put(fetchCollectionItemsRequest(collection.id))
         .dispatch(fetchCollectionItemsSuccess(collection.id, [syncedItem, updatedItem]))
         .put(
@@ -481,7 +481,7 @@ describe('when executing the approval flow', () => {
             contentHashes: [updatedItem.blockchainContentHash]
           } as ApprovalFlowModalMetadata)
         )
-        .dispatch(rescueItemsSuccess(collection, [updatedItem], [updatedItem.blockchainContentHash!], ChainId.MATIC_MAINNET, ['0xhash']))
+        .dispatch(rescueItemsSuccess(collection, [updatedItem], [updatedItem.blockchainContentHash!], ChainId.KAI_MAINNET, ['0xhash']))
         .put(fetchCollectionItemsRequest(collection.id))
         .dispatch(fetchCollectionItemsSuccess(collection.id, [syncedItem, updatedItem]))
         .put(
@@ -557,7 +557,7 @@ describe('when executing the approval flow', () => {
             contentHashes: [updatedItem.blockchainContentHash]
           } as ApprovalFlowModalMetadata)
         )
-        .dispatch(rescueItemsSuccess(collection, [updatedItem], [updatedItem.blockchainContentHash!], ChainId.MATIC_MAINNET, ['0xhash']))
+        .dispatch(rescueItemsSuccess(collection, [updatedItem], [updatedItem.blockchainContentHash!], ChainId.KAI_MAINNET, ['0xhash']))
         .put(fetchCollectionItemsRequest(collection.id))
         .dispatch(fetchCollectionItemsSuccess(collection.id, [syncedItem, updatedItem]))
         .put(
@@ -613,13 +613,13 @@ describe('when executing the approval flow', () => {
               { success: saveCollectionSuccess(collection) }
             ],
             [select(getAddress), [address]],
-            [call(getChainIdByNetwork, Network.MATIC), ChainId.MATIC_MAINNET],
+            [call(getChainIdByNetwork, Network.KAI), ChainId.KAI_MAINNET],
             [retry(10, 500, mockBuilder.lockCollection, collection), newLock],
             [retry(10, 500, mockBuilder.saveTOS, collection, email), undefined],
             [matchers.call.fn(sendTransaction), Promise.resolve(txHash)]
           ])
           .put(saveCollectionRequest(collection))
-          .put(publishCollectionSuccess(finalCollection, items, ChainId.MATIC_MAINNET, txHash))
+          .put(publishCollectionSuccess(finalCollection, items, ChainId.KAI_MAINNET, txHash))
           .put(replace(locations.activity()))
           .dispatch(publishCollectionRequest(collection, items, email))
           .run({ silenceTimeout: true })
@@ -682,13 +682,13 @@ describe('when executing the approval flow', () => {
         return expectSaga(collectionSaga, mockBuilder, mockCatalyst)
           .provide([
             [select(getAddress), [address]],
-            [call(getChainIdByNetwork, Network.MATIC), ChainId.MATIC_MAINNET],
+            [call(getChainIdByNetwork, Network.KAI), ChainId.KAI_MAINNET],
             [retry(10, 500, mockBuilder.lockCollection, lockedCollection), newLock],
             [retry(10, 500, mockBuilder.saveTOS, lockedCollection, email), undefined],
             [matchers.call.fn(sendTransaction), Promise.resolve(txHash)]
           ])
           .not.put(saveCollectionRequest(collection))
-          .put(publishCollectionSuccess(finalCollection, items, ChainId.MATIC_MAINNET, txHash))
+          .put(publishCollectionSuccess(finalCollection, items, ChainId.KAI_MAINNET, txHash))
           .put(replace(locations.activity()))
           .dispatch(publishCollectionRequest(lockedCollection, items, email))
           .run({ silenceTimeout: true })

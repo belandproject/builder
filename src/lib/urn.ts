@@ -76,7 +76,7 @@ export type DecodedURN<T extends URNType = any> = BaseDecodedURN &
     : BaseAvatarURN | CollectionsV2URN | CollectionThirdPartyURN)
 
 export function buildThirdPartyURN(thirdPartyName: string, collectionId: string, tokenId?: string) {
-  let urn = `urn:beland:${getNetworkURNProtocol(Network.MATIC)}:col-3dr:${thirdPartyName}:${collectionId}`
+  let urn = `urn:beland:${getNetworkURNProtocol(Network.KAI)}:col-3dr:${thirdPartyName}:${collectionId}`
   if (tokenId) {
     urn += `:${tokenId}`
   }
@@ -84,11 +84,11 @@ export function buildThirdPartyURN(thirdPartyName: string, collectionId: string,
 }
 
 export function buildCatalystItemURN(contractAddress: string, tokenId: string): URN {
-  return `urn:beland:${getNetworkURNProtocol(Network.MATIC)}:col:${contractAddress}:${tokenId}`
+  return `urn:beland:${getNetworkURNProtocol(Network.KAI)}:col:${contractAddress}:${tokenId}`
 }
 
 export function buildDefaultCatalystCollectionURN() {
-  return `urn:beland:${getNetworkURNProtocol(Network.MATIC)}:col:0x0000000000000000000000000000000000000000`
+  return `urn:beland:${getNetworkURNProtocol(Network.KAI)}:col:0x0000000000000000000000000000000000000000`
 }
 
 export function extractThirdPartyId(urn: URN): string {
