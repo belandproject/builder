@@ -15,24 +15,25 @@ import { Authorization } from '@beland/dapps/dist/modules/authorization/types'
 import { TRANSACTIONS_API_URL } from './utils'
 
 const baseWalletSaga = createWalletSaga({
-  CHAIN_ID: env.get('REACT_APP_CHAIN_ID') || ChainId.ETHEREUM_MAINNET,
+  CHAIN_ID: env.get('REACT_APP_CHAIN_ID') || ChainId.KAI_MAINNET,
   POLL_INTERVAL: 0,
   TRANSACTIONS_API_URL
 })
+
 
 export function* walletSaga() {
   yield all([baseWalletSaga(), customWalletSaga()])
 }
 
 function* customWalletSaga() {
-  yield takeEvery(CONNECT_WALLET_SUCCESS, handleWalletChange)
+  yield takeEvery(CONNECT_WALLET_SUCCESS, handleWalletChange) 
   yield takeEvery(CHANGE_ACCOUNT, handleWalletChange)
   yield takeEvery(CHANGE_NETWORK, handleWalletChange)
 }
 
 function* handleWalletChange(_action: ConnectWalletSuccessAction | ChangeAccountAction | ChangeNetworkAction) {
   // const { wallet } = action.payload
-  // const chainId = wallet.networks.MATIC.chainId
+  // const chainId = wallet.networks.KAI.chainId
   // All authorizations to be fetched must be added to the following list
   const authorizations: Authorization[] = []
 

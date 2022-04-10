@@ -11,12 +11,12 @@ import { Collection, Access, Mint, CollectionType } from './types'
 export const UNSYNCED_COLLECTION_ERROR_PREFIX = 'UnsyncedCollection:'
 
 export function setOnSale(collection: Collection, wallet: Wallet, isOnSale: boolean): Access[] {
-  const address = getSaleAddress(wallet.networks.MATIC.chainId)
+  const address = getSaleAddress(wallet.networks.KAI.chainId)
   return [{ address, hasAccess: isOnSale, collection }]
 }
 
 export function isOnSale(collection: Collection, wallet: Wallet) {
-  const address = getSaleAddress(wallet.networks.MATIC.chainId)
+  const address = getSaleAddress(wallet.networks.KAI.chainId)
   return includes(collection.minters, address)
 }
 

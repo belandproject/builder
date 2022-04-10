@@ -434,7 +434,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     const { collection } = action.payload
     try {
       const [wallet]: [Wallet] = yield getWallet()
-      const maticChainId = wallet.networks.MATIC.chainId
+      const maticChainId = wallet.networks.KAI.chainId
 
       const txHash: string = yield changeCollectionStatus(collection, false)
       yield put(rejectCollectionSuccess(collection, maticChainId, txHash))

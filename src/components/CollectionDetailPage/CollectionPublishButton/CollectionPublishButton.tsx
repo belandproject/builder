@@ -29,7 +29,7 @@ const CollectionPublishButton = (props: Props) => {
   )
 
   const getAuthorization = (): Authorization => {
-    return buildManaAuthorization(wallet.address, wallet.networks.MATIC.chainId, "" as any)
+    return buildManaAuthorization(wallet.address, wallet.networks.KAI.chainId, "" as any)
   }
 
   const handlePublish = () => {

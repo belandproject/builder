@@ -64,7 +64,7 @@ export default class ThirdPartyCollectionDetailPage extends React.PureComponent<
 
   getManaAuthorization = () => {
     const { wallet } = this.props
-    return buildManaAuthorization(wallet.address, wallet.networks.MATIC.chainId, '' as any)
+    return buildManaAuthorization(wallet.address, wallet.networks.KAI.chainId, '' as any)
   }
 
   handleNewItems = () => {

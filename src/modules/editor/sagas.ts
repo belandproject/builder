@@ -718,7 +718,7 @@ function* handleSetAvatarAnimation(_action: SetAvatarAnimationAction) {
 
 function* handleFetchBaseWearables() {
   try {
-    const response: Response = yield call(fetch, `${HUB_SERVER_URL}/collection-items?tokenAddress=urn:beland:off-chain:base-avatars&limit=1000`)
+    const response: Response = yield call(fetch, `${HUB_SERVER_URL}/items?tokenAddress=urn:beland:off-chain:base-avatars&limit=1000`)
     if (!response.ok) {
       throw new Error('Failed to fetch base wearables')
     }

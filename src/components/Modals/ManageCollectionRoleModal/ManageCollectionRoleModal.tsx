@@ -84,7 +84,7 @@ export default class ManageCollectionRoleModal extends React.PureComponent<Props
 
   getSaleAddress() {
     const { wallet } = this.props
-    return getSaleAddress(wallet.networks.MATIC.chainId)
+    return getSaleAddress(wallet.networks.KAI.chainId)
   }
 
   setRoles(accessList: Access[]) {
