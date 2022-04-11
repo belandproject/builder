@@ -1,5 +1,4 @@
 import { Address } from 'web3x/address'
-import { constants } from 'ethers'
 import { LocalItem } from '@dcl/builder-client'
 import { utils } from 'decentraland-commons'
 import { Entity } from 'dcl-catalyst-commons'
@@ -394,7 +393,7 @@ export function toInitializeItems(items: Item[]): InitializeItem[] {
 }
 
 export function toInitializeItem(item: Item): InitializeItem {
-  return [item.rarity!.toLowerCase(), item.price || '0', item.beneficiary ?? constants.AddressZero, getMetadata(item)]
+  return [item.totalSupply || 0, item.catalystContentHash || ""]
 }
 
 export function areEqualArrays<T>(a: T[], b: T[]) {

@@ -1,4 +1,4 @@
-import {ethers } from 'ethers'
+import { Contract, ethers } from 'ethers'
 import { push, replace } from 'connected-react-router'
 import { select, take, takeEvery, call, put, takeLatest, race, retry, delay, CallEffect, all } from 'redux-saga/effects'
 import { DeploymentPreparationData } from 'dcl-catalyst-client'
@@ -8,11 +8,13 @@ import { getOpenModals } from '@beland/dapps/dist/modules/modal/selectors'
 import { ModalState } from '@beland/dapps/dist/modules/modal/reducer'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { FetchTransactionSuccessAction, FETCH_TRANSACTION_SUCCESS } from '@beland/dapps/dist/modules/transaction/actions'
-import {  Wallet } from '@beland/dapps/dist/modules/wallet/types'
+import { Wallet } from '@beland/dapps/dist/modules/wallet/types'
 import { getAddress } from '@beland/dapps/dist/modules/wallet/selectors'
-import { getChainIdByNetwork} from '@beland/dapps/dist/lib/eth'
-import { ChainId, Network } from '@beland/schemas'
+import { getChainIdByNetwork, getConnectedProvider } from '@beland/dapps/dist/lib/eth'
+import { Network } from '@beland/schemas'
 import BelandNFTFactoryABI from '../../contracts/BelandNFTFactory.json'
+import BelandNFTABI from '../../contracts/BelandNFT.json'
+
 import {
   FetchCollectionsRequestAction,
   fetchCollectionsRequest,
@@ -89,7 +91,7 @@ import { locations } from 'routing/locations'
 import { getCollectionId } from 'modules/location/selectors'
 import { BuilderAPI } from 'lib/api/builder'
 import { closeModal, CloseModalAction, CLOSE_MODAL, openModal } from 'modules/modal/actions'
-import { Item, ItemApprovalData } from 'modules/item/types'
+import { InitializeItem, Item, ItemApprovalData, ItemRarity, RARITY_MAX_SUPPLY } from 'modules/item/types'
 import { Slot } from 'modules/thirdParty/types'
 import { getItems, getCollectionItems, getWalletItems, getData as getItemsById } from 'modules/item/selectors'
 import { getName } from 'modules/profile/selectors'
@@ -115,14 +117,7 @@ import {
 import { ApprovalFlowModalMetadata, ApprovalFlowModalView } from 'components/Modals/ApprovalFlowModal/ApprovalFlowModal.types'
 import { getCollection, getWalletCollections } from './selectors'
 import { Collection, CollectionType } from './types'
-import {
-  isOwner,
-  isLocked,
-  getCollectionType,
-  getLatestItemHash,
-  UNSYNCED_COLLECTION_ERROR_PREFIX,
-  isTPCollection
-} from './utils'
+import { isOwner, isLocked, getCollectionType, getLatestItemHash, UNSYNCED_COLLECTION_ERROR_PREFIX, isTPCollection } from './utils'
 import { HubAPI } from 'lib/api/hub'
 import { sendTransaction } from '@beland/dapps/dist/modules/wallet/utils'
 import { ContractData } from '@beland/transactions'
@@ -209,7 +204,6 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
         // const maticChainId = getChainIdByNetwork(Network.KAI)
         // const rarities = getContract(ContractName.Rarities, maticChainId)
         // const { abi } = getContract(ContractName.ERC721CollectionV2, maticChainId)
-
         // const provider: Provider = yield call(getNetworkProvider, maticChainId)
         // const collectionV2 = new Contract(
         //   constants.AddressZero, // using zero address here since we just want the implementation of the ERC721CollectionV2 to generate the `data` of the initialize method
@@ -279,8 +273,6 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
         }
       }
 
-    
-
       // Check that items currently in the builder match the items the user wants to publish
       // This will solve the issue were users could add items in different tabs and not see them in the tab
       // were the publish is being made, leaving the collection in a corrupted state.
@@ -299,32 +291,8 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
         }
       })
 
-      //const from: string = yield select(getAddress)
-      const chainID: ChainId = yield call(getChainIdByNetwork, Network.KAI)
+      yield sendCreateCollection(collection, items)
 
-      // const forwarder = getContract(ContractName.Forwarder, maticChainId)
-      // const factory = getContract(ContractName.CollectionFactory, maticChainId)
-      // const manager = getContract(ContractName.CollectionManager, maticChainId)
-
-      // // We wait for TOS to end first to avoid locking the collection preemptively if this endpoint fails
-      // yield retry(10, 500, builder.saveTOS, collection, email)
-
-      const factory: ContractData = {
-        abi: BelandNFTFactoryABI,
-        chainId: chainID,
-        address: "0x49E662ca18F7a2C7b38407f73928d5E83b688C69",
-        name: "factory",
-        version: "1"
-      }
-      console.log(factory)
-
-      const txHash: string = yield call(sendTransaction, factory, contract =>
-        contract.create(
-          collection.name,
-          collection.symbol,
-        )
-      )
-        console.log(txHash)
       const lock: string = yield retry(10, 500, builder.lockCollection, collection)
       collection = { ...collection, lock: +new Date(lock) }
 
@@ -333,6 +301,60 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     } catch (error) {
       yield put(publishCollectionFailure(collection, items, error.message))
     }
+  }
+
+  async function sendCreateCollection(collection: Collection, items: Item[]) {
+    const provider = await getConnectedProvider()
+    const web3 = new ethers.providers.Web3Provider(provider as any)
+    const contract: Contract = new ethers.Contract('0x49E662ca18F7a2C7b38407f73928d5E83b688C69', BelandNFTFactoryABI, web3.getSigner())
+    const tx = await contract.create(collection.name, collection.symbol)
+    await tx.wait()
+    const initializeItems: InitializeItem[] = []
+    for (let item of items) {
+      const contents = await _hub.createMetadata({
+        name: item.name,
+        description: item.description,
+        image: item.contents[item.thumbnail],
+        representations: item.data.representations.map(representation => {
+          return {
+            ...representation,
+            contents: representation.contents.map(content => {
+              return {
+                path: content,
+                hash: item.contents[content]
+              }
+            })
+          }
+        }),
+        attributes: [
+          {
+            trait_type: 'type',
+            value: item.data.__type.toString()
+          },
+          {
+            trait_type: 'category',
+            value: item.data.category
+          },
+          {
+            trait_type: 'rarity',
+            value: item.rarity
+          },
+          ...item.data.tags.map(value => ({ trait_type: 'tags', value })),
+          ...item.data.hides.map(value => ({ trait_type: 'hides', value })),
+          ...item.data.replaces.map(value => ({ trait_type: 'replaces', value }))
+        ]
+      })
+      initializeItems.push([RARITY_MAX_SUPPLY[item.rarity || ItemRarity.UNIQUE], contents.ipfs_uri])
+    }
+    await sendAddItems(collection, initializeItems)
+  }
+
+  async function sendAddItems(collection: Collection, items: InitializeItem[]) {
+    const provider = await getConnectedProvider()
+    const web3 = new ethers.providers.Web3Provider(provider as any)
+    const contract: Contract = new ethers.Contract(collection.contractAddress || '0x', BelandNFTABI, web3.getSigner())
+    const tx = await contract.addItems(items)
+    await tx.wait()
   }
 
   function* handleSetCollectionMintersRequest(action: SetCollectionMintersRequestAction) {
@@ -530,14 +552,11 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
   function* changeCollectionStatus(_collection: Collection, _isApproved: boolean) {
     // const maticChainId = getChainIdByNetwork(Network.KAI)
     // const contract = getContract(ContractName.Committee, maticChainId)
-
     // const { abi } = getContract(ContractName.ERC721CollectionV2, maticChainId)
     // const implementation = new Contract(collection.contractAddress!, abi)
-
     // const manager = getContract(ContractName.CollectionManager, maticChainId)
     // const forwarder = getContract(ContractName.Forwarder, maticChainId)
     // const data: string = yield call(getMethodData, implementation.populateTransaction.setApproved(isApproved))
-
     // const txHash: string = yield call(sendTransaction, contract, committee =>
     //   committee.manageCollection(manager.address, forwarder.address, collection.contractAddress!, [data])
     // )
@@ -555,8 +574,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     return newItemCuration
   }
 
-  function* getStandardItemsAndEntitiesToDeploy(_collection: Collection) {
-  }
+  function* getStandardItemsAndEntitiesToDeploy(_collection: Collection) {}
 
   function* getTPItemsAndEntitiesToDeploy(
     _collection: Collection,
@@ -564,10 +582,10 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     _tree: MerkleDistributorInfo,
     _hashes: Record<string, string>
   ) {
-    return;
+    return
     const itemsToDeploy: Item[] = []
     const entitiesToDeploy: DeploymentPreparationData[] = []
-    
+
     return { itemsToDeploy, entitiesToDeploy }
   }
 

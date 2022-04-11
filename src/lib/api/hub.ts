@@ -48,6 +48,10 @@ export class HubAPI extends BaseAPI {
       onUploadProgress
     });
   }
+
+  async createMetadata(data: any) {
+    return await this.request('post', `/upload/metadata`, data);
+  }
 }
 
 

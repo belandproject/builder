@@ -26,7 +26,7 @@ const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
 }
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
-  onPublish: (collection, items, email) => dispatch(publishCollectionRequest(collection, items, email)),
+  onPublish: (collection, items) => dispatch(publishCollectionRequest(collection, items, "")),
   onFetchRarities: () => dispatch(fetchRaritiesRequest())
 })
 

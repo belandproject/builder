@@ -28,7 +28,7 @@ import { getChainIdByNetwork } from '@beland/dapps/dist/lib/eth'
  *   )
  */
 const baseMatcher = 'urn:beland'
-const protocolMatcher = '(?<protocol>mainnet|ropsten|matic|mumbai|off-chain)'
+const protocolMatcher = '(?<protocol>kai|off-chain)'
 const typeMatcher = '(?<type>base-avatars|col|col-3dr)'
 
 const baseAvatarsSuffixMatcher = '((?<=base-avatars:)BaseMale|BaseFemale)'
