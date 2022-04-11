@@ -107,7 +107,7 @@ describe('when getting the collection type', () => {
     })
 
     it('should return false', () => {
-      expect(getCollectionType(collection)).toBe(CollectionType.DECENTRALAND)
+      expect(getCollectionType(collection)).toBe(CollectionType.BELAND)
     })
   })
 
@@ -118,7 +118,7 @@ describe('when getting the collection type', () => {
     })
 
     it('should return false', () => {
-      expect(getCollectionType(collection)).toBe(CollectionType.DECENTRALAND)
+      expect(getCollectionType(collection)).toBe(CollectionType.BELAND)
     })
   })
 

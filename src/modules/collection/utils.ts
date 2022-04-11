@@ -52,11 +52,9 @@ export function getCollectionType(collection: Collection): CollectionType {
   const { type } = decodeURN(collection.urn)
 
   switch (type) {
-    case URNType.COLLECTIONS_THIRDPARTY:
-      return CollectionType.THIRD_PARTY
     case URNType.COLLECTIONS_V2:
     case URNType.BASE_AVATARS:
-      return CollectionType.DECENTRALAND
+      return CollectionType.BELAND
     default:
       throw new Error(`Tried to get a collection type from an invalid URN: ${collection.urn}`)
   }

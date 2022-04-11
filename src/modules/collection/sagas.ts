@@ -135,7 +135,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
 
       let data: string = ''
 
-      if (getCollectionType(collection) === CollectionType.DECENTRALAND) {
+      if (getCollectionType(collection) === CollectionType.BELAND) {
         // const items: Item[] = yield select(state => getCollectionItems(state, collection.id))
         // const from: string = yield select(getAddress)
         // const maticChainId = getChainIdByNetwork(Network.KAI)
@@ -291,7 +291,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     const contract: Contract = new ethers.Contract(collection.contractAddress || '0x', BelandNFTABI, web3.getSigner())
     const tx = await contract.addItems(items)
     const reciept = await tx.wait()
-    return reciept.status
+    return reciept.transactionHash
   }
 
   function* handleSetCollectionMintersRequest(action: SetCollectionMintersRequestAction) {
@@ -333,7 +333,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     const contract: Contract = new ethers.Contract(collection.contractAddress || '0x', BelandNFTABI, web3.getSigner())
     const tx = await contract.setMinter(address, isMinter)
     const reciept = await tx.wait()
-    return reciept.status
+    return reciept.transactionHash
   }
 
   function* handleSetCollectionManagersRequest(action: SetCollectionManagersRequestAction) {
