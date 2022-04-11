@@ -46,7 +46,8 @@ import {
   SAVE_COLLECTION_FAILURE,
   SaveCollectionFailureAction,
   SaveCollectionSuccessAction,
-  publishCollectionSuccess
+  publishCollectionSuccess,
+  setCollectionMintersSuccess
 } from './actions'
 import { setItemsTokenIdRequest, FETCH_ITEMS_SUCCESS, SAVE_ITEM_SUCCESS, SaveItemSuccessAction } from 'modules/item/actions'
 import { isValidText } from 'modules/item/utils'
@@ -313,15 +314,26 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
           newMinters.delete(address)
         }
       }
+      let txHash: string = "";
+      for (let i = 0; i < addresses.length; i ++) {
+        txHash = yield sendTxSetMinter(collection, addresses[i], values[i])
+      }
 
-      // const contract = { ...getContract(ContractName.ERC721CollectionV2, maticChainId), address: collection.contractAddress! }
-      // const txHash: string = yield call(sendTransaction, contract, collection => collection.setMinters(addresses, values))
-
-      // yield put(setCollectionMintersSuccess(collection, Array.from(newMinters), maticChainId, txHash))
-      // yield put(replace(locations.activity()))
+      const chainId = getChainIdByNetwork(Network.KAI)
+      yield put(setCollectionMintersSuccess(collection, Array.from(newMinters), chainId, txHash))
+      yield put(replace(locations.activity()))
     } catch (error) {
       yield put(setCollectionMintersFailure(collection, accessList, error.message))
     }
+  }
+
+  async function sendTxSetMinter(collection: Collection, address: string, isMinter: boolean) {
+    const provider = await getConnectedProvider()
+    const web3 = new ethers.providers.Web3Provider(provider as any)
+    const contract: Contract = new ethers.Contract(collection.contractAddress || '0x', BelandNFTABI, web3.getSigner())
+    const tx = await contract.setMinter(address, isMinter)
+    const reciept = await tx.wait()
+    return reciept.status
   }
 
   function* handleSetCollectionManagersRequest(action: SetCollectionManagersRequestAction) {
