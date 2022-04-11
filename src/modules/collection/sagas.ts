@@ -11,7 +11,8 @@ import { FetchTransactionSuccessAction, FETCH_TRANSACTION_SUCCESS } from '@belan
 import {  Wallet } from '@beland/dapps/dist/modules/wallet/types'
 import { getAddress } from '@beland/dapps/dist/modules/wallet/selectors'
 import { getChainIdByNetwork} from '@beland/dapps/dist/lib/eth'
-import { Network } from '@beland/schemas'
+import { ChainId, Network } from '@beland/schemas'
+import BelandNFTFactoryABI from '../../contracts/BelandNFTFactory.json'
 import {
   FetchCollectionsRequestAction,
   fetchCollectionsRequest,
@@ -123,6 +124,8 @@ import {
   isTPCollection
 } from './utils'
 import { HubAPI } from 'lib/api/hub'
+import { sendTransaction } from '@beland/dapps/dist/modules/wallet/utils'
+import { ContractData } from '@beland/transactions'
 
 export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
   yield takeEvery(FETCH_COLLECTIONS_REQUEST, handleFetchCollectionsRequest)
@@ -276,9 +279,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
         }
       }
 
-      if (!collection.salt) {
-        throw new Error(yield call(t, 'sagas.item.missing_salt'))
-      }
+    
 
       // Check that items currently in the builder match the items the user wants to publish
       // This will solve the issue were users could add items in different tabs and not see them in the tab
@@ -299,7 +300,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
       })
 
       //const from: string = yield select(getAddress)
-      // const maticChainId: ChainId = yield call(getChainIdByNetwork, Network.KAI)
+      const chainID: ChainId = yield call(getChainIdByNetwork, Network.KAI)
 
       // const forwarder = getContract(ContractName.Forwarder, maticChainId)
       // const factory = getContract(ContractName.CollectionFactory, maticChainId)
@@ -308,19 +309,22 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
       // // We wait for TOS to end first to avoid locking the collection preemptively if this endpoint fails
       // yield retry(10, 500, builder.saveTOS, collection, email)
 
-      // const txHash: string = yield call(sendTransaction, manager, collectionManager =>
-      //   collectionManager.createCollection(
-      //     forwarder.address,
-      //     factory.address,
-      //     collection.salt!,
-      //     collection.name,
-      //     getCollectionSymbol(collection),
-      //     getCollectionBaseURI(),
-      //     from,
-      //     toInitializeItems(items)
-      //   )
-      // )
+      const factory: ContractData = {
+        abi: BelandNFTFactoryABI,
+        chainId: chainID,
+        address: "0x49E662ca18F7a2C7b38407f73928d5E83b688C69",
+        name: "factory",
+        version: "1"
+      }
+      console.log(factory)
 
+      const txHash: string = yield call(sendTransaction, factory, contract =>
+        contract.create(
+          collection.name,
+          collection.symbol,
+        )
+      )
+        console.log(txHash)
       const lock: string = yield retry(10, 500, builder.lockCollection, collection)
       collection = { ...collection, lock: +new Date(lock) }
 

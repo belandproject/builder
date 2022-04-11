@@ -5,7 +5,6 @@ import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { Button, Popup } from '@beland/uikit'
 import { env } from 'decentraland-commons'
 import { Authorization } from '@beland/dapps/dist/modules/authorization/types'
-import { hasAuthorization } from '@beland/dapps/dist/modules/authorization/utils'
 import { AuthorizationModal } from 'components/AuthorizationModal'
 import { MAX_ITEMS } from 'modules/collection/constants'
 import { isComplete } from 'modules/item/utils'
@@ -15,7 +14,7 @@ import { Props } from './CollectionPublishButton.types'
 import UnderReview from './UnderReview'
 
 const CollectionPublishButton = (props: Props) => {
-  const { wallet, collection, items, authorizations, status, hasPendingCuration, onPublish, onPush, onInit } = props
+  const { wallet, collection, items, status, hasPendingCuration, onPublish, onPush, onInit } = props
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
 
   useEffect(() => {
@@ -33,9 +32,7 @@ const CollectionPublishButton = (props: Props) => {
   }
 
   const handlePublish = () => {
-    const hasAuth = hasAuthorization(authorizations, getAuthorization())
-    if (hasAuth) onPublish()
-    setIsAuthModalOpen(!hasAuth)
+    onPublish()
   }
 
   const handleAuthModalClose = () => {
