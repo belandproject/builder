@@ -311,19 +311,11 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
       const beneficiaries: string[] = []
       const tokenIds: string[] = []
 
-      for (const mint of mints) {
-        const beneficiary = mint.address
-        for (let i = 0; i < mint.amount; i++) {
-          beneficiaries.push(beneficiary)
-          tokenIds.push(mint.item.tokenId!)
-        }
-      }
       let txHash = '';
-      for (let i =0; i < tokenIds.length; i ++) {
-        txHash = yield sendTxMintNFT(collection, beneficiaries[i], tokenIds[i])
+      for (const mint of mints) {
+        txHash = yield sendTxMintNFT(collection, mint.address, mint.item.tokenId!, mint.amount)
       }
 
-      
       yield put(mintCollectionItemsSuccess(collection, mints, chainId, txHash))
       yield put(closeModal('MintItemsModal'))
       yield put(replace(locations.activity()))
@@ -332,11 +324,11 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     }
   }
 
-  async function sendTxMintNFT(collection: Collection, to: string, itemId: string) {
+  async function sendTxMintNFT(collection: Collection, to: string, itemId: string, amount: number) {
     const provider = await getConnectedProvider()
     const web3 = new ethers.providers.Web3Provider(provider as any)
     const contract: Contract = new ethers.Contract(collection.contractAddress || '0x', BelandNFTABI, web3.getSigner())
-    const tx = await contract.create(to, itemId)
+    const tx = await contract.batchCreate(to, itemId, amount)
     const reciept = await tx.wait()
     return reciept.transactionHash
   }
