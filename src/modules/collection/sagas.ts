@@ -35,9 +35,6 @@ import {
   SetCollectionMintersRequestAction,
   setCollectionMintersFailure,
   SET_COLLECTION_MINTERS_REQUEST,
-  SetCollectionManagersRequestAction,
-  setCollectionManagersFailure,
-  SET_COLLECTION_MANAGERS_REQUEST,
   MintCollectionItemsRequestAction,
   mintCollectionItemsFailure,
   MINT_COLLECTION_ITEMS_REQUEST,
@@ -74,7 +71,6 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
   yield takeEvery(DELETE_COLLECTION_REQUEST, handleDeleteCollectionRequest)
   yield takeEvery(PUBLISH_COLLECTION_REQUEST, handlePublishCollectionRequest)
   yield takeEvery(SET_COLLECTION_MINTERS_REQUEST, handleSetCollectionMintersRequest)
-  yield takeEvery(SET_COLLECTION_MANAGERS_REQUEST, handleSetCollectionManagersRequest)
   yield takeEvery(MINT_COLLECTION_ITEMS_REQUEST, handleMintCollectionItemsRequest)
   yield takeLatest(LOGIN_SUCCESS, handleLoginSuccess)
 
@@ -334,37 +330,6 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     const tx = await contract.setMinter(address, isMinter)
     const reciept = await tx.wait()
     return reciept.transactionHash
-  }
-
-  function* handleSetCollectionManagersRequest(action: SetCollectionManagersRequestAction) {
-    const { collection, accessList } = action.payload
-    try {
-      //const maticChainId = getChainIdByNetwork(Network.KAI)
-
-      const addresses: string[] = []
-      const values: boolean[] = []
-
-      const newManagers = new Set(collection.managers)
-
-      for (const { address, hasAccess } of accessList) {
-        addresses.push(address)
-        values.push(hasAccess)
-
-        if (hasAccess) {
-          newManagers.add(address)
-        } else {
-          newManagers.delete(address)
-        }
-      }
-
-      // const contract = { ...getContract(ContractName.ERC721CollectionV2, maticChainId), address: collection.contractAddress! }
-      // const txHash: string = yield call(sendTransaction, contract, collection => collection.setManagers(addresses, values))
-
-      // yield put(setCollectionManagersSuccess(collection, Array.from(newManagers), maticChainId, txHash))
-      // yield put(replace(locations.activity()))
-    } catch (error) {
-      yield put(setCollectionManagersFailure(collection, accessList, error.message))
-    }
   }
 
   function* handleMintCollectionItemsRequest(action: MintCollectionItemsRequestAction) {
