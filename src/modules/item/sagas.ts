@@ -44,9 +44,6 @@ import {
   fetchRaritiesFailure,
   FETCH_RARITIES_REQUEST,
   FETCH_ITEMS_SUCCESS,
-  RESCUE_ITEMS_REQUEST,
-  RescueItemsRequestAction,
-  rescueItemsFailure,
   ResetItemRequestAction,
   RESET_ITEM_REQUEST,
   resetItemFailure,
@@ -100,7 +97,6 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
   yield takeEvery(FETCH_COLLECTION_REQUEST, handleFetchCollectionRequest)
   yield takeEvery(SET_ITEMS_TOKEN_ID_FAILURE, handleRetrySetItemsTokenId)
   yield takeEvery(FETCH_RARITIES_REQUEST, handleFetchRaritiesRequest)
-  yield takeEvery(RESCUE_ITEMS_REQUEST, handleRescueItemsRequest)
   yield takeEvery(RESET_ITEM_REQUEST, handleResetItemRequest)
   yield takeEvery(DOWNLOAD_ITEM_REQUEST, handleDownloadItemRequest)
   yield takeLatestCancellable(
@@ -342,49 +338,6 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
       if (pointers.length > 0) {
         yield put(fetchEntitiesByPointersRequest(EntityType.WEARABLE, pointers))
       }
-    }
-  }
-
-  function* handleRescueItemsRequest(action: RescueItemsRequestAction) {
-    const { collection, items, contentHashes } = action.payload
-
-    try {
-      // const chainId: ChainId = yield call(getChainIdByNetwork, Network.KAI)
-      // const tokenIds = items.map(item => item.tokenId!)
-      // const metadatas = items.map(item => getMetadata(item))
-
-      // const contract = getContract(ContractName.Committee, chainId)
-      // const { abi } = getContract(ContractName.ERC721CollectionV2, chainId)
-      // const implementation = new Contract(collection.contractAddress!, abi)
-
-      // const manager = getContract(ContractName.CollectionManager, chainId)
-      // const forwarder = getContract(ContractName.Forwarder, chainId)
-
-      // const tokenIdsChunks = groupsOf(tokenIds, MAX_ITEMS)
-      // const itemsChunks = groupsOf(items, MAX_ITEMS)
-      // const metadatasChunks = groupsOf(metadatas, MAX_ITEMS)
-      // const contentHashesChunks = groupsOf(contentHashes, MAX_ITEMS)
-      // const txHashes: string[] = []
-
-      // for (let i = 0; i < tokenIdsChunks.length; i++) {
-      //   const data: string = yield call(
-      //     getMethodData,
-      //     implementation.populateTransaction.rescueItems(tokenIdsChunks[i], contentHashesChunks[i], metadatasChunks[i])
-      //   )
-
-      //   const txHash: string = yield call(sendTransaction, contract, committee =>
-      //     committee.manageCollection(manager.address, forwarder.address, collection.contractAddress!, [data])
-      //   )
-
-      //   txHashes.push(txHash)
-      //   yield put(rescueItemsChunkSuccess(collection, itemsChunks[i], contentHashesChunks[i], chainId, txHash))
-
-      //   yield call(waitForTx, txHash)
-      // }
-      // const newItems = items.map<Item>((item, index) => ({ ...item, blockchainContentHash: contentHashes[index] }))
-      // yield put(rescueItemsSuccess(collection, newItems, contentHashes, chainId, txHashes))
-    } catch (error) {
-      yield put(rescueItemsFailure(collection, items, contentHashes, error.message))
     }
   }
 
