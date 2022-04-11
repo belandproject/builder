@@ -44,7 +44,8 @@ import {
   SaveCollectionFailureAction,
   SaveCollectionSuccessAction,
   publishCollectionSuccess,
-  setCollectionMintersSuccess
+  setCollectionMintersSuccess,
+  mintCollectionItemsSuccess
 } from './actions'
 import { setItemsTokenIdRequest, FETCH_ITEMS_SUCCESS, SAVE_ITEM_SUCCESS, SaveItemSuccessAction } from 'modules/item/actions'
 import { isValidText } from 'modules/item/utils'
@@ -57,8 +58,8 @@ import { getCollectionItems, getWalletItems } from 'modules/item/selectors'
 import { LoginSuccessAction, LOGIN_SUCCESS } from 'modules/identity/actions'
 
 import { getCollection, getWalletCollections } from './selectors'
-import { Collection, CollectionType } from './types'
-import { isOwner, isLocked, getCollectionType, UNSYNCED_COLLECTION_ERROR_PREFIX, isTPCollection } from './utils'
+import { Collection } from './types'
+import { isOwner, isLocked, UNSYNCED_COLLECTION_ERROR_PREFIX, isTPCollection } from './utils'
 import { HubAPI } from 'lib/api/hub'
 
 export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
@@ -128,37 +129,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
       if (isLocked(collection)) {
         throw new Error(yield call(t, 'sagas.collection.collection_locked'))
       }
-
-      let data: string = ''
-
-      if (getCollectionType(collection) === CollectionType.BELAND) {
-        // const items: Item[] = yield select(state => getCollectionItems(state, collection.id))
-        // const from: string = yield select(getAddress)
-        // const maticChainId = getChainIdByNetwork(Network.KAI)
-        // const rarities = getContract(ContractName.Rarities, maticChainId)
-        // const { abi } = getContract(ContractName.ERC721CollectionV2, maticChainId)
-        // const provider: Provider = yield call(getNetworkProvider, maticChainId)
-        // const collectionV2 = new Contract(
-        //   constants.AddressZero, // using zero address here since we just want the implementation of the ERC721CollectionV2 to generate the `data` of the initialize method
-        //   abi,
-        //   new providers.Web3Provider(provider)
-        // )
-        // data = yield call(
-        //   getMethodData,
-        //   collectionV2.populateTransaction.initialize(
-        //     collection.name,
-        //     getCollectionSymbol(collection),
-        //     getCollectionBaseURI(),
-        //     from,
-        //     true, // should complete
-        //     false, // is approved
-        //     rarities.address,
-        //     toInitializeItems(items)
-        //   )
-        // )
-      }
-
-      const remoteCollection: Collection = yield call([builder, 'saveCollection'], collection, data)
+      const remoteCollection: Collection = yield call([builder, 'saveCollection'], collection)
       const newCollection = { ...collection, ...remoteCollection }
 
       yield put(saveCollectionSuccess(newCollection))
@@ -335,7 +306,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
   function* handleMintCollectionItemsRequest(action: MintCollectionItemsRequestAction) {
     const { collection, mints } = action.payload
     try {
-      //const maticChainId = getChainIdByNetwork(Network.KAI)
+      const chainId = getChainIdByNetwork(Network.KAI)
 
       const beneficiaries: string[] = []
       const tokenIds: string[] = []
@@ -347,16 +318,27 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
           tokenIds.push(mint.item.tokenId!)
         }
       }
+      let txHash = '';
+      for (let i =0; i < tokenIds.length; i ++) {
+        txHash = yield sendTxMintNFT(collection, beneficiaries[i], tokenIds[i])
+      }
 
-      // const contract = { ...getContract(ContractName.ERC721CollectionV2, maticChainId), address: collection.contractAddress! }
-      // const txHash: string = yield call(sendTransaction, contract, collection => collection.issueTokens(beneficiaries, tokenIds))
-
-      // yield put(mintCollectionItemsSuccess(collection, mints, maticChainId, txHash))
-      // yield put(closeModal('MintItemsModal'))
-      // yield put(replace(locations.activity()))
+      
+      yield put(mintCollectionItemsSuccess(collection, mints, chainId, txHash))
+      yield put(closeModal('MintItemsModal'))
+      yield put(replace(locations.activity()))
     } catch (error) {
       yield put(mintCollectionItemsFailure(collection, mints, error.message))
     }
+  }
+
+  async function sendTxMintNFT(collection: Collection, to: string, itemId: string) {
+    const provider = await getConnectedProvider()
+    const web3 = new ethers.providers.Web3Provider(provider as any)
+    const contract: Contract = new ethers.Contract(collection.contractAddress || '0x', BelandNFTABI, web3.getSigner())
+    const tx = await contract.create(to, itemId)
+    const reciept = await tx.wait()
+    return reciept.transactionHash
   }
 
   function* handleLoginSuccess(action: LoginSuccessAction) {
