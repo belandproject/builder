@@ -67,8 +67,7 @@ export type RemoteCollection = {
   minters: string[]
   managers: string[]
   forum_link: string | null
-  lock: Date | null
-  reviewed_at: Date | null
+  locked_at: Date | null
   created_at: Date
   updated_at: Date
 }
@@ -368,8 +367,7 @@ function toRemoteCollection(collection: Collection): RemoteCollection {
     minters: collection.minters,
     managers: collection.managers,
     forum_link: collection.forumLink || null,
-    lock: collection.lock ? new Date(collection.lock) : null,
-    reviewed_at: collection.reviewedAt ? new Date(collection.reviewedAt) : null,
+    locked_at: collection.lock ? new Date(collection.lock) : null,
     created_at: new Date(collection.createdAt),
     updated_at: new Date(collection.updatedAt)
   }
@@ -389,13 +387,11 @@ function fromRemoteCollection(remoteCollection: RemoteCollection) {
     minters: remoteCollection.minters || [],
     managers: remoteCollection.managers || [],
     forumLink: remoteCollection.forum_link || undefined,
-    lock: remoteCollection.lock ? +new Date(remoteCollection.lock) : undefined,
-    reviewedAt: remoteCollection.reviewed_at ? +new Date(remoteCollection.reviewed_at) : undefined,
+    lock: remoteCollection.locked_at ? +new Date(remoteCollection.locked_at) : undefined,
     createdAt: +new Date(remoteCollection.created_at),
     updatedAt: +new Date(remoteCollection.updated_at)
   }
 
-  if (remoteCollection.salt) collection.salt = remoteCollection.salt
   if (remoteCollection.contract_address) collection.contractAddress = remoteCollection.contract_address
 
   return collection
@@ -680,7 +676,7 @@ export class BuilderAPI extends BaseAPI {
   }
 
   lockCollection = (collection: Collection): Promise<string> => {
-    return this.request('post', `/collections/${collection.id}/lock`, { collection_address: collection.id })
+    return this.request('post', `/collections/${collection.id}/lock`)
   }
 
   async deleteCollection(id: string) {
