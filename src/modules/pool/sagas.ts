@@ -47,12 +47,12 @@ export function* poolSaga(builder: BuilderAPI) {
   yield takeLatest(LOAD_POOLS_REQUEST, handleLoadPools)
 
   function* handleLoadPools(action: LoadPoolsRequestAction) {
-    const { group, page, sortBy, sortOrder, ethAddress } = action.payload
+    const { page, sortBy, sortOrder, ethAddress } = action.payload
 
     try {
       const { offset, limit } = getPagination(page || 1, RECORDS_PER_PAGE)
       const { items, total }: { items: Pool[]; total: number } = yield call(() =>
-        builder.fetchPoolsPage({ offset, limit, group, eth_address: ethAddress, sort_by: sortBy, sort_order: sortOrder })
+        builder.fetchPoolsPage({ offset, limit, owner: ethAddress, orderBy: sortBy, orderDirection: sortOrder })
       )
       const records: ModelById<Pool> = {}
       for (const item of items) {

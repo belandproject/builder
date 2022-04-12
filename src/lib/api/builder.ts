@@ -7,7 +7,6 @@ import { Asset, AssetAction, AssetParameter } from 'modules/asset/types'
 import { Scene } from 'modules/scene/types'
 import { FullAssetPack } from 'modules/assetPack/types'
 import { dataURLToBlob, isDataUrl, objectURLToBlob } from 'modules/media/utils'
-import { Pool } from 'modules/pool/types'
 import { Item, ItemType, ItemRarity, WearableData, Rarity, ItemApprovalData } from 'modules/item/types'
 import { Collection } from 'modules/collection/types'
 import { Cheque, ThirdParty } from 'modules/thirdParty/types'
@@ -199,29 +198,6 @@ function fromRemoteProject(remoteProject: RemoteProject): Project {
     createdAt: remoteProject.created_at,
     updatedAt: remoteProject.updated_at
   }
-}
-
-function fromRemotePool(remotePool: RemotePool): Pool {
-  const pool = fromRemoteProject(remotePool) as Pool
-
-  pool.thumbnail = `${BUILDER_SERVER_URL}/projects/${remotePool.id}/media/preview.png`
-  pool.isPublic = true
-  pool.groups = remotePool.groups || []
-  pool.likes = remotePool.likes || 0
-  pool.like = !!remotePool.like
-
-  if (remotePool.parcels) {
-    pool.statistics = {
-      parcels: remotePool.parcels as number,
-      transforms: remotePool.transforms as number,
-      gltf_shapes: remotePool.gltf_shapes as number,
-      nft_shapes: remotePool.nft_shapes as number,
-      scripts: remotePool.scripts as number,
-      entities: remotePool.entities as number
-    }
-  }
-
-  return pool
 }
 
 function toRemoteAssetPack(assetPack: FullAssetPack): RemoteAssetPack {
@@ -419,8 +395,8 @@ export type PoolDeploymentAdditionalFields = {
 }
 
 export type Sort = {
-  sort_by?: string
-  sort_order?: 'asc' | 'desc'
+  orderBy?: string
+  orderDirection?: 'asc' | 'desc'
 }
 
 export type Pagination = {
@@ -429,8 +405,7 @@ export type Pagination = {
 }
 
 export type PoolFilters = {
-  group?: string
-  eth_address?: string
+  owner?: string
 }
 
 // API
@@ -497,13 +472,14 @@ export class BuilderAPI extends BaseAPI {
     return rows.map(fromRemoteProject)
   }
 
-  async fetchPublicProject(projectId: string, type: 'public' | 'pool' = 'public') {
-    const project: RemotePool = await this.request('get', `/projects/${projectId}/${type}`)
-    return type === 'pool' ? fromRemotePool(project) : fromRemoteProject(project)
+  async fetchPublicProject(projectId: string) {
+    const project: RemotePool = await this.request('get', `/projects/${projectId}`)
+    return fromRemoteProject(project)
   }
 
   async fetchPoolsPage(_filters: PoolFilters & Pagination & Sort) {
-    return { items: [], total: 0 }
+    const { rows, count }: { rows: RemoteProject[]; count: number } = await this.request('get', `/projects`, {..._filters, is_public: 1})
+    return { items: rows.map(fromRemoteProject), total: count }
   }
 
   async fetchPoolGroups(_activeOnly: boolean = false) {
