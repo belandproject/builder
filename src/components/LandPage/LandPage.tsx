@@ -5,14 +5,14 @@ import Chip from 'components/Chip'
 import { Atlas } from 'components/Atlas'
 import { NavigationTab } from 'components/Navigation/Navigation.types'
 import LoggedInDetailPage from 'components/LoggedInDetailPage'
-import { RoleType } from 'modules/land/types'
+import { Land, RoleType } from 'modules/land/types'
 import { LandPageView } from 'modules/ui/land/types'
 import { getCoords } from 'modules/land/utils'
 import TableRow from './TableRow'
 import { Props, State } from './LandPage.types'
 import './LandPage.css'
 
-const PAGE_SIZE = 20
+const PAGE_SIZE = 10
 
 export default class LandPage extends React.PureComponent<Props, State> {
   state: State = {
@@ -100,21 +100,20 @@ export default class LandPage extends React.PureComponent<Props, State> {
         {view === LandPageView.GRID ? (
           <Container>
             <Section className="table-section">
-              {filteredLands.length > 0 ? (
+              {filteredLands && filteredLands.length > 0 ? (
                 <Table basic="very">
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell width="4">{t('land_page.name')}</Table.HeaderCell>
                       <Table.HeaderCell width="2">{t('land_page.coords')}</Table.HeaderCell>
                       <Table.HeaderCell width="2">{t('land_page.owner')}</Table.HeaderCell>
-                      <Table.HeaderCell width="4">{t('land_page.operators')}</Table.HeaderCell>
                       <Table.HeaderCell width="4">{t('land_page.online_scenes')}</Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
 
                   <Table.Body>
-                    {filteredLands.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map(land => (
-                      <TableRow land={land} />
+                    {filteredLands.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map((land, index) => (
+                      <TableRow land={land} key={index} />
                     ))}
                   </Table.Body>
                 </Table>
@@ -141,7 +140,7 @@ export default class LandPage extends React.PureComponent<Props, State> {
     )
   }
 
-  getFilteredLands() {
+  getFilteredLands(): Land[] {
     const { lands } = this.props
     const { showOwner, showOperator } = this.state
 
@@ -152,9 +151,8 @@ export default class LandPage extends React.PureComponent<Props, State> {
       if (showOperator && land.role === RoleType.OPERATOR) {
         return true
       }
-      return false
+      return true
     })
-
     return filteredLands
   }
 

@@ -3,7 +3,10 @@ export const includes = (addresses: string[], address: string) => {
 }
 
 export const isEqual = (addr1: string, addr2: string) => {
-  return addr1.toLowerCase() === addr2.toLowerCase()
+  if (addr1 && addr2) {
+    return addr1.toLowerCase() === addr2.toLowerCase()
+  }
+  return addr1 === addr2;
 }
 
 export const isZero = (addr: string) => {
