@@ -49,8 +49,7 @@ import { isRemoteURL } from 'modules/media/utils'
 import { getSceneByProjectId } from 'modules/scene/utils'
 import { BuilderAPI } from 'lib/api/builder'
 import { saveProjectRequest } from 'modules/sync/actions'
-import { Gizmo } from 'modules/editor/types'
-import { Pool } from 'modules/pool/types'
+import { Gizmo, PreviewType } from 'modules/editor/types'
 import { loadProfileRequest } from '@beland/dapps/dist/modules/profile/actions'
 import { LOGIN_SUCCESS, LoginSuccessAction } from 'modules/identity/actions'
 import { getName } from 'modules/profile/selectors'
@@ -217,10 +216,10 @@ export function* projectSaga(builder: BuilderAPI) {
   }
 
   function* handleLoadPublicProject(action: LoadPublicProjectRequestAction) {
-    const { id, type } = action.payload
+    const { id } = action.payload
     try {
-      const project: Project | Pool = yield call(() => builder.fetchPublicProject(id, type))
-      yield put(loadPublicProjectSuccess(project, type))
+      const project: Project = yield call(() => builder.fetchPublicProject(id))
+      yield put(loadPublicProjectSuccess(project, PreviewType.PUBLIC))
       if (project) {
         if (project.ethAddress) {
           yield put(loadProfileRequest(project.ethAddress))

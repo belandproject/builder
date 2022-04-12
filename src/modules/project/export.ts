@@ -52,7 +52,7 @@ export async function createFiles(args: {
   isEmpty?: boolean
   onProgress: (args: { loaded: number; total: number }) => void
 }) {
-  const { project, scene, point, rotation, thumbnail, author, isDeploy, isEmpty, onProgress } = args
+  const { project, scene, point, rotation, author, isDeploy, isEmpty, onProgress } = args
   const files = await downloadFiles({ scene, onProgress, isDeploy })
   const gameFile = await createGameFile({ project, scene, rotation }, isDeploy)
 
@@ -61,7 +61,7 @@ export async function createFiles(args: {
     [EXPORT_PATH.MANIFEST_FILE]: JSON.stringify(createManifest(project, scene)),
     [EXPORT_PATH.GAME_FILE]: gameFile,
     [EXPORT_PATH.BUNDLED_GAME_FILE]: hasScripts(scene) ? createGameFileBundle(gameFile) : gameFile,
-    [EXPORT_PATH.THUMBNAIL_FILE]: await createThumbnailBlob(thumbnail),
+    [EXPORT_PATH.THUMBNAIL_FILE]: await createThumbnailBlob(project.thumbnail),
     ...createDynamicFiles({ project, scene, point, rotation, thumbnail: EXPORT_PATH.THUMBNAIL_FILE, author, isEmpty }),
     ...createStaticFiles(),
     ...files
@@ -351,7 +351,7 @@ export async function downloadFiles(args: {
 
   const promises = paths.map(path => {
     const url = mappings[path]
-    return fetch(url, { headers: NO_CACHE_HEADERS })
+    return fetch(url)
       .then(resp => resp.blob())
       .then(blob => {
         progress++
@@ -520,7 +520,7 @@ export function hasScripts(scene: Scene) {
 async function createThumbnailBlob(thumbnail: string | null) {
   if (thumbnail) {
     try {
-      const resp = await fetch(thumbnail, { headers: NO_CACHE_HEADERS })
+      const resp = await fetch(thumbnail)
       const blob = await resp.blob()
       return blob
     } catch (error) {
