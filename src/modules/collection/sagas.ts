@@ -308,9 +308,6 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     try {
       const chainId = getChainIdByNetwork(Network.KAI)
 
-      const beneficiaries: string[] = []
-      const tokenIds: string[] = []
-
       let txHash = '';
       for (const mint of mints) {
         txHash = yield sendTxMintNFT(collection, mint.address, mint.item.tokenId!, mint.amount)
