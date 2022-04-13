@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Table, Row, Radio, Column, Header, Pagination, Section, Container, Popup } from '@beland/uikit'
+import { Table, Row, Column, Header, Pagination, Section, Container } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import Chip from 'components/Chip'
 import { Atlas } from 'components/Atlas'
@@ -16,8 +16,6 @@ const PAGE_SIZE = 10
 
 export default class LandPage extends React.PureComponent<Props, State> {
   state: State = {
-    showOwner: true,
-    showOperator: true,
     page: 1,
     selectedLand: 0
   }
@@ -30,7 +28,7 @@ export default class LandPage extends React.PureComponent<Props, State> {
 
   renderLand() {
     const { view, onSetView } = this.props
-    const { page, showOwner, showOperator, selectedLand } = this.state
+    const { page, selectedLand } = this.state
 
     const filteredLands = this.getFilteredLands()
 
@@ -65,31 +63,6 @@ export default class LandPage extends React.PureComponent<Props, State> {
               </Column>
               <Column align="right">
                 <Row>
-                  <Popup
-                    trigger={
-                      <Radio
-                        className="owner-checkbox"
-                        value="owner"
-                        checked={showOwner}
-                        onClick={() => this.setState({ showOwner: !showOwner })}
-                        label={t('land_page.owner')}
-                      />
-                    }
-                    content="These are lands you own."
-                  />
-                  <Popup
-                    trigger={
-                      <Radio
-                        className="operator-checkbox"
-                        value="operator"
-                        checked={showOperator}
-                        onClick={() => this.setState({ showOperator: !showOperator })}
-                        label={t('land_page.operator')}
-                      />
-                    }
-                    className="operator-popup"
-                    content={<div>{t('land_page.owner_permission')}</div>}
-                  />
                   <Chip className="grid" icon="table" isActive={view === LandPageView.GRID} onClick={() => onSetView(LandPageView.GRID)} />
                   <Chip className="atlas" icon="pin" isActive={view === LandPageView.ATLAS} onClick={() => onSetView(LandPageView.ATLAS)} />
                 </Row>
@@ -107,7 +80,6 @@ export default class LandPage extends React.PureComponent<Props, State> {
                       <Table.HeaderCell width="4">{t('land_page.name')}</Table.HeaderCell>
                       <Table.HeaderCell width="2">{t('land_page.coords')}</Table.HeaderCell>
                       <Table.HeaderCell width="2">{t('land_page.owner')}</Table.HeaderCell>
-                      <Table.HeaderCell width="4">{t('land_page.online_scenes')}</Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
 
@@ -133,7 +105,7 @@ export default class LandPage extends React.PureComponent<Props, State> {
           </Container>
         ) : (
           <div className="atlas-wrapper">
-            <Atlas className="main" x={selectedX} y={selectedY} showOperator={showOperator} showOwner={showOwner} hasPopup />
+            <Atlas className="main" x={selectedX} y={selectedY} hasPopup />
           </div>
         )}
       </>
@@ -142,16 +114,11 @@ export default class LandPage extends React.PureComponent<Props, State> {
 
   getFilteredLands(): Land[] {
     const { lands } = this.props
-    const { showOwner, showOperator } = this.state
-
     const filteredLands = lands.filter(land => {
-      if (showOwner && land.role === RoleType.OWNER) {
+      if (land.role === RoleType.OWNER) {
         return true
       }
-      if (showOperator && land.role === RoleType.OPERATOR) {
-        return true
-      }
-      return true
+      return false
     })
     return filteredLands
   }
