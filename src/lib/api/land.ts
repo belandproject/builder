@@ -1,14 +1,13 @@
 import { AxiosRequestConfig, AxiosError } from 'axios'
 import { APIParam, BaseAPI } from '@beland/dapps/dist/lib/api'
-import { env } from 'decentraland-commons'
+import { HUB_SERVER_URL } from './builder'
 
-export const BUILDER_SERVER_URL = env.get('REACT_APP_BUILDER_SERVER_URL', '')
 
 
 export class LandAPI extends BaseAPI {
 
     constructor() {
-        super(BUILDER_SERVER_URL)
+        super(HUB_SERVER_URL)
     }
 
     async request(method: AxiosRequestConfig['method'], path: string, params?: APIParam | null, config?: AxiosRequestConfig) {

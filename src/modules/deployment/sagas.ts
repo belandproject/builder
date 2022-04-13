@@ -10,6 +10,8 @@ import { getCurrentProject, getData as getProjects } from 'modules/project/selec
 import { Deployment, SceneDefinition, Placement } from 'modules/deployment/types'
 import { Scene } from 'modules/scene/types'
 import { Project } from 'modules/project/types'
+import BelandSceneABI from '../../contracts/BelandScene.json'
+
 import {
   DEPLOY_TO_POOL_REQUEST,
   deployToPoolFailure,
@@ -50,6 +52,9 @@ import { FETCH_LANDS_SUCCESS, FetchLandsSuccessAction } from 'modules/land/actio
 import { LandType } from 'modules/land/types'
 import { coordsToId, idToCoords } from 'modules/land/utils'
 import { getCoordsByEstateId } from 'modules/land/selectors'
+import { HubAPI } from 'lib/api/hub'
+import { getConnectedProvider } from '@beland/dapps/dist/lib/eth'
+import { Contract, ethers } from 'ethers'
 
 type UnwrapPromise<T> = T extends PromiseLike<infer U> ? U : T
 
@@ -59,7 +64,7 @@ const handleProgress = (type: ProgressStage) => (args: { loaded: number; total: 
   store.dispatch(setProgress(type, progress))
 }
 
-export function* deploymentSaga(builder: BuilderAPI) {
+export function* deploymentSaga(builder: BuilderAPI, hub: HubAPI) {
   yield takeLatest(DEPLOY_TO_POOL_REQUEST, handleDeployToPoolRequest)
   yield takeLatest(DEPLOY_TO_LAND_REQUEST, handleDeployToLandRequest)
   yield takeLatest(CLEAR_DEPLOYMENT_REQUEST, handleClearDeploymentRequest)
@@ -102,6 +107,13 @@ export function* deploymentSaga(builder: BuilderAPI) {
     } else {
       yield put(deployToPoolFailure('Unable to Publish: Invalid project'))
     }
+  }
+
+  function arrayBufferFrom(value: Buffer | Uint8Array) {
+    if (value.buffer) {
+      return value.buffer
+    }
+    return value
   }
 
   function* handleDeployToLandRequest(action: DeployToLandRequestAction) {
@@ -165,18 +177,21 @@ export function* deploymentSaga(builder: BuilderAPI) {
       })
 
       const contentFiles: Map<string, Buffer> = yield call(makeContentFiles, files)
+      const metadata: any = { contents: [] }
+      for (let filename of contentFiles.keys()) {
+        const file = contentFiles.get(filename)
+        if (file) {
+          const uploadResult: any[] = yield call([hub, 'uploadMedia'], new Blob([arrayBufferFrom(file)]), filename)
+          metadata.contents.push({
+            path: filename,
+            hash: uploadResult[0].hash
+          })
+        }
+      }
+      const from: string = yield select(getAddress)
+      const createdMeta: { ipfs_uri: string } = yield call([hub, 'createMetadata'], metadata)
+      const entityId: string = yield sendTxDeployScene(createdMeta.ipfs_uri, from)
       const sceneDefinition: SceneDefinition = JSON.parse(files[EXPORT_PATH.SCENE_FILE])
-      const client = new CatalystClient(PEER_URL, 'Builder')
-      const { entityId, files: hashedFiles } = yield call(() =>
-        client.buildEntity({
-          type: EntityType.SCENE,
-          pointers: [...sceneDefinition.scene.parcels],
-          metadata: sceneDefinition,
-          files: contentFiles
-        })
-      )
-      const authChain = Authenticator.signPayload(identity, entityId)
-      yield call(() => client.deployEntity({ entityId, files: hashedFiles, authChain }))
       // generate new deployment
       const deployment: Deployment = {
         id: entityId,
@@ -196,6 +211,15 @@ export function* deploymentSaga(builder: BuilderAPI) {
     } catch (e) {
       yield put(deployToLandFailure(e.message.split('\n')[0]))
     }
+  }
+
+  async function sendTxDeployScene(ipfs_uri: string, user: string): Promise<string> {
+    const provider = await getConnectedProvider()
+    const web3 = new ethers.providers.Web3Provider(provider as any)
+    const contract: Contract = new ethers.Contract('0x0454A95CE549807EC1427736C9eACC30c1943E94', BelandSceneABI, web3.getSigner())
+    const tx = await contract.create(user, ipfs_uri)
+    const reciept = await tx.wait()
+    return reciept.transactionHash
   }
 
   function* handleClearDeploymentRequest(action: ClearDeploymentRequestAction) {
