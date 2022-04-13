@@ -46,7 +46,7 @@ export function* rootSaga(builderAPI: BuilderAPI, newBuilderClient: BuilderClien
     authorizationSaga(),
     collectionSaga(builderAPI, hubAPI),
     committeeSaga(builderAPI),
-    deploymentSaga(builderAPI),
+    deploymentSaga(builderAPI, hubAPI),
     editorSaga(),
     ensSaga(),
     entitySaga(hubAPI),
