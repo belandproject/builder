@@ -40,11 +40,11 @@ export class LandAPI extends BaseAPI {
         return error.isAxiosError
     }
 
-    fetchParcels = async (_address?: string) => {
-        return await this.request('get', `/parcels`);
+    fetchParcelsByOwner = async (_address: string) => {
+        return await this.request('get', `/parcels?owner=${_address}`);
     }
 
-    fetchEstates = async (_address?: string) => {
-        return await this.request('get', `/estates`);
+    fetchEstatesOwnByOwner = async (_address: string) => {
+        return await this.request('get', `/estates?include=parcels&owner=${_address}`);
     }
 }

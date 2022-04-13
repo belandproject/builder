@@ -18,7 +18,7 @@ export const coordsToId = (x: string | number, y: string | number) => x + SEPARA
 
 export const idToCoords = (id: string) => id.split(SEPARATOR).map(coord => +coord) as [number, number]
 
-export const isCoords = (id: string) => id.includes(SEPARATOR)
+export const isCoords = (id: string) => id && id.toString().includes(SEPARATOR)
 
 export const getCoords = (land: Land): Coord =>
   land.type === LandType.PARCEL ? { x: land.x!, y: land.y! } : { x: land.parcels![0].x!, y: land.parcels![0].y! }
