@@ -4,6 +4,8 @@ import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { closeModal } from '@beland/dapps/dist/modules/modal/actions'
 import { BuilderClient, RemoteItem } from '@dcl/builder-client'
 import { EntityType } from 'dcl-catalyst-commons'
+import BelandNFTPresale from '../../contracts/BelandNFTPresale.json'
+
 import {
   FetchItemsRequestAction,
   fetchItemsSuccess,
@@ -44,9 +46,6 @@ import {
   fetchRaritiesFailure,
   FETCH_RARITIES_REQUEST,
   FETCH_ITEMS_SUCCESS,
-  ResetItemRequestAction,
-  RESET_ITEM_REQUEST,
-  resetItemFailure,
   DOWNLOAD_ITEM_REQUEST,
   DownloadItemRequestAction,
   downloadItemFailure,
@@ -60,7 +59,8 @@ import {
   FETCH_COLLECTION_ITEMS_SUCCESS,
   FetchItemsSuccessAction,
   FetchCollectionItemsSuccessAction,
-  fetchItemsRequest
+  fetchItemsRequest,
+  setPriceAndBeneficiarySuccess
 } from './actions'
 import { FetchCollectionRequestAction, FETCH_COLLECTION_REQUEST } from 'modules/collection/actions'
 import { fromRemoteItem } from 'lib/api/transformations'
@@ -82,6 +82,9 @@ import { buildZipContents, isValidText, generateCatalystImage, MAX_FILE_SIZE } f
 
 import { LoginSuccessAction, LOGIN_SUCCESS } from 'modules/identity/actions'
 import { HubAPI } from 'lib/api/hub'
+import { getChainIdByNetwork, getConnectedProvider } from '@beland/dapps/dist/lib/eth'
+import { Contract, ethers } from 'ethers'
+import { Network } from '@beland/schemas'
 
 export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClient, hub: HubAPI) {
   yield takeEvery(FETCH_ITEMS_REQUEST, handleFetchItemsRequest)
@@ -97,7 +100,6 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
   yield takeEvery(FETCH_COLLECTION_REQUEST, handleFetchCollectionRequest)
   yield takeEvery(SET_ITEMS_TOKEN_ID_FAILURE, handleRetrySetItemsTokenId)
   yield takeEvery(FETCH_RARITIES_REQUEST, handleFetchRaritiesRequest)
-  yield takeEvery(RESET_ITEM_REQUEST, handleResetItemRequest)
   yield takeEvery(DOWNLOAD_ITEM_REQUEST, handleDownloadItemRequest)
   yield takeLatestCancellable(
     { initializer: SAVE_MULTIPLE_ITEMS_REQUEST, cancellable: CANCEL_SAVE_MULTIPLE_ITEMS },
@@ -220,7 +222,7 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
 
       for (let path in contents) {
         const res: any[] = yield call([hub, 'uploadMedia'], contents[path], path)
-        item.contents[path] = res[0].hash;
+        item.contents[path] = res[0].hash
       }
 
       yield call([legacyBuilder, 'saveItem'], item)
@@ -233,6 +235,15 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
 
   function* handleSaveItemSuccess() {
     yield put(closeModal('EditItemURNModal'))
+  }
+
+  async function sendTxSetListingPrice(collection: Collection, itemId: string, price: string, beneficiary: string): Promise<string> {
+    const provider = await getConnectedProvider()
+    const web3 = new ethers.providers.Web3Provider(provider as any)
+    const contract: Contract = new ethers.Contract('0x', BelandNFTPresale, web3.getSigner())
+    const tx = await contract.addPresale(collection.contractAddress, itemId, '0x', price, beneficiary)
+    const reciept = await tx.wait()
+    return reciept.transactionHash
   }
 
   function* handleSetPriceAndBeneficiaryRequest(action: SetPriceAndBeneficiaryRequestAction) {
@@ -251,16 +262,10 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
         throw new Error(yield call(t, 'sagas.item.not_published'))
       }
 
-      //const newItem = { ...item, price, beneficiary, updatedAt: Date.now() }
-
-      // const metadata = getMetadata(newItem)
-      // const chainId: ChainId = yield call(getChainIdByNetwork, Network.KAI)
-      // const contract = { ...getContract(ContractName.ERC721CollectionV2, chainId), address: collection.contractAddress! }
-      // const txHash: string = yield call(sendTransaction, contract, collection =>
-      //   collection.editItemsData([newItem.tokenId!], [newItem.price!], [newItem.beneficiary!], [metadata])
-      // )
-
-      // yield put(setPriceAndBeneficiarySuccess(newItem, chainId, txHash))
+      const newItem = { ...item, price, beneficiary, updatedAt: Date.now() }
+      const txHash: string = yield sendTxSetListingPrice(collection, itemId, price, beneficiary);
+      const chainId = getChainIdByNetwork(Network.KAI)
+      yield put(setPriceAndBeneficiarySuccess(newItem, chainId, txHash))
     } catch (error) {
       yield put(setPriceAndBeneficiaryFailure(itemId, price, beneficiary, error.message))
     }
@@ -380,67 +385,5 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
     } catch (error) {
       yield put(downloadItemFailure(itemId, error.message))
     }
-  }
-}
-
-export function* handleResetItemRequest(action: ResetItemRequestAction) {
-  const { itemId } = action.payload
-  // const itemsById: Record<string, Item> = yield select(getItemsById)
-  // const entitiesByItemId: Record<string, Entity> = yield select(getEntityByItemId)
-
-  // const item = itemsById[itemId]
-  // const entity = entitiesByItemId[itemId]
-
-  try {
-    // const catalystItem = entity.metadata as CatalystItem
-
-    // if (!entity.content) {
-    //   throw new Error('Entity does not have content')
-    // }
-
-    // const entityContentsAsMap = entity.content.reduce<Record<string, string>>((contents, { file, hash }) => {
-    //   contents[file] = hash
-    //   return contents
-    // }, {})
-
-    // // Fetch blobs from the catalyst so they can be reuploaded to the item
-    // const newContents: Record<string, Blob> = yield Promise.all(
-    //   Object.entries(entityContentsAsMap).map<Promise<[string, Blob]>>(async ([key, hash]) => [
-    //     key,
-    //     await fetch(getCatalystContentUrl(hash)).then(res => res.blob())
-    //   ])
-    // ).then(res =>
-    //   res.reduce<Record<string, Blob>>((contents, [key, blob]) => {
-    //     contents[key] = blob
-    //     return contents
-    //   }, {})
-    // )
-
-    // // Replace the current item with values from the item in the catalyst
-    // const newItem: Item = {
-    //   ...item,
-    //   name: catalystItem.name,
-    //   description: catalystItem.description,
-    //   contents: entityContentsAsMap,
-    //   data: catalystItem.data as WearableData
-    // }
-
-    // yield put(saveItemRequest(newItem, newContents))
-
-    // const saveItemResult: {
-    //   success: SaveItemSuccessAction
-    //   failure: SaveItemFailureAction
-    // } = yield race({
-    //   success: take(SAVE_ITEM_SUCCESS),
-    //   failure: take(SAVE_ITEM_FAILURE)
-    // })
-
-    // if (saveItemResult.success) {
-    //   yield put(resetItemSuccess(itemId))
-    // } else if (saveItemResult.failure) {
-    //   yield put(resetItemFailure(itemId, saveItemResult.failure.payload.error))
-    // }
-  } catch (error) {
-    yield put(resetItemFailure(itemId, error.message))
   }
 }
