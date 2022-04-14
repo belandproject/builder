@@ -55,7 +55,6 @@ export async function createFiles(args: {
   const { project, scene, point, rotation, author, isDeploy, isEmpty, onProgress } = args
   const files = await downloadFiles({ scene, onProgress, isDeploy })
   const gameFile = await createGameFile({ project, scene, rotation }, isDeploy)
-
   return {
     // @ts-ignore: 'builder.json' is specified more than once, but don't want to break anything
     [EXPORT_PATH.MANIFEST_FILE]: JSON.stringify(createManifest(project, scene)),
@@ -343,7 +342,6 @@ export async function downloadFiles(args: {
       mappings[localPath] = remotePath
     }
   }
-
   // Download models
   const paths = Object.keys(mappings).filter(path => (isDeploy ? !path.endsWith('.ts') : !path.endsWith('.js')))
   total += paths.length

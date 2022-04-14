@@ -18,15 +18,15 @@ export const UNPUBLISHED_PROJECT_ID = 'unpublished-project'
 export const getDefaultGroundAsset = (): Asset => ({
   id: 'c9b17021-765c-4d9a-9966-ce93a9c323d1',
   name: 'Bermuda Grass',
-  thumbnail: getContentsStorageUrl('QmexuPHcbEtQCR11dPXxKZmRjGuY4iTooPJYfST7hW71DE'),
+  thumbnail: getContentsStorageUrl('ipfs://QmT1WfQPMBVhgwyxV5SfcfWivZ6hqMCT74nxdKXwyZBiXb'),
   model: 'FloorBaseGrass_01/FloorBaseGrass_01.glb',
   script: null,
   tags: ['ground'],
   category: 'ground',
   contents: {
-    'FloorBaseGrass_01/FloorBaseGrass_01.glb': 'QmSyvWnb5nKCaGHw9oHLSkwywvS5NYpj6vgb8L121kWveS',
-    'FloorBaseGrass_01/Floor_Grass01.png.png': 'QmT1WfQPMBVhgwyxV5SfcfWivZ6hqMCT74nxdKXwyZBiXb',
-    'FloorBaseGrass_01/thumbnail.png': 'QmexuPHcbEtQCR11dPXxKZmRjGuY4iTooPJYfST7hW71DE'
+    'FloorBaseGrass_01/FloorBaseGrass_01.glb': 'ipfs://QmSyvWnb5nKCaGHw9oHLSkwywvS5NYpj6vgb8L121kWveS',
+    'FloorBaseGrass_01/Floor_Grass01.png.png': 'ipfs://QmT1WfQPMBVhgwyxV5SfcfWivZ6hqMCT74nxdKXwyZBiXb',
+    'FloorBaseGrass_01/thumbnail.png': 'ipfs://QmexuPHcbEtQCR11dPXxKZmRjGuY4iTooPJYfST7hW71DE'
   },
   assetPackId: 'e6fa9601-3e47-4dff-9a84-e8e017add15a',
   metrics: {
