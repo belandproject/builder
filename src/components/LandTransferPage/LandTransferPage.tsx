@@ -64,7 +64,7 @@ export default class LandTransferPage extends React.PureComponent<Props, State> 
                     type="submit"
                     primary
                     disabled={!address || !isValid || land.role !== RoleType.OWNER || isEqual(land.owner, address)}
-                    network={Network.ETHEREUM}
+                    network={Network.KAI}
                   >
                     {t('global.submit')}
                   </NetworkButton>

@@ -14,6 +14,9 @@ export const LAND_POOL_ADDRESS = '0xDc13378daFca7Fe2306368A16BCFac38c80BfCAD'
 export const MAX_PARCELS_PER_TX = 20
 export const SEPARATOR = ','
 
+export const BELAND_PARCEL_ADDRESS='0x80974C4249b212178B4B54f63F6F4d6597C71c0f'
+export const BELAND_ESTATE_ADDRESS='0x9299C332Db2AFD9B52dC234DdA2BA5614A2dC744'
+
 export const coordsToId = (x: string | number, y: string | number) => x + SEPARATOR + y
 
 export const idToCoords = (id: string) => id.split(SEPARATOR).map(coord => +coord) as [number, number]

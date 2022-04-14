@@ -51,8 +51,13 @@ import { push } from 'connected-react-router'
 import { locations } from 'routing/locations'
 import { closeModal } from 'modules/modal/actions'
 import { getWallet } from 'modules/wallet/utils'
-import { splitCoords, buildMetadata } from './utils'
+import { splitCoords, buildMetadata, BELAND_PARCEL_ADDRESS, BELAND_ESTATE_ADDRESS } from './utils'
 import { Land, LandType, Authorization } from './types'
+import { getConnectedProvider } from '@beland/dapps/dist/lib/eth'
+import { Contract, ethers } from 'ethers'
+import BelandParcelABI from '../../contracts/BelandParcel.json'
+import BelandEstateABI from '../../contracts/BelandBundle.json'
+
 
 export function* landSaga() {
   yield takeEvery(SET_UPDATE_MANAGER_REQUEST, handleSetUpdateManagerRequest)
@@ -235,29 +240,15 @@ function* handleEditLandRequest(action: EditLandRequestAction) {
   const metadata = buildMetadata(name, description)
 
   try {
-    const [wallet, eth]: [Wallet, Eth] = yield getWallet()
-    const from = Address.fromString(wallet.address)
-
+    const [wallet]: [Wallet, Eth] = yield getWallet()
     switch (land.type) {
       case LandType.PARCEL: {
-        const landRegistry = new LANDRegistry(eth, Address.fromString(LAND_REGISTRY_ADDRESS))
-        const txHash: string = yield call(() =>
-          landRegistry.methods
-            .updateLandData(land.x!, land.y!, metadata)
-            .send({ from })
-            .getTxHash()
-        )
+        const txHash: string = yield parcelUpdateMetaData(land.landId, metadata);
         yield put(editLandSuccess(land, name, description, wallet.chainId, txHash))
         break
       }
       case LandType.ESTATE: {
-        const estateRegistry = new EstateRegistry(eth, Address.fromString(ESTATE_REGISTRY_ADDRESS))
-        const txHash: string = yield call(() =>
-          estateRegistry.methods
-            .updateMetadata(land.id, metadata)
-            .send({ from })
-            .getTxHash()
-        )
+        const txHash: string = yield estateUpdateMetaData(land.landId, metadata)
         yield put(editLandSuccess(land, name, description, wallet.chainId, txHash))
         break
       }
@@ -270,35 +261,41 @@ function* handleEditLandRequest(action: EditLandRequestAction) {
   }
 }
 
+async function parcelUpdateMetaData (landId: number | string, metadata: string) {
+  const provider = await getConnectedProvider()
+  const web3 = new ethers.providers.Web3Provider(provider as any)
+  const contract: Contract = new ethers.Contract(BELAND_PARCEL_ADDRESS, BelandParcelABI, web3.getSigner())
+  const tx = await contract.setMetadata(landId, metadata);
+  const reciept = await tx.wait()
+  return reciept.transactionHash
+}
+
+async function estateUpdateMetaData (landId: number | string, metadata: string) {
+  const provider = await getConnectedProvider()
+  const web3 = new ethers.providers.Web3Provider(provider as any)
+  const contract: Contract = new ethers.Contract(BELAND_ESTATE_ADDRESS, BelandEstateABI, web3.getSigner())
+  const tx = await contract.updateMetdata(landId, metadata);
+  const reciept = await tx.wait()
+  return reciept.transactionHash
+}
+
+
 function* handleTransferLandRequest(action: TransferLandRequestAction) {
   const { land, address } = action.payload
 
   try {
-    const [wallet, eth]: [Wallet, Eth] = yield getWallet()
-    const from = Address.fromString(wallet.address)
-    const to = Address.fromString(address)
+    const [wallet]: [Wallet, Eth] = yield getWallet()
+    const from = wallet.address
+    const to = address
 
     switch (land.type) {
       case LandType.PARCEL: {
-        const landRegistry = new LANDRegistry(eth, Address.fromString(LAND_REGISTRY_ADDRESS))
-        const id: string = yield call(() => landRegistry.methods.encodeTokenId(land.x!, land.y!).call())
-        const txHash: string = yield call(() =>
-          landRegistry.methods
-            .transferFrom(from, to, id)
-            .send({ from })
-            .getTxHash()
-        )
+        const txHash: string = yield estateTransfers(from, to, land.landId);
         yield put(transferLandSuccess(land, address, wallet.chainId, txHash))
         break
       }
       case LandType.ESTATE: {
-        const estateRegistry = new EstateRegistry(eth, Address.fromString(ESTATE_REGISTRY_ADDRESS))
-        const txHash: string = yield call(() =>
-          estateRegistry.methods
-            .transferFrom(from, to, land.id)
-            .send({ from })
-            .getTxHash()
-        )
+        const txHash: string = yield parcelTransfers(from, to, land.landId);
         yield put(transferLandSuccess(land, address, wallet.chainId, txHash))
         break
       }
@@ -309,6 +306,24 @@ function* handleTransferLandRequest(action: TransferLandRequestAction) {
   } catch (error) {
     yield put(transferLandFailure(land, address, error.message))
   }
+}
+
+async function estateTransfers (from: string, to: string, landId: number | string) {
+  const provider = await getConnectedProvider()
+  const web3 = new ethers.providers.Web3Provider(provider as any)
+  const contract: Contract = new ethers.Contract(BELAND_ESTATE_ADDRESS, BelandEstateABI, web3.getSigner())
+  const tx = await contract.transferFrom(from, to, landId);
+  const reciept = await tx.wait()
+  return reciept.transactionHash
+}
+
+async function parcelTransfers (from: string, to: string, landId: number | string) {
+  const provider = await getConnectedProvider()
+  const web3 = new ethers.providers.Web3Provider(provider as any)
+  const contract: Contract = new ethers.Contract(BELAND_PARCEL_ADDRESS, BelandParcelABI, web3.getSigner())
+  const tx = await contract.transferFrom(from, to, landId);
+  const reciept = await tx.wait()
+  return reciept.transactionHash
 }
 
 function* handleFetchLandRequest(action: FetchLandsRequestAction) {

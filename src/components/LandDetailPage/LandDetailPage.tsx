@@ -150,7 +150,6 @@ export default class LandDetailPage extends React.PureComponent<Props, State> {
                                 text={t('land_detail_page.build_estate')}
                                 onClick={() => onOpenModal('EstateEditorModal', { land })}
                               />
-                              <Dropdown.Divider />
                             </>
                           ) : null}
                           {land.type === LandType.ESTATE ? (
@@ -172,13 +171,8 @@ export default class LandDetailPage extends React.PureComponent<Props, State> {
                                 text={t('land_detail_page.assign_name')}
                                 onClick={() => onNavigate(locations.landSelectENS(land.id))}
                               />
-                              <Dropdown.Divider />
                             </>
                           ) : null}
-                          <Dropdown.Item
-                            text={t('land_detail_page.set_operator')}
-                            onClick={() => onNavigate(locations.landOperator(land.id))}
-                          />
                         </Dropdown.Menu>
                       </Dropdown>
                     </Row>

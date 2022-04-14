@@ -53,7 +53,7 @@ export default class LandEditPage extends React.PureComponent<Props, State> {
                   type="submit"
                   primary
                   disabled={isPristine || !this.getName(land) || land.role !== RoleType.OWNER}
-                  network={Network.ETHEREUM}
+                  network={Network.KAI}
                 >
                   {t('global.submit')}
                 </NetworkButton>

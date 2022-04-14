@@ -13,6 +13,7 @@ export enum RoleType {
 
 export type Land = {
   id: string
+  landId: number | string
   type: LandType
   role: RoleType
   x?: number

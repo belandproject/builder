@@ -7,6 +7,7 @@ const fromParcel = (parcel: any, role: RoleType) => {
   const id = coordsToId(parcel.x, parcel.y)
   const result: Land = {
     id,
+    landId: parcel.id,
     name: parcel.name || `Parcel ${id}`,
     type: LandType.PARCEL,
     role,
@@ -23,6 +24,7 @@ const fromEstate = (estate: any, role: RoleType) => {
   const id = estate.id || ''
   const result: Land = {
     id,
+    landId: estate.id,
     name: estate.name || `Estate ${id}`,
     type: LandType.ESTATE,
     role,
