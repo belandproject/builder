@@ -1,6 +1,7 @@
 import { AxiosRequestConfig, AxiosError } from 'axios'
 import { APIParam, BaseAPI } from '@beland/dapps/dist/lib/api'
 import { HUB_SERVER_URL } from './builder'
+import { ethers } from 'ethers'
 
 
 
@@ -40,10 +41,12 @@ export class LandAPI extends BaseAPI {
     }
 
     fetchParcelsByOwner = async (_address: string) => {
-        return await this.request('get', `/parcels?owner=${_address}`);
+        const checksumAddress = ethers.utils.getAddress(_address)
+        return await this.request('get', `/parcels?owner=${checksumAddress}`);
     }
 
     fetchEstatesOwnByOwner = async (_address: string) => {
-        return await this.request('get', `/estates?include=parcels&owner=${_address}`);
+        const checksumAddress = ethers.utils.getAddress(_address)
+        return await this.request('get', `/estates?include=parcels&owner=${checksumAddress}`);
     }
 }
