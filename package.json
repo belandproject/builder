@@ -5,10 +5,10 @@
   "dependencies": {
     "@babylonjs/core": "^4.2.0",
     "@babylonjs/loaders": "^4.2.0",
-    "@beland/dapps": "^0.0.4",
+    "@beland/dapps": "github:belandproject/beland-dapps",
     "@beland/schemas": "^0.0.3",
     "@beland/transactions": "^0.0.5",
-    "@beland/uikit": "^0.0.1",
+    "@beland/uikit": "github:belandproject/beland-ui",
     "@dcl/builder-client": "^1.7.1",
     "@dcl/content-hash-tree": "^1.1.2",
     "@svgr/webpack": "2.4.1",
