@@ -1,4 +1,60 @@
 :root {
+
+  /* global */
+  --background: #28293D;
+  --danger: #ffa900;
+  --error: rgba(255, 65, 92, 1);
+  --fore-background: #2D2F45;
+
+  /* buttons */
+  --primary: #1EB4F5;
+  --secondary: #6E7198;
+  --primary-hover: #ff3d61;
+  --secondary-hover: #28262c;
+
+  --button-primary-linear: linear-gradient(180deg, #5561FF 0%, #3643FC 100%, #3643FC 100%);
+  --button-text-on-primary: rgba(254, 254, 254, 0.87);
+
+  /* within modals */
+  --secondary-on-modal: #67637033;
+  --secondary-on-modal-hover: #6763704d;
+  --card-on-modal: #67637033;
+
+  /* text */
+  --text: rgba(254, 254, 254, 0.52);
+  --secondary-text: rgba(254, 254, 254, 0.24);
+  --text-on-primary: #FEFEFE;
+  --text-on-secondary: rgba(254, 254, 254, 0.87);
+
+  /* ui */
+  --divider: #6E7198;
+  --dropdown: #676370;
+  --dropdown-hover: #24212933;
+  --popup: #676370;
+  --popup-text: #ffffff;
+  --navbar-popup: #242129;
+  --navbar-popup-hover: #67637033;
+  --card: #3E405B;
+  --outline: 1px solid #00000005;
+  --toast: #38333d;
+  --toast-text: #ffffff;
+  --modal: #3E405B;
+  --dimmer: #000000dd;
+
+  /* shadows */
+  --shadow-1: 0px 0px 1px rgba(40, 41, 61, 0.08), 0px 1px 2px rgba(0, 0, 0, 0.32);
+  --shadow-2: 0px 10px 20px 0px rgba(0, 0, 0, 0.24);
+  --shadow-3: 0px 2px 4px rgba(0, 0, 0, 0.04), 0px 8px 16px rgba(0, 0, 0, 0.32);
+
+  --shadow-color-1: 0px 2px 4px 0px rgba(0, 0, 0, 0.16);
+  --shadow-color-2: 0px 10px 20px 0px rgba(0, 0, 0, 0.24);
+  --shadow-color-3: 0px 16px 32px 0px rgba(0, 0, 0, 0.32);
+
+  --shadow-card-1: 0px 0px 2px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.32);
+
+  /* svgs */
+  --brightness: brightness(100); /* black svgs */
+
   /* Colors */
   --metaverse-gradient: linear-gradient(to bottom, #060d2b, #132d7d 52%, #9763c1);
   --purple-banner: #691ea9;

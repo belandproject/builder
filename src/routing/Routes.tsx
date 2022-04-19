@@ -41,7 +41,7 @@ import CurationPage from 'components/CurationPage'
 import { isDevelopment } from 'lib/environment'
 
 import { Props, State } from './Routes.types'
-
+import './Routes.css'
 export default class Routes extends React.Component<Props, State> {
   state = {
     hasError: false,

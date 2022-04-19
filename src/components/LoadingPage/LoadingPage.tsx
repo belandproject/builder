@@ -10,8 +10,8 @@ export default class LoadingPage extends React.PureComponent {
     return (
       <>
         {/* <Ad slot="BUILDER_TOP_BANNER" type="full" /> */}
-        <Navbar isFullscreen />
         <Page isFullscreen>
+          <Navbar isFullscreen />
           <Loader active size="huge" />
         </Page>
         <Footer isFullscreen />

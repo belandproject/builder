@@ -59,8 +59,8 @@ export default class MobilePage extends React.PureComponent<Props, State> {
 
     return (
       <>
-        <Navbar isFullscreen isOverlay />
         <Page isFullscreen>
+          <Navbar isFullscreen isOverlay />
           <div className="MobilePage">
             <MobilePageHero
               email={email}

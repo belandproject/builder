@@ -43,8 +43,9 @@ export default class LoggedInDetailPage extends React.PureComponent<Props> {
     return (
       <>
         <Navbar isFullscreen />
-        {hasNavigation ? <Navigation activeTab={activeTab} isFullscreen={isNavigationFullscreen} /> : null}
+        
         <Page className={`LoggedInDetailPage ${className}`} isFullscreen={isPageFullscreen}>
+          {hasNavigation ? <Navigation activeTab={activeTab} isFullscreen={isNavigationFullscreen} /> : null}
           {isLoading ? this.renderLoading() : null}
           {!isLoggedIn && !isLoading ? this.renderLogin() : null}
           {isLoggedIn && !isLoading ? children : null}

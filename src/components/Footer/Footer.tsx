@@ -1,8 +1,13 @@
 import * as React from 'react'
-import { FooterProps } from '@beland/uikit'
+import { FooterProps, Footer as BuilderFooter } from '@beland/uikit'
+import './Footer.css'
 
 export default class Footer extends React.PureComponent<FooterProps> {
   render() {
-    return <div/>
+    return (
+      <div className='be-footer'>
+        <BuilderFooter/>
+      </div>
+    ) 
   }
 }
