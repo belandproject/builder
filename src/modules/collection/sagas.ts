@@ -325,7 +325,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     const provider = await getConnectedProvider()
     const web3 = new ethers.providers.Web3Provider(provider as any)
     const contract: Contract = new ethers.Contract(collection.contractAddress || '0x', BelandNFTABI, web3.getSigner())
-    const tx = await contract.batchCreate(to, itemId, amount)
+    const tx = await contract.batchCreate(to, Number(itemId), Number(amount))
     const reciept = await tx.wait()
     return reciept.transactionHash
   }

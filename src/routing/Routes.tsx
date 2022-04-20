@@ -2,7 +2,6 @@ import * as React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { Center, Page, Responsive } from '@beland/uikit'
 import { env } from 'decentraland-commons'
-import Intercom from '@beland/dapps/dist/components/Intercom'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 
 import { locations } from 'routing/locations'
@@ -23,11 +22,6 @@ import LandPage from 'components/LandPage'
 import LandDetailPage from 'components/LandDetailPage'
 import LandTransferPage from 'components/LandTransferPage'
 import LandEditPage from 'components/LandEditPage'
-import ENSListPage from 'components/ENSListPage'
-import ClaimENSPage from 'components/ClaimENSPage'
-import LandSelectENSPage from 'components/LandSelectENSPage'
-import LandAssignENSPage from 'components/LandAssignENSPage'
-import ENSSelectLandPage from 'components/ENSSelectLandPage'
 import LandOperatorPage from 'components/LandOperatorPage'
 import ActivityPage from 'components/ActivityPage'
 import SettingsPage from 'components/SettingsPage'
@@ -35,7 +29,6 @@ import SceneDetailPage from 'components/SceneDetailPage'
 import CollectionsPage from 'components/CollectionsPage'
 import ItemDetailPage from 'components/ItemDetailPage'
 import CollectionDetailPage from 'components/CollectionDetailPage'
-import ThirdPartyCollectionDetailPage from 'components/ThirdPartyCollectionDetailPage'
 import ItemEditorPage from 'components/ItemEditorPage'
 import CurationPage from 'components/CurationPage'
 import { isDevelopment } from 'lib/environment'
@@ -112,15 +105,6 @@ export default class Routes extends React.Component<Props, State> {
             <Route exact path={locations.activity()} component={ActivityPage} />
             <Route exact path={locations.settings()} component={SettingsPage} />
             <Route exact path={locations.sceneDetail()} component={SceneDetailPage} />
-            {env.get('REACT_APP_FF_ENS')
-              ? [
-                  <Route exact key={1} path={locations.ens()} component={ENSListPage} />,
-                  <Route exact key={2} path={locations.claimENS()} component={ClaimENSPage} />,
-                  <Route exact key={3} path={locations.landSelectENS()} component={LandSelectENSPage} />,
-                  <Route exact key={4} path={locations.landAssignENS()} component={LandAssignENSPage} />,
-                  <Route exact key={5} path={locations.ensSelectLand()} component={ENSSelectLandPage} />
-                ]
-              : null}
             {env.get('REACT_APP_FF_WEARABLES')
               ? [
                   <Route exact key={1} path={locations.collections()} component={CollectionsPage} />,
@@ -130,12 +114,6 @@ export default class Routes extends React.Component<Props, State> {
                   <Route exact key={5} path={locations.curation()} component={CurationPage} />
                 ]
               : null}
-
-            {/* This env check will be replaced for https://github.com/decentraland/feature-flags */
-            env.get('REACT_APP_FF_THIRD_PARTY_WEARABLES')
-              ? [<Route exact key={1} path={locations.thirdPartyCollectionDetail()} component={ThirdPartyCollectionDetailPage} />]
-              : null}
-
             <Redirect to={locations.root()} />
           </Switch>
         </Responsive>
@@ -143,16 +121,10 @@ export default class Routes extends React.Component<Props, State> {
     )
   }
 
-  renderIntercom() {
-    const APP_ID = env.get('REACT_APP_INTERCOM_APP_ID', '')
-    return <Intercom appId={APP_ID} settings={{ alignment: 'right' }} />
-  }
-
   render() {
     return (
       <>
         {this.renderRoutes()}
-        {this.renderIntercom()}
       </>
     )
   }

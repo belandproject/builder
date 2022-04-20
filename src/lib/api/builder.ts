@@ -319,7 +319,7 @@ function fromRemoteItem(remoteItem: RemoteItem) {
   }
 
   if (remoteItem.collection_id) item.collectionId = remoteItem.collection_id
-  if (remoteItem.blockchain_item_id) item.tokenId = remoteItem.blockchain_item_id
+  if (remoteItem.blockchain_item_id !== null) item.tokenId = remoteItem.blockchain_item_id
   if (remoteItem.price) item.price = remoteItem.price
   if (remoteItem.urn) item.urn = remoteItem.urn
   if (remoteItem.beneficiary) item.beneficiary = remoteItem.beneficiary
