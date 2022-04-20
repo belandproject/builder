@@ -1,4 +1,4 @@
-import { BodyShapeRespresentation, Wearable } from 'decentraland-ecs'
+import { BodyShapeRespresentation, Wearable } from '@beland/ecs'
 import { EditorScene, UnityKeyboardEvent } from 'modules/editor/types'
 import { Project } from 'modules/project/types'
 import { getSceneDefinition } from 'modules/project/export'
@@ -223,7 +223,7 @@ export function patchWearables(wearables: Wearable[]) {
   return wearables.map(wearable => {
     // 1. if the category is "skin" we need to hide all the other categories
     if (wearable.category === 'skin') {
-      const alreadyHidden: string[] = [...((wearable as any).hides || [])] // The typing from decentraland-ecs is wrong and it misses the hides list
+      const alreadyHidden: string[] = [...((wearable as any).hides || [])] // The typing from @beland/ecs is wrong and it misses the hides list
       const hides = Array.from(
         new Set<string>([...alreadyHidden, ...getSkinHiddenCategories()])
       )

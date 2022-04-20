@@ -1,16 +1,16 @@
 import { EventEmitter } from 'events'
-import { engine, GLTFShape, Transform, Entity, Component, NFTShape, IEntity, Vector3, AvatarShape, Wearable } from 'decentraland-ecs'
-import * as ECS from 'decentraland-ecs'
+import { engine, GLTFShape, Transform, Entity, Component, NFTShape, IEntity, Vector3, AvatarShape, Wearable } from '@beland/ecs'
+import * as ECS from '@beland/ecs'
 import { createChannel } from 'decentraland-builder-scripts/channel'
 import { createInventory } from 'decentraland-builder-scripts/inventory'
-import { DecentralandInterface } from 'decentraland-ecs/dist/decentraland/Types'
+import { DecentralandInterface } from '@beland/ecs/dist/decentraland/Types'
 import { EntityDefinition, AnyComponent, ComponentData, ComponentType, Scene } from 'modules/scene/types'
 import { toLegacyURN } from 'lib/urnLegacy'
 import { AssetParameterValues } from 'modules/asset/types'
 import { BODY_SHAPE_CATEGORY, WearableBodyShape } from 'modules/item/types'
 import { getEyeColors, getHairColors, getSkinColors } from 'modules/editor/avatar'
 
-const { Gizmos, SmartItem } = require('decentraland-ecs') as any
+const { Gizmos, SmartItem } = require('@beland/ecs') as any
 declare var dcl: DecentralandInterface
 
 const inventory = createInventory(ECS.UICanvas, ECS.UIContainerStack, ECS.UIImage)

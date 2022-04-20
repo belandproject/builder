@@ -1,4 +1,4 @@
-import { Color4 } from 'decentraland-ecs'
+import { Color4 } from '@beland/ecs'
 import { WearableBodyShape } from 'modules/item/types'
 
 export function getSkinColors() {

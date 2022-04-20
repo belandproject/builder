@@ -1,5 +1,5 @@
 import React from 'react'
-import { Color4 } from 'decentraland-ecs'
+import { Color4 } from '@beland/ecs'
 import { Dropdown, DropdownItemProps } from '@beland/uikit'
 import { Props } from './AvatarColorDropdown.types'
 import './AvatarColorDropdown.css'

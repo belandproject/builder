@@ -1,4 +1,4 @@
-import { Color4, Wearable } from 'decentraland-ecs'
+import { Color4, Wearable } from '@beland/ecs'
 import { takeLatest, select, put, call, delay, take, race } from 'redux-saga/effects'
 import { getSearch } from 'connected-react-router'
 import { isLoadingType } from '@beland/dapps/dist/modules/loading/selectors'

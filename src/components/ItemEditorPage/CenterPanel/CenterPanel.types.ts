@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { Color4, Wearable } from 'decentraland-ecs'
+import { Color4, Wearable } from '@beland/ecs'
 import {
   closeEditor,
   CloseEditorAction,

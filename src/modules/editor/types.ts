@@ -1,5 +1,5 @@
 import { WearableBodyShape } from 'modules/item/types'
-import { BodyShapeRespresentation, Wearable } from 'decentraland-ecs'
+import { BodyShapeRespresentation, Wearable } from '@beland/ecs'
 import { WearableCategory } from 'modules/item/types'
 
 export enum Gizmo {

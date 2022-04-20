@@ -614,7 +614,7 @@ Add the typings to the `tsconfig.json` file
     "src/**/*.ts",
     "./node_modules/decentraland-builder-scripts/types.d.ts"
   ],
-  "extends": "./node_modules/decentraland-ecs/types/tsconfig.json"
+  "extends": "./node_modules/@beland/ecs/types/tsconfig.json"
 }
 ```
 

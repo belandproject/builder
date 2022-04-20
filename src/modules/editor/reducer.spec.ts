@@ -1,4 +1,4 @@
-import { Wearable } from 'decentraland-ecs'
+import { Wearable } from '@beland/ecs'
 import { WearableBodyShape, WearableCategory } from 'modules/item/types'
 import { anotherWearable, convertWearable, wearable } from 'specs/editor'
 import { fetchBaseWearablesFailure, fetchBaseWearablesRequest, fetchBaseWearablesSuccess, setBaseWearable } from './actions'

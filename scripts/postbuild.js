@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-const ecsVersion = require(require.resolve('decentraland-ecs/package.json')).version
+const ecsVersion = require(require.resolve('@beland/ecs/package.json')).version
 const editorFile = `editor.${ecsVersion}.js`
 
 console.log(`ECS version: ${ecsVersion}`)

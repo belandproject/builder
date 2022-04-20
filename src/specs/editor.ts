@@ -1,4 +1,4 @@
-import { Wearable } from 'decentraland-ecs'
+import { Wearable } from '@beland/ecs'
 import { CatalystWearable } from 'modules/editor/types'
 import { WearableBodyShape, WearableCategory } from 'modules/item/types'
 

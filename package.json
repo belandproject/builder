@@ -40,7 +40,7 @@
     "decentraland-ad": "^1.4.2",
     "decentraland-builder-scripts": "^0.24.0",
     "decentraland-commons": "^5.1.0",
-    "decentraland-ecs": "^6.6.1-20201020183014.commit-bdc29ef",
+    "@beland/ecs": "0.0.1",
     "decentraland-experiments": "^1.0.2",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",

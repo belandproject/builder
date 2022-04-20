@@ -1,4 +1,4 @@
-import { Color4, Wearable } from 'decentraland-ecs'
+import { Color4, Wearable } from '@beland/ecs'
 import { loadingReducer, LoadingState } from '@beland/dapps/dist/modules/loading/reducer'
 
 import { LOAD_ASSET_PACKS_SUCCESS, LoadAssetPacksSuccessAction } from 'modules/assetPack/actions'
