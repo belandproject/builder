@@ -75,7 +75,7 @@ export async function createGameFile(args: { project: Project; scene: Scene; rot
   const { scene, project, rotation } = args
   const useLightweight = isDeploy && !hasScripts(scene)
   const Writer = useLightweight ? LightweightWriter : SceneWriter
-  const writer = new Writer(ECS, require('@beland/ecs/types/dcl/decentraland-ecs.api'))
+  const writer = new Writer(ECS, require('decentraland-ecs/types/dcl/decentraland-ecs.api'))
   const { cols, rows } = project.layout
   const sceneEntity = new ECS.Entity()
 
