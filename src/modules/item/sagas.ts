@@ -65,7 +65,7 @@ import {
 import { FetchCollectionRequestAction, FETCH_COLLECTION_REQUEST } from 'modules/collection/actions'
 import { fromRemoteItem } from 'lib/api/transformations'
 import { updateProgressSaveMultipleItems } from 'modules/ui/createMultipleItems/action'
-import { isLocked } from 'modules/collection/utils'
+import { isLocked, SALE_CONTRACT, SALE_QUOTE_TOKEN } from 'modules/collection/utils'
 import { locations } from 'routing/locations'
 import { BuilderAPI as LegacyBuilderAPI } from 'lib/api/builder'
 import { getCollection, getCollections } from 'modules/collection/selectors'
@@ -237,11 +237,11 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
     yield put(closeModal('EditItemURNModal'))
   }
 
-  async function sendTxSetListingPrice(collection: Collection, itemId: string, price: string, beneficiary: string): Promise<string> {
+  async function sendTxSale(collection: Collection, itemId: string, price: string, beneficiary: string): Promise<string> {
     const provider = await getConnectedProvider()
     const web3 = new ethers.providers.Web3Provider(provider as any)
-    const contract: Contract = new ethers.Contract('0x', BelandNFTPresale, web3.getSigner())
-    const tx = await contract.addPresale(collection.contractAddress, itemId, '0x', price, beneficiary)
+    const contract: Contract = new ethers.Contract(SALE_CONTRACT, BelandNFTPresale, web3.getSigner())
+    const tx = await contract.addPresale(collection.contractAddress, itemId, SALE_QUOTE_TOKEN, price, beneficiary)
     const reciept = await tx.wait()
     return reciept.transactionHash
   }
@@ -263,7 +263,7 @@ export function* itemSaga(legacyBuilder: LegacyBuilderAPI, builder: BuilderClien
       }
 
       const newItem = { ...item, price, beneficiary, updatedAt: Date.now() }
-      const txHash: string = yield sendTxSetListingPrice(collection, itemId, price, beneficiary);
+      const txHash: string = yield sendTxSale(collection, item.tokenId as string, price, beneficiary);
       const chainId = getChainIdByNetwork(Network.KAI)
       yield put(setPriceAndBeneficiarySuccess(newItem, chainId, txHash))
     } catch (error) {
