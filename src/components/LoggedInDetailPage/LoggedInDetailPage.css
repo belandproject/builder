@@ -1,0 +1,12 @@
+.LoggedInDetailPage .builder-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.LoggedInDetailPage .builder-header .title {
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 64px;
+    color: rgba(254, 254, 254, 0.87);
+  }

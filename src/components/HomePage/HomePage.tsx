@@ -43,13 +43,13 @@ export default class HomePage extends React.PureComponent<Props> {
     )
   }
 
-  renderCreateButton = () => {
-    return (
-      <Button basic className="create-scene" onClick={this.handleOpenCreateModal}>
-        <BuilderIcon name="add-active" />
-      </Button>
-    )
-  }
+  // renderCreateButton = () => {
+  //   return (
+  //     <Button basic className="create-scene" onClick={this.handleOpenCreateModal}>
+  //       <BuilderIcon name="add-active" />
+  //     </Button>
+  //   )
+  // }
 
   renderSortDropdown = () => {
     const { sortBy } = this.props
@@ -93,7 +93,6 @@ export default class HomePage extends React.PureComponent<Props> {
     }
     return (
       <div className="empty-projects">
-        <div>
           <T
             id="home_page.no_projects"
             values={{
@@ -111,7 +110,6 @@ export default class HomePage extends React.PureComponent<Props> {
               )
             }}
           />
-        </div>
       </div>
     )
   }
@@ -149,6 +147,12 @@ export default class HomePage extends React.PureComponent<Props> {
       <>
         <Navbar isFullscreen />
         <Page isFullscreen className="HomePage">
+          <div className='builder-header'>
+            <div className='title'>Builder</div>
+            <Button primary onClick={this.handleOpenCreateModal}>
+              Create new Scence
+            </Button>
+          </div>
           <Navigation activeTab={NavigationTab.SCENES}>
             <SyncToast />
           </Navigation>
@@ -158,7 +162,6 @@ export default class HomePage extends React.PureComponent<Props> {
               <div className="actions">
                 {projects.length > 1 ? this.renderSortDropdown() : null}
                 {this.renderImportButton()}
-                {this.renderCreateButton()}
               </div>
             </div>
             <Section className={`project-cards ${hasPagination ? 'has-pagination' : ''}`}>

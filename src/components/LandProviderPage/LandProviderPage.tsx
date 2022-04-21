@@ -28,8 +28,8 @@ export default class LandProviderPage extends React.PureComponent<Props> {
     }
     return (
       <>
+        <Navbar isFullscreen />
         <Page className={classes.join(' ')}>
-          <Navbar isFullscreen />
           <LandProvider>
             {(id, land, deployments, isLoading) => (
               <>
