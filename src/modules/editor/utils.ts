@@ -42,7 +42,7 @@ export function getNewEditorScene(project: Project): EditorScene {
     },
     communications: {
       type: 'webrtc',
-      signalling: 'https://rendezvous.decentraland.org'
+      signalling: 'https://signalling.beland.io'
     },
     policy: {
       fly: true,

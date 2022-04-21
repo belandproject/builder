@@ -40,13 +40,13 @@ export default class IntroPopup extends PureComponent<Props, State> {
                       </>
                     ),
                     blog_link: (
-                      <a href="https://decentraland.org/blog/announcements/polygon-mana/" target="_blank" rel="noopener noreferrer">
+                      <a href="#" target="_blank" rel="noopener noreferrer">
                         {t('intro_popup.blog_link')}
                       </a>
                     ),
                     account_link: (
                       <a
-                        href={env.get('REACT_APP_ACCOUNT_URL', 'https://account.decentraland.org')}
+                        href={env.get('REACT_APP_ACCOUNT_URL', '#')}
                         target="_blank"
                         rel="noopener noreferrer"
                       >

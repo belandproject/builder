@@ -11,28 +11,12 @@ describe('when extracting the base URL of a wearable', () => {
       expect(() => extractBaseUrl('https://something.com')).toThrowError('No base URL found in th URL: https://something.com')
     })
   })
-
-  describe('and the URL contains the /content/content path with a hash', () => {
-    it('should return the base URL', () => {
-      expect(extractBaseUrl('https://peer-ec1.decentraland.org/content/contents/QmYktkLr5rnn9zPPARkavhVowvTNTih8uWq8BVscTGxtZD')).toEqual(
-        'https://peer-ec1.decentraland.org/content/contents/'
-      )
-    })
-  })
 })
 
 describe('when extracting the hash of a wearable', () => {
   describe("and the URL doesn't contain the /content/content path with a hash", () => {
     it("should throw an error signaling that the hash wasn't found", () => {
       expect(() => extractHash('https://something.com')).toThrowError('No hash found in the URL: https://something.com')
-    })
-  })
-
-  describe('and the URL contains the /content/content path with a hash', () => {
-    it('should return the hash', () => {
-      expect(extractHash('https://peer-ec1.decentraland.org/content/contents/QmYktkLr5rnn9zPPARkavhVowvTNTih8uWq8BVscTGxtZD')).toEqual(
-        'QmYktkLr5rnn9zPPARkavhVowvTNTih8uWq8BVscTGxtZD'
-      )
     })
   })
 })

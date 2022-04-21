@@ -6,7 +6,7 @@ export const wearable: Wearable = {
   id: 'urn:beland:off-chain:base-avatars:aviatorstyle',
   type: 'wearable',
   category: 'eyewear',
-  baseUrl: 'https://peer-ec1.decentraland.org/content/contents/',
+  baseUrl: 'https://ipfs-test.beland.io/ipfs/',
   tags: ['accesories', 'male', 'man', 'base-wearable'],
   representations: [
     {
@@ -30,7 +30,7 @@ export const anotherWearable: Wearable = {
   id: 'urn:beland:off-chain:base-avatars:baggy_pullover',
   type: 'wearable',
   category: 'upper_body',
-  baseUrl: 'https://peer-ec1.decentraland.org/content/contents/',
+  baseUrl: 'https://ipfs-test.beland.io/ipfs/',
   tags: ['top', 'female', 'woman', 'base-wearable'],
   representations: [
     {
@@ -51,7 +51,7 @@ export const anotherWearable: Wearable = {
 export const catalystWearable: CatalystWearable = {
   id: 'urn:beland:off-chain:base-avatars:aviatorstyle',
   description: '',
-  thumbnail: 'https://peer-ec1.decentraland.org/content/contents/QmWEr5ttPDezxMjDHU1UKPPukHjLiNEi1EjznmaUXiaHgn',
+  thumbnail: 'https://ipfs-test.beland.io/ipfs/QmWEr5ttPDezxMjDHU1UKPPukHjLiNEi1EjznmaUXiaHgn',
   rarity: '',
   data: {
     tags: ['accesories', 'male', 'man', 'base-wearable'],
@@ -65,11 +65,11 @@ export const catalystWearable: CatalystWearable = {
         contents: [
           {
             key: 'AvatarWearables_TX.png',
-            url: 'https://peer-ec1.decentraland.org/content/contents/QmYktkLr5rnn9zPPARkavhVowvTNTih8uWq8BVscTGxtZD'
+            url: 'https://ipfs-test.beland.io/ipfs/QmYktkLr5rnn9zPPARkavhVowvTNTih8uWq8BVscTGxtZD'
           },
           {
             key: 'M_Eyewear_AviatorStyle.glb',
-            url: 'https://peer-ec1.decentraland.org/content/contents/QmXb4PnGmkpTLEfbrFrkupXjxj1AafyEX3k53iFnjsSmAk'
+            url: 'https://ipfs-test.beland.io/ipfs/content/contents/QmXb4PnGmkpTLEfbrFrkupXjxj1AafyEX3k53iFnjsSmAk'
           }
         ]
       }

@@ -447,7 +447,7 @@ export default class CreateSingleItemModal extends React.PureComponent<Props, St
     this.setState({ error: error.message })
   }
 
-  handleOpenDocs = () => window.open('https://docs.decentraland.org/3d-modeling/3d-models/', '_blank')
+  handleOpenDocs = () => window.open('https://docs.beland.io/create/3d-modeling/3d-models/', '_blank')
 
   handleNameChange = (_event: React.ChangeEvent<HTMLInputElement>, props: InputOnChangeData) =>
     this.setState({ name: props.value.slice(0, ITEM_NAME_MAX_LENGTH) })

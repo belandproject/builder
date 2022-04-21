@@ -7,7 +7,7 @@ import { Props } from './ItemImport.types'
 import styles from './ItemImport.module.css'
 
 export default class ItemImport extends React.PureComponent<Props, any> {
-  handleOpenDocs = () => window.open('https://docs.decentraland.org/3d-modeling/3d-models/', '_blank')
+  handleOpenDocs = () => window.open('https://docs.beland.io/create/3d-modeling/3d-models/', '_blank')
 
   renderDropzoneCTA = (open: () => void) => {
     const { error, isLoading, acceptedExtensions, moreInformation } = this.props

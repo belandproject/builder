@@ -31,7 +31,7 @@ export default class ExportModal extends React.PureComponent<Props> {
               id="export_modal.description"
               values={{
                 sdk_link: (
-                  <a href="https://developers.decentraland.org" rel="noopener noreferrer" target="_blank">
+                  <a href="https://docs.beland.io" rel="noopener noreferrer" target="_blank">
                     Decentraland SDK
                   </a>
                 )

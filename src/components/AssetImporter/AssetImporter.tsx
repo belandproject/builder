@@ -322,7 +322,7 @@ export default class AssetImporter<T extends MixedAssetPack = RawAssetPack> exte
   }
 
   handleOpenDocs = () => {
-    window.open('https://docs.decentraland.org/3d-modeling/3d-models/', '_blank')
+    window.open('https://docs.beland.io/create/3d-modeling/3d-models/', '_blank')
   }
 
   render() {

@@ -112,7 +112,7 @@ export default class ClaimENSPage extends React.PureComponent<Props, State> {
                   <T
                     id="claim_ens_page.subtitle"
                     values={{
-                      exampleLink: <i>https://name.dcl.eth</i>,
+                      exampleLink: <i>https://name.beland.eth</i>,
                       br: (
                         <>
                           <br />
@@ -120,7 +120,7 @@ export default class ClaimENSPage extends React.PureComponent<Props, State> {
                         </>
                       ),
                       dclWorldLink: (
-                        <a href="http://play.decentraland.org" rel="noopener noreferrer" target="_blank">
+                        <a href="http://play.beland.io" rel="noopener noreferrer" target="_blank">
                           {t('claim_ens_page.world')}
                         </a>
                       ),
