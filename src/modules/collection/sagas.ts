@@ -48,7 +48,7 @@ import {
   mintCollectionItemsSuccess
 } from './actions'
 import { setItemsTokenIdRequest, FETCH_ITEMS_SUCCESS, SAVE_ITEM_SUCCESS, SaveItemSuccessAction } from 'modules/item/actions'
-import { isValidText } from 'modules/item/utils'
+import { isValidText, toBodyShapeType } from 'modules/item/utils'
 import { locations } from 'routing/locations'
 import { getCollectionId } from 'modules/location/selectors'
 import { BuilderAPI } from 'lib/api/builder'
@@ -214,6 +214,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     await tx.wait()
     const initializeItems: InitializeItem[] = []
     for (let item of items) {
+      const bodyShapes = item.data.representations.map(representation => toBodyShapeType(representation.bodyShapes[0]));
       const contents = await _hub.createMetadata({
         name: item.name,
         description: item.description,
@@ -244,7 +245,8 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
           },
           ...item.data.tags.map(value => ({ trait_type: 'tags', value })),
           ...item.data.hides.map(value => ({ trait_type: 'hides', value })),
-          ...item.data.replaces.map(value => ({ trait_type: 'replaces', value }))
+          ...item.data.replaces.map(value => ({ trait_type: 'replaces', value })),
+          ...bodyShapes.map(value => ({ trait_type: 'body_shapes', value })),
         ]
       })
       initializeItems.push([RARITY_MAX_SUPPLY[item.rarity || ItemRarity.UNIQUE], contents.ipfs_uri])
