@@ -1,6 +1,6 @@
 import { CatalystClient } from 'dcl-catalyst-client'
 import { Authenticator, AuthIdentity } from 'beland-crypto'
-import { Entity, EntityType } from 'dcl-catalyst-commons'
+import { EntityType } from 'dcl-catalyst-commons'
 import { utils } from 'decentraland-commons'
 import { Omit } from '@beland/dapps/dist/lib/types'
 import { getAddress } from '@beland/dapps/dist/modules/wallet/selectors'
@@ -296,21 +296,20 @@ export function* deploymentSaga(builder: BuilderAPI, hub: HubAPI) {
     const { coords } = action.payload
 
     try {
-      const catalyst = new CatalystClient(PEER_URL, 'builder')
 
-      let entities: Entity[] = []
+      let scenes: {rows: any[]} = {rows: []}
 
       if (coords.length > 0) {
-        entities = yield call([catalyst, 'fetchEntitiesByPointers'], EntityType.SCENE, coords)
+        scenes = yield call([hub, 'fetchScenesByPointers'], coords)
       }
 
       const deployments = new Map<string, Deployment>()
-      for (const entity of entities.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1))) {
-        const id = entity.pointers[0]
+      for (const scene of scenes.rows.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))) {
+        const id = scene.pointers[0]
         if (id) {
           const [x, y] = idToCoords(id)
-          const content = entity.content
-          const definition = entity.metadata as SceneDefinition
+          const content = scene.contents
+          const definition = scene.metadata as SceneDefinition
           let name = 'Untitled Scene'
           if (definition && definition.display && definition.display.title && definition.display.title !== 'interactive-text') {
             name = definition.display.title
@@ -326,13 +325,13 @@ export function* deploymentSaga(builder: BuilderAPI, hub: HubAPI) {
           const isEmpty = !!(definition && definition.source && definition.source.isEmpty)
           if (!isEmpty) {
             deployments.set(id, {
-              id: entity.id,
-              timestamp: entity.timestamp,
+              id: scene.id,
+              timestamp: scene.createdAt,
               projectId,
               name,
               thumbnail,
               placement,
-              owner: definition.owner,
+              owner: scene.owner,
               layout,
               base,
               parcels

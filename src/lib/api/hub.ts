@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, AxiosError } from 'axios'
 import { APIParam, BaseAPI } from '@beland/dapps/dist/lib/api'
 import { Authorization } from './auth'
-
+import * as queryString from 'query-string';
 export class HubAPI extends BaseAPI {
   private authorization: Authorization
 
@@ -51,6 +51,14 @@ export class HubAPI extends BaseAPI {
 
   async createMetadata(data: any) {
     return await this.request('post', `/upload/metadata`, data);
+  }
+
+  fetchScenesByPointers(pointers: string[]) {
+    const q = queryString.stringify({
+      pointers,
+      limit: 1000
+    })
+    return this.request('get', `/scenes?` + q);
   }
 }
 

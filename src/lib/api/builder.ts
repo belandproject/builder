@@ -468,7 +468,7 @@ export class BuilderAPI extends BaseAPI {
   }
 
   async fetchProjects() {
-    const { rows }: { rows: RemoteProject[]; total: number } = await this.request('get', `/projects`)
+    const { rows }: { rows: RemoteProject[]; total: number } = await this.request('get', `/projects`, {limit: 1000})
     return rows.map(fromRemoteProject)
   }
 
@@ -560,9 +560,9 @@ export class BuilderAPI extends BaseAPI {
   }
 
   async fetchAssetPacks(address?: string): Promise<FullAssetPack[]> {
-    const promisesOfRemoteAssetPacks: Array<Promise<RemoteAssetPack[]>> = [this.request('get', '/asset-packs', { owner: 'default' }).then(res => res.rows)]
+    const promisesOfRemoteAssetPacks: Array<Promise<RemoteAssetPack[]>> = [this.request('get', '/asset-packs', { owner: 'default',limit: 1000 }).then(res => res.rows)]
     if (address) {
-      promisesOfRemoteAssetPacks.push(this.request('get', '/asset-packs', { owner: address }).then(res => res.rows))
+      promisesOfRemoteAssetPacks.push(this.request('get', '/asset-packs', { owner: address, limit: 1000 }).then(res => res.rows))
     }
 
     const assetPacks: RemoteAssetPack[][] = await Promise.all(promisesOfRemoteAssetPacks)
@@ -579,7 +579,7 @@ export class BuilderAPI extends BaseAPI {
   }
 
   async fetchItems(_address?: string) {
-    const remoteItems: RemoteItem[] = await this.request('get', `/items`).then(res => res.rows)
+    const remoteItems: RemoteItem[] = await this.request('get', `/items`, { limit: 1000}).then(res => res.rows)
     return remoteItems.map(fromRemoteItem)
   }
 
@@ -589,7 +589,7 @@ export class BuilderAPI extends BaseAPI {
   }
 
   async fetchCollectionItems(collection_id: string) {
-    const res: {rows: RemoteItem[]} = await this.request('get', `/items`, { collection_id})
+    const res: {rows: RemoteItem[]} = await this.request('get', `/items`, { collection_id, limit: 1000})
     return res.rows.map(fromRemoteItem)
   }
 
@@ -602,7 +602,7 @@ export class BuilderAPI extends BaseAPI {
   }
 
   async fetchCollections(_address?: string) {
-    const remoteCollections: RemoteCollection[] = await this.request('get', '/collections').then(res => res.rows)
+    const remoteCollections: RemoteCollection[] = await this.request('get', '/collections', {limit: 1000}).then(res => res.rows)
     return remoteCollections.map(fromRemoteCollection)
   }
 
