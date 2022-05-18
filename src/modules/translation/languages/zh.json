@@ -164,18 +164,18 @@
   },
   "claim_ens_page": {
     "title": "索取唯一名称",
-    "subtitle": "可以将唯一名称分配给您的化身以用作别名，也可以将它们分配给宗地和地产。{br}为宗地或地产分配名称可以使您创建唯一的URL，例如{exampleLink} 轻松将人们送往您的LAND。 当有人使用您的新网址时，他们将在{dclWorldLink}中重定向到您的LAND{br} 名称仅在以太坊中提供，并且只能使用以太坊 MANA {symbol} 进行认领",
+    "subtitle": "可以将唯一名称分配给您的化身以用作别名，也可以将它们分配给宗地和地产。{br}为宗地或地产分配名称可以使您创建唯一的URL，例如{exampleLink} 轻松将人们送往您的LAND。 当有人使用您的新网址时，他们将在{dclWorldLink}中重定向到您的LAND{br} 名称仅在以太坊中提供，并且只能使用以太坊 BEAN {symbol} 进行认领",
     "world": "Beland!",
     "name_label": "名称",
     "name_message": "名称不得超过15个字符，不得包含空格或任何非字母数字字符。",
     "name_placeholder": "你的名字在这里",
     "repeated_message": "此名称不可用。",
     "error_message": "网络出现错误，请重试",
-    "radio_label": "MANA批准",
+    "radio_label": "BEAN批准",
     "claim_button": "要求 ",
-    "feed_mana_message": "授权{contract_link}合同代表您操作MANA",
-    "mana_not_allowed": "您需要授权足够的MANA才能申请新名称",
-    "not_enough_mana": "您没有足够的MANA来申请新名称"
+    "feed_mana_message": "授权{contract_link}合同代表您操作BEAN",
+    "mana_not_allowed": "您需要授权足够的BEAN才能申请新名称",
+    "not_enough_mana": "您没有足够的BEAN来申请新名称"
   },
   "create_single_item_modal": {
     "title": "新物品",
@@ -887,8 +887,8 @@
     "set_ens_resolver": "为名称\"{name}\"设置解析器",
     "set_ens_content": "在{land_link}上为名称\"{name}\"设置重定向内容。",
     "unset_ens_content": "删除名称\" {name} \"的重定向内容",
-    "allowed_claim_mana": "允许MANA声明新名称",
-    "disallowed_claim_mana": "不允许MANA申请新名称",
+    "allowed_claim_mana": "允许BEAN声明新名称",
+    "disallowed_claim_mana": "不允许BEAN申请新名称",
     "claim_name": "声明新名称：\"{name}\"。",
     "buy_third_party_item_slots": "为第三方 {name} 购买了 {count}个插槽",
     "rescue_items": "您已批准 {count} 项目 的内容，用于 {collectionName} 集合"
@@ -1098,7 +1098,7 @@
     "free": "免费",
     "price_label": "价格",
     "beneficiary_label": "受益人",
-    "beneficiary_popup": "这是第一次出售物品时将收到 MANA 和有人转售时收取版税的钱包地址。 您可以为集合中的每个项目设置不同的收款人地址。"
+    "beneficiary_popup": "这是第一次出售物品时将收到 BEAN 和有人转售时收取版税的钱包地址。 您可以为集合中的每个项目设置不同的收款人地址。"
   },
   "confirm_delete": {
     "content": "您确定要删除\"{name}\"吗?"
@@ -1110,7 +1110,7 @@
     "second_paragraph": "发布收藏集后，您将无法添加或删除项目",
     "third_paragraph": "您将无法更改集合的名称。请确保拼写正确且不侵犯知识产权。",
     "fourth_paragraph": "您收藏中的物品将出现在市场中，但只有获得批准，才能出售。",
-    "items_breakdown_title": "“您即将发布{count} {count, 复数，一个{item} 其他{items}}。您需要Polygon MANA 来支付交易费用，所有这些费用都交给Beland DAO。DAO 使用这个MANA 来支付 用于对您提交的内容进行技术审查，并通过赠款、活动和奖品支持社区的发展”",
+    "items_breakdown_title": "“您即将发布{count} {count, 复数，一个{item} 其他{items}}。您需要KardiaChain BEAN 来支付交易费用，所有这些费用都交给Beland DAO。DAO 使用这个BEAN 来支付 用于对您提交的内容进行技术审查，并通过赠款、活动和奖品支持社区的发展”",
     "tos_title": "我在此声明并保证：",
     "tos_first_condition": "1：提交穿戴式是完全符合{TERMS_OF_USE}和{} content_policy，我承认并接受。",
     "tos_second_condition": "2：我对提交的穿戴式拥有足够的知识产权。",
@@ -1300,14 +1300,15 @@
   },
   "networks": {
     "ethereum": "Ethereum",
-    "matic": "Polygon"
+    "matic": "Polygon",
+    "kai": "KardiaChain"
   },
   "intro_popup": {
-    "title": "介绍Polygon MANA",
+    "title": "介绍KardiaChain BEAN",
     "blog_link": "博客文章",
     "account_link": "帐户dApp",
     "manage_account": "管理帐户",
-    "content": "Polygon MANA将使您更快地进行购买。{br}您可以在我们的{blog_link}中了解有关Polygon MANA的更多信息。{br}您还可以在新的{ account_link}。{br}点击您的头像，选择{manage_account}，然后开始征服Metaverse。",
+    "content": "KardiaChain BEAN将使您更快地进行购买。{br}您可以在我们的{blog_link}中了解有关KardiaChain BEAN的更多信息。{br}您还可以在新的{ account_link}。{br}点击您的头像，选择{manage_account}，然后开始征服Metaverse。",
     "dismiss": "知道了！"
   },
   "toast": {

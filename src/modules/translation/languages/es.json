@@ -172,18 +172,18 @@
   },
   "claim_ens_page": {
     "title": "Reclamar un nombre único",
-    "subtitle": "Se pueden asignar nombres únicos a su avatar para usarlos como un alias, o se pueden asignar a parcelas y propiedades. {br} Asignar un nombre a una parcela o propiedad le permite crear una URL única, como {exampleLink}, por lo que fácilmente podrá enviar personas a su LAND. Cuando alguien siga su nueva URL, será redirigido a su LAND en {dclWorldLink}{br} Los nombres estan disponibles solo en Ethereum, y solo pueden ser reclamados con MANA de Ethereum {symbol}",
+    "subtitle": "Se pueden asignar nombres únicos a su avatar para usarlos como un alias, o se pueden asignar a parcelas y propiedades. {br} Asignar un nombre a una parcela o propiedad le permite crear una URL única, como {exampleLink}, por lo que fácilmente podrá enviar personas a su LAND. Cuando alguien siga su nueva URL, será redirigido a su LAND en {dclWorldLink}{br} Los nombres estan disponibles solo en Ethereum, y solo pueden ser reclamados con BEAN de Ethereum {symbol}",
     "world": "Beland!",
     "name_label": "Nombre",
     "name_message": "Los nombres no pueden exceder los 15 caracteres, contener espacios o incluir caracteres no alfanuméricos.",
     "name_placeholder": "Tu nombre va aquí",
     "repeated_message": "Este nombre no esta disponible.",
     "error_message": "Hay un error de red. Vuelve a intentarlo.",
-    "radio_label": "MANA aprobado",
+    "radio_label": "BEAN aprobado",
     "claim_button": "Reclama",
-    "need_mana_message": "Autoriza el contrato {contract_link} a operar MANA en tu nombre",
-    "mana_not_allowed": "Debes autorizar suficiente MANA para reclamar un nuevo nombre",
-    "not_enough_mana": "No tienes suficiente MANA para reclamar un nuevo nombre"
+    "need_mana_message": "Autoriza el contrato {contract_link} a operar BEAN en tu nombre",
+    "mana_not_allowed": "Debes autorizar suficiente BEAN para reclamar un nuevo nombre",
+    "not_enough_mana": "No tienes suficiente BEAN para reclamar un nuevo nombre"
   },
   "create_single_item_modal": {
     "title": "Nuevo item",
@@ -386,7 +386,7 @@
     "action": "Únete al Contest",
     "submit": {
       "title": "Creator Contest",
-      "subtitle": "Gana hasta 200 MANA (  ̴$5 USD) por cada escena que envies al Creator Contest. ¡Puedes enviar hasta 20!.",
+      "subtitle": "Gana hasta 200 BEAN (  ̴$5 USD) por cada escena que envies al Creator Contest. ¡Puedes enviar hasta 20!.",
       "eth_address": "Dirección ETH (optional)",
       "invalid_eth_address": "Dirección ETH inválida"
     },
@@ -903,8 +903,8 @@
     "set_ens_resolver": "Haz asignado el resolver para el nombre \"{name}\".",
     "set_ens_content": "Haz asignado el contenido de redirección para el nombre \"{name}\" en {land_link}.",
     "unset_ens_content": "Haz removido el contenido para el nombre \"{name}\".",
-    "allowed_claim_mana": "Permitió el uso de MANA para reclamar un nuevo nombre",
-    "disallowed_claim_mana": "No permitió el uso de MANA para reclamar un nuevo nombre",
+    "allowed_claim_mana": "Permitió el uso de BEAN para reclamar un nuevo nombre",
+    "disallowed_claim_mana": "No permitió el uso de BEAN para reclamar un nuevo nombre",
     "claim_name": "Haz reclamado el nombre: \"{name}\".",
     "buy_third_party_item_slots": "Has comprado {count} {count, plural, one {slot} other {slots}} para el registro externo \"{name}\"",
     "rescue_items": "Has aprobado el contenido de {count} {count, plural, one {item} other {items}} para la collección {collectionName}"
@@ -1117,7 +1117,7 @@
     "free": "Hacerlo gratuito",
     "price_label": "Precio",
     "beneficiary_label": "Beneficiario",
-    "beneficiary_popup": "Esta es la dirección de la billetera que recibirá MANA cuando se venda este item por primera vez y Regalías cuando sea revendido. Puede establecer una dirección de beneficiario diferente para cada item de una colección."
+    "beneficiary_popup": "Esta es la dirección de la billetera que recibirá BEAN cuando se venda este item por primera vez y Regalías cuando sea revendido. Puede establecer una dirección de beneficiario diferente para cada item de una colección."
   },
   "confirm_delete": {
     "content": "¿Estás seguro que quieres eliminar \"{name}\"?"
@@ -1129,7 +1129,7 @@
     "second_paragraph": "No serás capaz de agregar o borrar items luego de publicar.",
     "third_paragraph": "No podrás cambiar el nombre de la colección. Asegúrese de que esté escrito correctamente y que no viole los derechos de propiedad intelectual.",
     "fourth_paragraph": "Los items de la colección aparecerán en Marketplace, pero no se pueden vender hasta que sean aprobados por la DAO.",
-    "items_breakdown_title": "Estas por publicar {count} {count, plural, one {item} other {items}}. El fee de MANA por publicar la collección será enviado a la DAO, donde va a ser usado para soportar grants, eventos y premios",
+    "items_breakdown_title": "Estas por publicar {count} {count, plural, one {item} other {items}}. El fee de BEAN por publicar la collección será enviado a la DAO, donde va a ser usado para soportar grants, eventos y premios",
     "tos_title": "Por la presente declaro y garantizo que:",
     "tos_first_condition": "1: Los Wearables por publicarse cumplen plenamente con los {terms_of_use} y las {content_policy}, que reconozco y acepto.",
     "tos_second_condition": "2: Tengo suficientes derechos de propiedad intelectual sobre los Wearables que serán publicados.",
@@ -1317,14 +1317,15 @@
   },
   "networks": {
     "ethereum": "Ethereum",
-    "matic": "Polygon"
+    "matic": "Polygon",
+    "kai": "KardiaChain"
   },
   "intro_popup": {
-    "title": "Introducimos Polygon MANA",
+    "title": "Introducimos KardiaChain BEAN",
     "blog_link": "blog post",
     "account_link": "dApp de Account",
     "manage_account": "Mi Cuenta",
-    "content": "Polygon MANA te permitirá hacer transacciones mas rápido y barato.{br}Puedes aprender mas sobre Polygon MANA en nuestro {blog_link}.{br}Puedes gestionar tus tokens desde la {account_link}.{br}Haz click en tu avatar, luego en {manage_account} y comienza a conquistar el Metaverso.",
+    "content": "KardiaChain BEAN te permitirá hacer transacciones mas rápido y barato.{br}Puedes aprender mas sobre KardiaChain BEAN en nuestro {blog_link}.{br}Puedes gestionar tus tokens desde la {account_link}.{br}Haz click en tu avatar, luego en {manage_account} y comienza a conquistar el Metaverso.",
     "dismiss": "Entendido!"
   },
   "toast": {
