@@ -1,14 +1,14 @@
 // @ts-ignore
-import Dockerfile from '!raw-loader!decentraland/samples/ecs/Dockerfile'
+import Dockerfile from '!raw-loader!beland-project/Dockerfile'
 // @ts-ignore
 import builderChannelRaw from 'raw-loader!decentraland-builder-scripts/lib/channel'
 // @ts-ignore
 import builderInventoryRaw from 'raw-loader!decentraland-builder-scripts/lib/inventory'
 import * as ECS from '@beland/ecs'
-import { SceneWriter, LightweightWriter } from 'dcl-scene-writer'
-import packageJson from 'decentraland/samples/ecs/package.json'
-import sceneJson from 'decentraland/samples/ecs/scene.json'
-import tsconfig from 'decentraland/samples/ecs/tsconfig.json'
+import { SceneWriter, LightweightWriter } from 'bld-scene-writer'
+import packageJson from 'beland-project/package.json'
+import sceneJson from 'beland-project/scene.json'
+import tsconfig from 'beland-project/tsconfig.json'
 import { Rotation, Coordinate, SceneDefinition } from 'modules/deployment/types'
 import { Project, Manifest } from 'modules/project/types'
 import { Scene, ComponentType, ComponentDefinition } from 'modules/scene/types'
@@ -27,7 +27,7 @@ export enum EXPORT_PATH {
   SCENE_FILE = 'scene.json',
   PACKAGE_FILE = 'package.json',
   DOCKER_FILE = 'Dockerfile',
-  DCLIGNORE_FILE = '.dclignore',
+  DCLIGNORE_FILE = '.bldignore',
   TSCONFIG_FILE = 'tsconfig.json',
   BUNDLED_GAME_FILE = 'bin/game.js',
   THUMBNAIL_FILE = 'scene-thumbnail.png'

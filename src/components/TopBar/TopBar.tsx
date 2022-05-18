@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { Header, Grid, Icon } from '@beland/uikit'
-import { IntercomWidget } from '@beland/dapps/dist/components/Intercom/IntercomWidget'
 
 import DeploymentStatus from 'components/DeploymentStatus'
 import ShortcutTooltip from 'components/ShortcutTooltip'
@@ -16,7 +15,6 @@ import { Shortcut } from 'modules/keyboard/types'
 import { Props } from './TopBar.types'
 import './TopBar.css'
 
-const widget = IntercomWidget.getInstance()
 
 export default class TopBar extends React.PureComponent<Props> {
   handleMoveMode = () => {
@@ -36,7 +34,6 @@ export default class TopBar extends React.PureComponent<Props> {
 
   handleTogglePreview = () => {
     const { onTogglePreview, isPreviewing } = this.props
-    widget.unmount()
     onTogglePreview(!isPreviewing)
   }
 

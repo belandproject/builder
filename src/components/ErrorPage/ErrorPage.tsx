@@ -2,14 +2,12 @@ import * as React from 'react'
 import { Button, Page } from '@beland/uikit'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { getAnalytics } from '@beland/dapps/dist/modules/analytics/utils'
-import { IntercomWidget } from '@beland/dapps/dist/components/Intercom/IntercomWidget'
 
 import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'
 import { Props } from './ErrorPage.types'
 import './ErrorPage.css'
 
-const widget = IntercomWidget.getInstance()
 
 export default class ErrorPage extends React.PureComponent<Props> {
   analytics = getAnalytics()
@@ -24,9 +22,6 @@ export default class ErrorPage extends React.PureComponent<Props> {
   }
 
   handleOnClick = () => {
-    const { stackTrace } = this.props
-    const lines = stackTrace.split('\n')
-    widget.showNewMessage(`Hey! I just ran into this error using the Builder:\n${lines[0] + lines[1]}`)
   }
 
   handleSelectText = (el: React.MouseEvent<HTMLTextAreaElement>) => {

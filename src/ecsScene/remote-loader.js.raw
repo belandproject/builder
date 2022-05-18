@@ -5,10 +5,10 @@ const contentServer = initContext()
 
 function initContext() {
   return new Promise(resolve => {
-    define('node_modules/decentraland-builder-scripts/channel', [], () => {
+    define('node_modules/@beland/ecs-scene-utils/channel', [], () => {
       /* */
     })
-    define('node_modules/decentraland-builder-scripts/inventory', [], () => {
+    define('node_modules/@beland/ecs-scene-utils/inventory', [], () => {
       /* */
     })
 
