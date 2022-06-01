@@ -5,7 +5,7 @@ import { Props, State, LocalStorageState } from './Banner.types'
 import './Banner.css'
 
 const MAX_SAVED_BANNERS = 2
-const STORAGE_KEY = 'dcl-banner-storage'
+const STORAGE_KEY = 'bld-banner-storage'
 
 export default class Banner extends React.PureComponent<Props, State> {
   static defaultProps = {

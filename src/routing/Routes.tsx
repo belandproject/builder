@@ -30,7 +30,6 @@ import CollectionsPage from 'components/CollectionsPage'
 import ItemDetailPage from 'components/ItemDetailPage'
 import CollectionDetailPage from 'components/CollectionDetailPage'
 import ItemEditorPage from 'components/ItemEditorPage'
-import CurationPage from 'components/CurationPage'
 import { isDevelopment } from 'lib/environment'
 
 import { Props, State } from './Routes.types'
@@ -111,7 +110,6 @@ export default class Routes extends React.Component<Props, State> {
                   <Route exact key={2} path={locations.itemDetail()} component={ItemDetailPage} />,
                   <Route exact key={3} path={locations.collectionDetail()} component={CollectionDetailPage} />,
                   <Route exact key={4} path={locations.itemEditor()} component={ItemEditorPage} />,
-                  <Route exact key={5} path={locations.curation()} component={CurationPage} />
                 ]
               : null}
             <Redirect to={locations.root()} />

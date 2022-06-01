@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { Network } from '@beland/schemas'
 import { RootState } from 'modules/common/types'
-import { getManaBalanceForNetwork } from 'modules/wallet/selectors'
+import { getBeanBalanceForNetwork } from 'modules/wallet/selectors'
 import { ThirdParty } from 'modules/thirdParty/types'
 import { getError, isBuyingItemSlots, isFetchingSlotPrice, getItemSlotPrice } from 'modules/thirdParty/selectors'
 import { buyThirdPartyItemSlotRequest, fetchThirdPartyItemSlotPriceRequest } from 'modules/thirdParty/actions'
@@ -13,7 +13,7 @@ const mapState = (state: RootState): MapStateProps => {
     slotPrice: getItemSlotPrice(state),
     isFetchingSlotPrice: isFetchingSlotPrice(state),
     isBuyingItemSlots: isBuyingItemSlots(state),
-    manaBalance: getManaBalanceForNetwork(state, Network.KAI),
+    beanBalance: getBeanBalanceForNetwork(state, Network.KAI),
     error: getError(state)
   }
 }

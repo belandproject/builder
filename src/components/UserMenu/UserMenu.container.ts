@@ -20,7 +20,6 @@ const mapState = (state: RootState): MapStateProps => {
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onClickActivity: () => dispatch(push(locations.activity())),
-  onClickSettings: () => dispatch(push(locations.settings())),
   onSignOut: () => dispatch(logout())
 })
 

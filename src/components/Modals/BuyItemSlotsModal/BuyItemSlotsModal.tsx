@@ -27,10 +27,10 @@ export default class BuyItemSlotsModal extends React.PureComponent<Props, State>
     onClose()
   }
 
-  hasInsufficientMana = (): boolean => {
-    const { manaBalance, slotPrice } = this.props
+  hasInsufficienBean = (): boolean => {
+    const { beanBalance, slotPrice } = this.props
     const { slotsToBuy } = this.state
-    return slotsToBuy && slotPrice ? Number(slotsToBuy) * slotPrice > manaBalance : false
+    return slotsToBuy && slotPrice ? Number(slotsToBuy) * slotPrice > beanBalance : false
   }
 
   handleItemSlotsBuy = (): void => {
@@ -71,7 +71,7 @@ export default class BuyItemSlotsModal extends React.PureComponent<Props, State>
     const { slotsToBuy } = this.state
 
     const hasError = this.hasError()
-    const hasInsufficientMANA = this.hasInsufficientMana()
+    const hasInsufficientBEAN = this.hasInsufficienBean()
 
     return (
       <Modal size="tiny" onClose={this.handleCloseModal} name={name} closeIcon>
@@ -114,7 +114,7 @@ export default class BuyItemSlotsModal extends React.PureComponent<Props, State>
             )}
           </div>
           {error !== null && <Message error size="tiny" visible content={error} header={t('global.error_ocurred')} />}
-          {!isFetchingSlotPrice && hasInsufficientMANA && (
+          {!isFetchingSlotPrice && hasInsufficientBEAN && (
             <div className={styles.notEnoughMana}>
               <small>
                 <T
@@ -146,7 +146,7 @@ export default class BuyItemSlotsModal extends React.PureComponent<Props, State>
           <NetworkButton
             className={styles.acceptButton}
             primary
-            disabled={hasInsufficientMANA || isBuyingItemSlots || isFetchingSlotPrice || !this.isValidSlotAmount()}
+            disabled={hasInsufficientBEAN || isBuyingItemSlots || isFetchingSlotPrice || !this.isValidSlotAmount()}
             loading={isBuyingItemSlots}
             network={Network.KAI}
             onClick={this.handleItemSlotsBuy}

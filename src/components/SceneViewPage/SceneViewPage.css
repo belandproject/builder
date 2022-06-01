@@ -36,11 +36,11 @@
   align-items: center;
 }
 
-.SceneViewPage.mini canvas.dcl-canvas {
+.SceneViewPage.mini canvas.bld-canvas {
   cursor: grab !important;
 }
 
-.SceneViewPage.mini canvas.dcl-canvas:active {
+.SceneViewPage.mini canvas.bld-canvas:active {
   cursor: grabbing !important;
 }
 

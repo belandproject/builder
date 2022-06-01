@@ -26,7 +26,7 @@ import { Props } from './CollectionDetailPage.types'
 
 import './CollectionDetailPage.css'
 
-const STORAGE_KEY = 'dcl-collection-notice'
+const STORAGE_KEY = 'bld-collection-notice'
 
 export default class CollectionDetailPage extends React.PureComponent<Props> {
   handleMintItems = () => {

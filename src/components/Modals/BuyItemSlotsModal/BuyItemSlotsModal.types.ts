@@ -10,7 +10,7 @@ import {
 
 export type Props = ModalProps & {
   isBuyingItemSlots: boolean
-  manaBalance: number
+  beanBalance: number
   isFetchingSlotPrice: boolean
   slotPrice: number | null
   metadata: BuyItemSlotsModalMetadata
@@ -27,6 +27,6 @@ export type BuyItemSlotsModalMetadata = {
   thirdParty: ThirdParty
 }
 
-export type MapStateProps = Pick<Props, 'isBuyingItemSlots' | 'isFetchingSlotPrice' | 'manaBalance' | 'slotPrice' | 'error'>
+export type MapStateProps = Pick<Props, 'isBuyingItemSlots' | 'isFetchingSlotPrice' | 'beanBalance' | 'slotPrice' | 'error'>
 export type MapDispatchProps = Pick<Props, 'onBuyItemSlots' | 'onFetchThirdPartyItemSlotPrice'>
 export type MapDispatch = Dispatch<FetchThirdPartyItemSlotPriceRequestAction | BuyThirdPartyItemSlotRequestAction>

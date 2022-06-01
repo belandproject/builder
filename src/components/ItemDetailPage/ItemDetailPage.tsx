@@ -20,7 +20,7 @@ import Back from 'components/Back'
 import { Props } from './ItemDetailPage.types'
 import './ItemDetailPage.css'
 
-const STORAGE_KEY = 'dcl-item-notice'
+const STORAGE_KEY = 'bld-item-notice'
 
 export default class ItemDetailPage extends React.PureComponent<Props> {
   handleEditItem = () => {
