@@ -188,7 +188,7 @@ export type Rarity = {
 }
 
 export type ThirdPartyContractItem = [string, string]
-export type InitializeItem = [number, string]
+export type InitializeItem = [number, string, string, string]
 
 export type GenerateImageOptions = { width?: number; height?: number; thumbnail?: Blob }
 

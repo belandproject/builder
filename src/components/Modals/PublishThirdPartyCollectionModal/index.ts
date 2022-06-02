@@ -1,3 +1,0 @@
-import PublishThirdPartyCollectionModal from './PublishThirdPartyCollectionModal.container'
-
-export default PublishThirdPartyCollectionModal

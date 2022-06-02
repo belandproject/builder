@@ -1,6 +1,6 @@
 import { Contract, ethers } from 'ethers'
 import { push, replace } from 'connected-react-router'
-import { select, take, takeEvery, call, put, takeLatest, race, retry} from 'redux-saga/effects'
+import { select, take, takeEvery, call, put, takeLatest, race, retry } from 'redux-saga/effects'
 import { getOpenModals } from '@beland/dapps/dist/modules/modal/selectors'
 import { ModalState } from '@beland/dapps/dist/modules/modal/reducer'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
@@ -61,6 +61,8 @@ import { getCollection, getWalletCollections } from './selectors'
 import { Collection } from './types'
 import { isOwner, isLocked, UNSYNCED_COLLECTION_ERROR_PREFIX, isTPCollection } from './utils'
 import { HubAPI } from 'lib/api/hub'
+import { ChainId } from '@beland/schemas'
+import address from 'config/constants/contracts'
 
 export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
   yield takeEvery(FETCH_COLLECTIONS_REQUEST, handleFetchCollectionsRequest)
@@ -194,11 +196,10 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
           throw new Error(`${UNSYNCED_COLLECTION_ERROR_PREFIX} Item found in the server but not in the browser`)
         }
       })
-
-      const txHash: string = yield sendCreateCollection(collection, items)
+      const chainId: ChainId = yield call(getChainIdByNetwork, Network.KAI)
+      const txHash: string = yield createCollection(collection, items, chainId)
       const { locked_at }: { locked_at: string } = yield retry(10, 500, builder.lockCollection, collection)
       collection = { ...collection, lock: +new Date(locked_at) }
-      const chainId = getChainIdByNetwork(Network.KAI)
       yield put(publishCollectionSuccess(collection, items, chainId, txHash))
       yield put(replace(locations.activity()))
     } catch (error) {
@@ -206,15 +207,13 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     }
   }
 
-  async function sendCreateCollection(collection: Collection, items: Item[]) {
+  async function createCollection(collection: Collection, items: Item[], chainId: ChainId) {
     const provider = await getConnectedProvider()
     const web3 = new ethers.providers.Web3Provider(provider as any)
-    const contract: Contract = new ethers.Contract('0x49E662ca18F7a2C7b38407f73928d5E83b688C69', BelandNFTFactoryABI, web3.getSigner())
-    const tx = await contract.create(collection.name, collection.symbol)
-    await tx.wait()
+    const contract: Contract = new ethers.Contract(address.factory[chainId], BelandNFTFactoryABI, web3.getSigner())
     const initializeItems: InitializeItem[] = []
     for (let item of items) {
-      const bodyShapes = item.data.representations.map(representation => toBodyShapeType(representation.bodyShapes[0]));
+      const bodyShapes = item.data.representations.map(representation => toBodyShapeType(representation.bodyShapes[0]))
       const contents = await _hub.createMetadata({
         name: item.name,
         description: item.description,
@@ -246,19 +245,17 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
           ...item.data.tags.map(value => ({ trait_type: 'tags', value })),
           ...item.data.hides.map(value => ({ trait_type: 'hides', value })),
           ...item.data.replaces.map(value => ({ trait_type: 'replaces', value })),
-          ...bodyShapes.map(value => ({ trait_type: 'body_shapes', value })),
+          ...bodyShapes.map(value => ({ trait_type: 'body_shapes', value }))
         ]
       })
-      initializeItems.push([RARITY_MAX_SUPPLY[item.rarity || ItemRarity.UNIQUE], contents.ipfs_uri])
+      initializeItems.push([
+        RARITY_MAX_SUPPLY[item.rarity || ItemRarity.UNIQUE],
+        contents.ipfs_uri,
+        item.price || '0',
+        item.beneficiary || '0x'
+      ])
     }
-    return await sendAddItems(collection, initializeItems)
-  }
-
-  async function sendAddItems(collection: Collection, items: InitializeItem[]): Promise<string> {
-    const provider = await getConnectedProvider()
-    const web3 = new ethers.providers.Web3Provider(provider as any)
-    const contract: Contract = new ethers.Contract(collection.contractAddress || '0x', BelandNFTABI, web3.getSigner())
-    const tx = await contract.addItems(items)
+    const tx = await contract.create(collection.name, collection.symbol, initializeItems, "")
     const reciept = await tx.wait()
     return reciept.transactionHash
   }
@@ -283,9 +280,9 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
           newMinters.delete(address)
         }
       }
-      let txHash: string = "";
-      for (let i = 0; i < addresses.length; i ++) {
-        txHash = yield sendTxSetMinter(collection, addresses[i], values[i])
+      let txHash: string = ''
+      for (let i = 0; i < addresses.length; i++) {
+        txHash = yield setMinter(collection, addresses[i], values[i])
       }
 
       const chainId = getChainIdByNetwork(Network.KAI)
@@ -296,7 +293,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     }
   }
 
-  async function sendTxSetMinter(collection: Collection, address: string, isMinter: boolean) {
+  async function setMinter(collection: Collection, address: string, isMinter: boolean) {
     const provider = await getConnectedProvider()
     const web3 = new ethers.providers.Web3Provider(provider as any)
     const contract: Contract = new ethers.Contract(collection.contractAddress || '0x', BelandNFTABI, web3.getSigner())
@@ -310,9 +307,9 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     try {
       const chainId = getChainIdByNetwork(Network.KAI)
 
-      let txHash = '';
+      let txHash = ''
       for (const mint of mints) {
-        txHash = yield sendTxMintNFT(collection, mint.address, mint.item.tokenId!, mint.amount)
+        txHash = yield mintNFT(collection, mint.address, mint.item.tokenId!, mint.amount)
       }
 
       yield put(mintCollectionItemsSuccess(collection, mints, chainId, txHash))
@@ -323,7 +320,7 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
     }
   }
 
-  async function sendTxMintNFT(collection: Collection, to: string, itemId: string, amount: number) {
+  async function mintNFT(collection: Collection, to: string, itemId: string, amount: number) {
     const provider = await getConnectedProvider()
     const web3 = new ethers.providers.Web3Provider(provider as any)
     const contract: Contract = new ethers.Contract(collection.contractAddress || '0x', BelandNFTABI, web3.getSigner())

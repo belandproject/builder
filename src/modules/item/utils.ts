@@ -393,7 +393,7 @@ export function toInitializeItems(items: Item[]): InitializeItem[] {
 }
 
 export function toInitializeItem(item: Item): InitializeItem {
-  return [item.totalSupply || 0, item.catalystContentHash || ""]
+  return [item.totalSupply || 0, item.catalystContentHash || "", item.price || "0", item.beneficiary || ""]
 }
 
 export function areEqualArrays<T>(a: T[], b: T[]) {

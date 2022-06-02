@@ -3,7 +3,7 @@ import { getContractName } from '@beland/transactions'
 export function getContractSymbol(address: string) {
   const contractName = getContractName(address)
   const symbols: Partial<Record<any, string>> = {
-    '0xAF984E23EAA3E7967F3C5E007fbe397D8566D23d': 'MANA'
+    '0x5cCA45303CE50Bf71B507fB80Afb951B165Bb829': 'BEAN'
   }
 
   const symbol = symbols[contractName]

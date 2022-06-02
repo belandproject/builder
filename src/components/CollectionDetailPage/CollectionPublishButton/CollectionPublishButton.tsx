@@ -9,12 +9,14 @@ import { AuthorizationModal } from 'components/AuthorizationModal'
 import { MAX_ITEMS } from 'modules/collection/constants'
 import { isComplete } from 'modules/item/utils'
 import { SyncStatus } from 'modules/item/types'
-import { buildManaAuthorization } from 'lib/mana'
+import { buildBeanAuthorization } from 'lib/bean'
 import { Props } from './CollectionPublishButton.types'
 import UnderReview from './UnderReview'
+import address from 'config/constants/contracts'
+import { hasAuthorization } from '@beland/dapps/dist/modules/authorization/utils'
 
 const CollectionPublishButton = (props: Props) => {
-  const { wallet, collection, items, status, hasPendingCuration, onPublish, onPush, onInit } = props
+  const { wallet, collection, items, status, authorizations, hasPendingCuration, onPublish, onPush, onInit } = props
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
 
   useEffect(() => {
@@ -28,11 +30,13 @@ const CollectionPublishButton = (props: Props) => {
   )
 
   const getAuthorization = (): Authorization => {
-    return buildManaAuthorization(wallet.address, wallet.networks.KAI.chainId, "" as any)
+    return buildBeanAuthorization(wallet.address, wallet.networks.KAI.chainId, address.factory[24])
   }
 
   const handlePublish = () => {
-    onPublish()
+    const hasAuth = hasAuthorization(authorizations, getAuthorization())
+    if (hasAuth) onPublish()
+    setIsAuthModalOpen(!hasAuth)
   }
 
   const handleAuthModalClose = () => {

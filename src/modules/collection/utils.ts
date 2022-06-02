@@ -7,18 +7,17 @@ import { decodeURN, isThirdParty, URNType } from 'lib/urn'
 import { Item, SyncStatus } from 'modules/item/types'
 import { buildItemContentHash } from 'modules/item/export'
 import { Collection, Access, Mint, CollectionType } from './types'
+import contracts from 'config/constants/contracts'
 
 export const UNSYNCED_COLLECTION_ERROR_PREFIX = 'UnsyncedCollection:'
-export const SALE_CONTRACT = '0xa8b931f1862d0EBcA64cFD22efEfF1583bCE2C12'
-export const SALE_QUOTE_TOKEN = '0xAF984E23EAA3E7967F3C5E007fbe397D8566D23d'
 
 export function setOnSale(collection: Collection, _wallet: Wallet, isOnSale: boolean): Access[] {
-  const address = SALE_CONTRACT
+  const address = contracts.sale[24];
   return [{ address, hasAccess: isOnSale, collection }]
 }
 
 export function isOnSale(collection: Collection, _wallet: Wallet) {
-  const address = SALE_CONTRACT
+  const address = contracts.sale[24];
   return includes(collection.minters, address)
 }
 

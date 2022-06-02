@@ -44,7 +44,7 @@ const Transaction = (props: Props) => {
     case GRANT_TOKEN_SUCCESS:
     case REVOKE_TOKEN_SUCCESS: {
       const { authorization } = tx.payload as GrantTokenSuccessAction['payload'] | RevokeTokenSuccessAction['payload']
-      const authorizedName = getContractName(authorization.authorizedAddress)
+      const authorizedName = authorization.authorizedAddress
       const contractName = getContractName(authorization.contractAddress)
       const action = tx.actionType === GRANT_TOKEN_SUCCESS ? t('transaction.approved') : t('transaction.unapproved')
       return (
