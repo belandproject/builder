@@ -144,6 +144,12 @@ export const splitCoords = (coords: Coord[]): [number[], number[]] => {
   return [xs, ys]
 }
 
+export const coordsToLandIds = (coords: Coord[]): number[]=> {
+  return coords.map(coord => {
+    return (coord.x + 150) % 300 + (coord.y + 150) * 300
+  })
+}
+
 export const buildMetadata = (name: string, description = '') => {
   return `0,"${name.replace(/"/g, '\\"')}","${description.replace(/"/g, '\\"')}",`
 }
