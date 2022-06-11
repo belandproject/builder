@@ -12,11 +12,14 @@ import {
   coordsToId,
   getCoordsToAdd,
   getCoordsToRemove,
-  MAX_PARCELS_PER_TX
+  MAX_PARCELS_PER_TX,
+  BELAND_ESTATE_ADDRESS,
+  BELAND_PARCEL_ADDRESS
 } from 'modules/land/utils'
 import { LandType, Land } from 'modules/land/types'
 import { Props, State } from './EstateEditorModal.types'
 import './EstateEditorModal.css'
+import { Authorization, AuthorizationType } from '@beland/dapps/dist/modules/authorization/types'
 
 const getInitialCoords = (land: Land) => {
   let x = 0
@@ -47,7 +50,8 @@ export default class EstateEditorModal extends React.PureComponent<Props, State>
     name: '',
     description: '',
     selection: getInitialSelection(this.props.metadata.land),
-    showCreationForm: false
+    showCreationForm: false,
+    isAuthModalOpen: true
   }
 
   handleClick = (x: number, y: number) => {
@@ -121,6 +125,20 @@ export default class EstateEditorModal extends React.PureComponent<Props, State>
     return getCoordsToRemove(getOriginalParcels(land), this.state.selection)
   }
 
+  getAuthorization = (): Authorization => {
+    const { wallet } = this.props;
+    return {
+      address: wallet.address,
+      authorizedAddress: BELAND_ESTATE_ADDRESS,
+      chainId: wallet.chainId,
+      contractAddress: BELAND_PARCEL_ADDRESS,
+      contractName: "parcel" as any,
+      type: AuthorizationType.APPROVAL
+    }
+  }
+
+  
+
   handleSubmit = () => {
     const { onCreateEstate, onEditEstate, metadata } = this.props
     const { land } = metadata
@@ -150,6 +168,8 @@ export default class EstateEditorModal extends React.PureComponent<Props, State>
     }
   }
 
+
+
   render() {
     const { metadata } = this.props
     const { name, description, showCreationForm } = this.state
@@ -176,6 +196,7 @@ export default class EstateEditorModal extends React.PureComponent<Props, State>
     }
 
     return (
+      <>
       <Modal name={this.props.name}>
         <ModalNavigation
           title={isEditing ? t('estate_editor.title_edit') : t('estate_editor.title_create')}
@@ -239,6 +260,8 @@ export default class EstateEditorModal extends React.PureComponent<Props, State>
           </Button>
         </ModalActions>
       </Modal>
+      
+      </>
     )
   }
 }

@@ -4,9 +4,13 @@ import { MapStateProps, MapDispatchProps, OwnProps, MapDispatch } from './Estate
 import EstateEditorModal from './EstateEditorModal'
 import { getLandTiles } from 'modules/land/selectors'
 import { createEstateRequest, editEstateRequest } from 'modules/land/actions'
+import { getData as getWallet } from '@beland/dapps/dist/modules/wallet/selectors'
+import { getData as getAuthorizations } from '@beland/dapps/dist/modules/authorization/selectors'
 
 const mapState = (state: RootState, _ownProps: OwnProps): MapStateProps => ({
-  landTiles: getLandTiles(state)
+  landTiles: getLandTiles(state),
+  authorizations: getAuthorizations(state),
+  wallet: getWallet(state)!,
 })
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({

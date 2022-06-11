@@ -4,7 +4,7 @@ import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { env } from 'decentraland-commons'
 import { LandType, Land, RoleType } from 'modules/land/types'
 import { Deployment } from 'modules/deployment/types'
-import { coordsToId, hoverStrokeByRole, hoverFillByRole } from 'modules/land/utils'
+import { coordsToId, hoverStrokeByRole, hoverFillByRole, BELAND_ESTATE_ADDRESS, BELAND_PARCEL_ADDRESS } from 'modules/land/utils'
 import { Atlas } from 'components/Atlas'
 import { locations } from 'routing/locations'
 import LandProviderPage from 'components/LandProviderPage'
@@ -15,13 +15,18 @@ import ENSChip from './ENSChip'
 import Scene from './Scene'
 import { Props, State } from './LandDetailPage.types'
 import './LandDetailPage.css'
+import { Authorization, AuthorizationType } from '@beland/dapps/dist/modules/authorization/types'
+import { AuthorizationModal } from 'components/AuthorizationModal'
+import { hasAuthorization } from '@beland/dapps/dist/modules/authorization/utils'
+import { ContractName } from '@beland/transactions'
 
 export default class LandDetailPage extends React.PureComponent<Props, State> {
   state: State = {
     hovered: null,
     mouseX: 0,
     mouseY: 0,
-    showTooltip: false
+    showTooltip: false,
+    isAuthModalOpen: false
   }
 
   handleMouseEnter = (deployment: Deployment) => {
@@ -88,6 +93,25 @@ export default class LandDetailPage extends React.PureComponent<Props, State> {
     return occupiedTotal
   }
 
+  openEstateEditor = (land: Land) => {
+    const hasAuth = hasAuthorization(this.props.authorizations, this.getAuthorization())
+    if (!hasAuth) {
+      this.setState({...this.state, isAuthModalOpen: true})
+      return;
+    }
+
+
+    this.props.onOpenModal('EstateEditorModal', { land })
+  }
+
+  handleAuthModalClose = () => {
+    this.setState({
+      ...this.state,
+      isAuthModalOpen: false
+    })
+  }
+
+
   renderDetail(land: Land, deployments: Deployment[]) {
     const { ensList, parcelsAvailableToBuildEstates, projects, onNavigate, onOpenModal } = this.props
     const { hovered, mouseX, mouseY, showTooltip } = this.state
@@ -148,7 +172,7 @@ export default class LandDetailPage extends React.PureComponent<Props, State> {
                             <>
                               <Dropdown.Item
                                 text={t('land_detail_page.build_estate')}
-                                onClick={() => onOpenModal('EstateEditorModal', { land })}
+                                onClick={() => this.openEstateEditor(land)}
                               />
                             </>
                           ) : null}
@@ -266,8 +290,27 @@ export default class LandDetailPage extends React.PureComponent<Props, State> {
             ) : null}
           </Section>
         </Narrow>
+        <AuthorizationModal
+          open={this.state.isAuthModalOpen}
+          authorization={this.getAuthorization()}
+          onProceed={() => this.openEstateEditor(land)}
+          onCancel={this.handleAuthModalClose}
+        />
+        
       </>
     )
+  }
+
+  getAuthorization = (): Authorization => {
+    const { wallet } = this.props;
+    return {
+      address: wallet.address,
+      authorizedAddress: BELAND_ESTATE_ADDRESS,
+      chainId: wallet.chainId,
+      contractAddress: BELAND_PARCEL_ADDRESS,
+      contractName: ContractName.ERC721,
+      type: AuthorizationType.APPROVAL
+    }
   }
 
   render() {

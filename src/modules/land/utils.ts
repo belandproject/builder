@@ -15,7 +15,7 @@ export const MAX_PARCELS_PER_TX = 20
 export const SEPARATOR = ','
 
 export const BELAND_PARCEL_ADDRESS='0x80974C4249b212178B4B54f63F6F4d6597C71c0f'
-export const BELAND_ESTATE_ADDRESS='0x9299C332Db2AFD9B52dC234DdA2BA5614A2dC744'
+export const BELAND_ESTATE_ADDRESS='0x871F3a16fF9d267854628966a2bA36665e0bD437'
 
 export const coordsToId = (x: string | number, y: string | number) => x + SEPARATOR + y
 

@@ -11,10 +11,12 @@ import {
   ConnectWalletSuccessAction
 } from '@beland/dapps/dist/modules/wallet/actions'
 import { fetchAuthorizationsRequest } from '@beland/dapps/dist/modules/authorization/actions'
-import { Authorization } from '@beland/dapps/dist/modules/authorization/types'
+import { Authorization, AuthorizationType } from '@beland/dapps/dist/modules/authorization/types'
 import { TRANSACTIONS_API_URL } from './utils'
 import { buildBeanAuthorization } from 'lib/bean'
 import address from 'config/constants/contracts'
+import { BELAND_ESTATE_ADDRESS, BELAND_PARCEL_ADDRESS } from 'modules/land/utils'
+import { ContractName } from '@beland/transactions'
 
 const baseWalletSaga = createWalletSaga({
   CHAIN_ID: env.get('REACT_APP_CHAIN_ID') || ChainId.KAI_MAINNET,
@@ -43,6 +45,15 @@ function* handleWalletChange(action: ConnectWalletSuccessAction | ChangeAccountA
     if (env.get('REACT_APP_FF_WEARABLES')) {
       authorizations.push(buildBeanAuthorization(wallet.address, chainId, address.factory[24]))
     }
+
+    authorizations.push({
+      address: wallet.address,
+      authorizedAddress: BELAND_ESTATE_ADDRESS,
+      chainId: chainId,
+      contractAddress: BELAND_PARCEL_ADDRESS,
+      contractName: ContractName.ERC721,
+      type: AuthorizationType.APPROVAL
+    })
 
     yield put(fetchAuthorizationsRequest(authorizations))
   } catch (error) {}
