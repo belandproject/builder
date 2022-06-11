@@ -14,7 +14,6 @@ import { fetchAuthorizationsRequest } from '@beland/dapps/dist/modules/authoriza
 import { Authorization, AuthorizationType } from '@beland/dapps/dist/modules/authorization/types'
 import { TRANSACTIONS_API_URL } from './utils'
 import { buildBeanAuthorization } from 'lib/bean'
-import address from 'config/constants/contracts'
 import { BELAND_ESTATE_ADDRESS, BELAND_PARCEL_ADDRESS } from 'modules/land/utils'
 import { ContractName } from '@beland/transactions'
 
@@ -43,7 +42,7 @@ function* handleWalletChange(action: ConnectWalletSuccessAction | ChangeAccountA
 
   try {
     if (env.get('REACT_APP_FF_WEARABLES')) {
-      authorizations.push(buildBeanAuthorization(wallet.address, chainId, address.factory[24]))
+      authorizations.push(buildBeanAuthorization(wallet.address, chainId, ContractName.NFT_FACTORY))
     }
 
     authorizations.push({

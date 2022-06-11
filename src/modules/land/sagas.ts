@@ -35,12 +35,11 @@ import { push } from 'connected-react-router'
 import { locations } from 'routing/locations'
 import { closeModal } from 'modules/modal/actions'
 import { getWallet } from 'modules/wallet/utils'
-import { buildMetadata, BELAND_PARCEL_ADDRESS, BELAND_ESTATE_ADDRESS, coordsToLandIds } from './utils'
+import { buildMetadata, coordsToLandIds } from './utils'
 import { Land, LandType, Authorization } from './types'
 import { getConnectedProvider } from '@beland/dapps/dist/lib/eth'
 import { Contract, ethers } from 'ethers'
-import BelandParcelABI from '../../contracts/BelandParcel.json'
-import BelandEstateABI from '../../contracts/BelandBundle.json'
+import { ContractName, getContract } from '@beland/transactions'
 
 export function* landSaga() {
   yield takeEvery(EDIT_ESTATE_REQUEST, handleEditEstateRequest)
@@ -57,7 +56,7 @@ function* handleCreateEstateRequest(action: CreateEstateRequestAction) {
   try {
     const [wallet]: [Wallet] = yield getWallet()
     const metadata = buildMetadata(name, description)
-    const txHash: string = yield call(createEstate, coordsToLandIds(coords), metadata)
+    const txHash: string = yield call(createEstate, wallet, coordsToLandIds(coords), metadata)
 
     yield put(createEstateSuccess(name, description, coords, wallet.chainId, txHash))
     yield put(closeModal('EstateEditorModal'))
@@ -67,10 +66,11 @@ function* handleCreateEstateRequest(action: CreateEstateRequestAction) {
   }
 }
 
-async function createEstate(landIds: number[], metadata: string) {
+async function createEstate(wallet: Wallet, landIds: number[], metadata: string) {
   const provider = await getConnectedProvider()
   const web3 = new ethers.providers.Web3Provider(provider as any)
-  const contract: Contract = new ethers.Contract(BELAND_ESTATE_ADDRESS, BelandEstateABI, web3.getSigner())
+  const estateContract = getContract(ContractName.ESTATE, wallet.chainId)
+  const contract: Contract = new ethers.Contract(estateContract.address, estateContract.abi, web3.getSigner())
   const tx = await contract.createBundle(landIds, metadata)
   const reciept = await tx.wait()
   return reciept.transactionHash
@@ -82,12 +82,12 @@ function* handleEditEstateRequest(action: EditEstateRequestAction) {
     const [wallet]: [Wallet] = yield getWallet()
 
     if (toAdd.length > 0) {
-      const txHash: string = yield call(addLandIds, land.id, coordsToLandIds(toAdd))
+      const txHash: string = yield call(addLandIds, wallet, land.id, coordsToLandIds(toAdd))
       yield put(editEstateSuccess(land, toAdd, 'add', wallet.chainId, txHash))
     }
 
     if (toRemove.length > 0) {
-      const txHash: string = yield call(removeLandIds, land.id, coordsToLandIds(toRemove))
+      const txHash: string = yield call(removeLandIds, wallet, land.id, coordsToLandIds(toRemove))
       yield put(editEstateSuccess(land, toRemove, 'remove', wallet.chainId, txHash))
     }
     yield put(closeModal('EstateEditorModal'))
@@ -97,19 +97,21 @@ function* handleEditEstateRequest(action: EditEstateRequestAction) {
   }
 }
 
-async function removeLandIds(estateId: string, landIds: number[]) {
+async function removeLandIds(wallet: Wallet, estateId: string, landIds: number[]) {
   const provider = await getConnectedProvider()
   const web3 = new ethers.providers.Web3Provider(provider as any)
-  const contract: Contract = new ethers.Contract(BELAND_ESTATE_ADDRESS, BelandEstateABI, web3.getSigner())
+  const estateContract = getContract(ContractName.ESTATE, wallet.chainId)
+  const contract: Contract = new ethers.Contract(estateContract.address, estateContract.abi, web3.getSigner())
   const tx = await contract.removeItems(estateId, landIds)
   const reciept = await tx.wait()
   return reciept.transactionHash
 }
 
-async function addLandIds(estateId: string, landIds: number[]) {
+async function addLandIds(wallet: Wallet, estateId: string, landIds: number[]) {
   const provider = await getConnectedProvider()
   const web3 = new ethers.providers.Web3Provider(provider as any)
-  const contract: Contract = new ethers.Contract(BELAND_ESTATE_ADDRESS, BelandEstateABI, web3.getSigner())
+  const estateContract = getContract(ContractName.ESTATE, wallet.chainId)
+  const contract: Contract = new ethers.Contract(estateContract.address, estateContract.abi, web3.getSigner())
   const tx = await contract.addItems(estateId, landIds)
   const reciept = await tx.wait()
   return reciept.transactionHash
@@ -124,12 +126,12 @@ function* handleEditLandRequest(action: EditLandRequestAction) {
     const [wallet]: [Wallet, Eth] = yield getWallet()
     switch (land.type) {
       case LandType.PARCEL: {
-        const txHash: string = yield parcelUpdateMetaData(land.landId, metadata)
+        const txHash: string = yield parcelUpdateMetaData(wallet, land.landId, metadata)
         yield put(editLandSuccess(land, name, description, wallet.chainId, txHash))
         break
       }
       case LandType.ESTATE: {
-        const txHash: string = yield estateUpdateMetaData(land.landId, metadata)
+        const txHash: string = yield estateUpdateMetaData(wallet, land.landId, metadata)
         yield put(editLandSuccess(land, name, description, wallet.chainId, txHash))
         break
       }
@@ -142,19 +144,21 @@ function* handleEditLandRequest(action: EditLandRequestAction) {
   }
 }
 
-async function parcelUpdateMetaData(landId: number | string, metadata: string) {
+async function parcelUpdateMetaData(wallet: Wallet, landId: number | string, metadata: string) {
   const provider = await getConnectedProvider()
   const web3 = new ethers.providers.Web3Provider(provider as any)
-  const contract: Contract = new ethers.Contract(BELAND_PARCEL_ADDRESS, BelandParcelABI, web3.getSigner())
+  const parcelContract = getContract(ContractName.PARCEL, wallet.chainId)
+  const contract: Contract = new ethers.Contract(parcelContract.address, parcelContract.abi, web3.getSigner())
   const tx = await contract.setMetadata(landId, metadata)
   const reciept = await tx.wait()
   return reciept.transactionHash
 }
 
-async function estateUpdateMetaData(landId: number | string, metadata: string) {
+async function estateUpdateMetaData(wallet: Wallet, landId: number | string, metadata: string) {
   const provider = await getConnectedProvider()
   const web3 = new ethers.providers.Web3Provider(provider as any)
-  const contract: Contract = new ethers.Contract(BELAND_ESTATE_ADDRESS, BelandEstateABI, web3.getSigner())
+  const estateContract = getContract(ContractName.ESTATE, wallet.chainId)
+  const contract: Contract = new ethers.Contract(estateContract.address, estateContract.abi, web3.getSigner())
   const tx = await contract.updateMetdata(landId, metadata)
   const reciept = await tx.wait()
   return reciept.transactionHash
@@ -170,12 +174,12 @@ function* handleTransferLandRequest(action: TransferLandRequestAction) {
 
     switch (land.type) {
       case LandType.PARCEL: {
-        const txHash: string = yield estateTransfers(from, to, land.landId)
+        const txHash: string = yield estateTransfers(wallet, from, to, land.landId)
         yield put(transferLandSuccess(land, address, wallet.chainId, txHash))
         break
       }
       case LandType.ESTATE: {
-        const txHash: string = yield parcelTransfers(from, to, land.landId)
+        const txHash: string = yield parcelTransfers(wallet, from, to, land.landId)
         yield put(transferLandSuccess(land, address, wallet.chainId, txHash))
         break
       }
@@ -188,19 +192,21 @@ function* handleTransferLandRequest(action: TransferLandRequestAction) {
   }
 }
 
-async function estateTransfers(from: string, to: string, landId: number | string) {
+async function estateTransfers(wallet: Wallet, from: string, to: string, landId: number | string) {
   const provider = await getConnectedProvider()
   const web3 = new ethers.providers.Web3Provider(provider as any)
-  const contract: Contract = new ethers.Contract(BELAND_ESTATE_ADDRESS, BelandEstateABI, web3.getSigner())
+  const estateContract = getContract(ContractName.ESTATE, wallet.chainId)
+  const contract: Contract = new ethers.Contract(estateContract.address, estateContract.abi, web3.getSigner())
   const tx = await contract.transferFrom(from, to, landId)
   const reciept = await tx.wait()
   return reciept.transactionHash
 }
 
-async function parcelTransfers(from: string, to: string, landId: number | string) {
+async function parcelTransfers(wallet: Wallet, from: string, to: string, landId: number | string) {
   const provider = await getConnectedProvider()
   const web3 = new ethers.providers.Web3Provider(provider as any)
-  const contract: Contract = new ethers.Contract(BELAND_PARCEL_ADDRESS, BelandParcelABI, web3.getSigner())
+  const parcel = getContract(ContractName.ESTATE, wallet.chainId)
+  const contract: Contract = new ethers.Contract(parcel.address, parcel.abi, web3.getSigner())
   const tx = await contract.transferFrom(from, to, landId)
   const reciept = await tx.wait()
   return reciept.transactionHash

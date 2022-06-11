@@ -7,7 +7,6 @@ import { t } from '@beland/dapps/dist/modules/translation/utils'
 import { getAddress } from '@beland/dapps/dist/modules/wallet/selectors'
 import { getChainIdByNetwork, getConnectedProvider } from '@beland/dapps/dist/lib/eth'
 import { Network } from '@beland/schemas'
-import BelandNFTFactoryABI from '../../contracts/BelandNFTFactory.json'
 import BelandNFTABI from '../../contracts/BelandNFT.json'
 
 import {
@@ -62,7 +61,7 @@ import { Collection } from './types'
 import { isOwner, isLocked, UNSYNCED_COLLECTION_ERROR_PREFIX, isTPCollection } from './utils'
 import { HubAPI } from 'lib/api/hub'
 import { ChainId } from '@beland/schemas'
-import address from 'config/constants/contracts'
+import { ContractName, getContract } from '@beland/transactions'
 
 export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
   yield takeEvery(FETCH_COLLECTIONS_REQUEST, handleFetchCollectionsRequest)
@@ -210,7 +209,8 @@ export function* collectionSaga(builder: BuilderAPI, _hub: HubAPI) {
   async function createCollection(collection: Collection, items: Item[], chainId: ChainId) {
     const provider = await getConnectedProvider()
     const web3 = new ethers.providers.Web3Provider(provider as any)
-    const contract: Contract = new ethers.Contract(address.factory[chainId], BelandNFTFactoryABI, web3.getSigner())
+    const factory = getContract(ContractName.NFT_FACTORY, chainId)
+    const contract: Contract = new ethers.Contract(factory.address, factory.abi, web3.getSigner())
     const initializeItems: InitializeItem[] = []
     for (let item of items) {
       const bodyShapes = item.data.representations.map(representation => toBodyShapeType(representation.bodyShapes[0]))

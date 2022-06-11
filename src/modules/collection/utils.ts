@@ -7,17 +7,17 @@ import { decodeURN, isThirdParty, URNType } from 'lib/urn'
 import { Item, SyncStatus } from 'modules/item/types'
 import { buildItemContentHash } from 'modules/item/export'
 import { Collection, Access, Mint, CollectionType } from './types'
-import contracts from 'config/constants/contracts'
+import { ContractName, getContract } from '@beland/transactions'
 
 export const UNSYNCED_COLLECTION_ERROR_PREFIX = 'UnsyncedCollection:'
 
-export function setOnSale(collection: Collection, _wallet: Wallet, isOnSale: boolean): Access[] {
-  const address = contracts.sale[24];
+export function setOnSale(collection: Collection, wallet: Wallet, isOnSale: boolean): Access[] {
+  const address = getContract(ContractName.SALE, wallet.chainId).address
   return [{ address, hasAccess: isOnSale, collection }]
 }
 
-export function isOnSale(collection: Collection, _wallet: Wallet) {
-  const address = contracts.sale[24];
+export function isOnSale(collection: Collection, wallet: Wallet) {
+  const address = getContract(ContractName.SALE, wallet.chainId).address
   return includes(collection.minters, address)
 }
 

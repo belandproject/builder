@@ -12,8 +12,8 @@ import { SyncStatus } from 'modules/item/types'
 import { buildBeanAuthorization } from 'lib/bean'
 import { Props } from './CollectionPublishButton.types'
 import UnderReview from './UnderReview'
-import address from 'config/constants/contracts'
 import { hasAuthorization } from '@beland/dapps/dist/modules/authorization/utils'
+import { ContractName } from '@beland/transactions'
 
 const CollectionPublishButton = (props: Props) => {
   const { wallet, collection, items, status, authorizations, hasPendingCuration, onPublish, onPush, onInit } = props
@@ -30,7 +30,11 @@ const CollectionPublishButton = (props: Props) => {
   )
 
   const getAuthorization = (): Authorization => {
-    return buildBeanAuthorization(wallet.address, wallet.networks.KAI.chainId, address.factory[24])
+    return buildBeanAuthorization(
+      wallet.address,
+      wallet.networks.KAI.chainId,
+      ContractName.NFT_FACTORY
+    )
   }
 
   const handlePublish = () => {
