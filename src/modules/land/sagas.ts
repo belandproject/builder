@@ -1,5 +1,4 @@
 import { Eth } from 'web3x/eth'
-import { Address } from 'web3x/address'
 import {
   CONNECT_WALLET_SUCCESS,
   CHANGE_ACCOUNT,
@@ -7,7 +6,7 @@ import {
   ChangeAccountAction
 } from '@beland/dapps/dist/modules/wallet/actions'
 import { Wallet } from '@beland/dapps/dist/modules/wallet/types'
-import { takeLatest, call, put, takeEvery, all } from 'redux-saga/effects'
+import { takeLatest, call, put, takeEvery } from 'redux-saga/effects'
 import {
   FETCH_LANDS_REQUEST,
   FetchLandsRequestAction,
@@ -22,10 +21,6 @@ import {
   EditLandRequestAction,
   editLandSuccess,
   editLandFailure,
-  SET_OPERATOR_REQUEST,
-  SetOperatorRequestAction,
-  setOperatorSuccess,
-  setOperatorFailure,
   CREATE_ESTATE_REQUEST,
   CreateEstateRequestAction,
   createEstateSuccess,
