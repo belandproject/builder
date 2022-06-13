@@ -28,7 +28,11 @@ import {
   EditEstateRequestAction,
   editEstateSuccess,
   editEstateFailure,
-  EDIT_ESTATE_REQUEST
+  EDIT_ESTATE_REQUEST,
+  dissolveEstateSuccess,
+  dissolveEstateFailure,
+  DissolveEstateRequestAction,
+  DISSOLVE_ESTATE_REQUEST
 } from './actions'
 import { manager } from 'lib/api/manager'
 import { push } from 'connected-react-router'
@@ -49,6 +53,7 @@ export function* landSaga() {
   yield takeEvery(FETCH_LANDS_REQUEST, handleFetchLandRequest)
   yield takeLatest(CONNECT_WALLET_SUCCESS, handleWallet)
   yield takeLatest(CHANGE_ACCOUNT, handleWallet)
+  yield takeEvery(DISSOLVE_ESTATE_REQUEST, handleDissolveEstateRequest)
 }
 
 function* handleCreateEstateRequest(action: CreateEstateRequestAction) {
@@ -95,6 +100,33 @@ function* handleEditEstateRequest(action: EditEstateRequestAction) {
   } catch (error) {
     yield put(editEstateFailure(land, toAdd, toRemove, error.message))
   }
+}
+
+function* handleDissolveEstateRequest(action: DissolveEstateRequestAction) {
+  const { land } = action.payload
+
+  try {
+    if (land.type !== LandType.ESTATE) {
+      throw new Error(`Invalid LandType: "${land.type}"`)
+    }
+    const [wallet]: [Wallet] = yield getWallet()
+    const txHash: string = yield call(removeEstate, wallet, land.id)
+    yield put(dissolveEstateSuccess(land, wallet.chainId, txHash))
+    yield put(closeModal('DissolveModal'))
+    yield put(push(locations.activity()))
+  } catch (error) {
+    yield put(dissolveEstateFailure(land, error.message))
+  }
+}
+
+async function removeEstate(wallet: Wallet, estateId: string) {
+  const provider = await getConnectedProvider()
+  const web3 = new ethers.providers.Web3Provider(provider as any)
+  const estateContract = getContract(ContractName.ESTATE, wallet.chainId)
+  const contract: Contract = new ethers.Contract(estateContract.address, estateContract.abi, web3.getSigner())
+  const tx = await contract.removeAllItems(estateId)
+  const reciept = await tx.wait()
+  return reciept.transactionHash
 }
 
 async function removeLandIds(wallet: Wallet, estateId: string, landIds: number[]) {
@@ -159,7 +191,7 @@ async function estateUpdateMetaData(wallet: Wallet, landId: number | string, met
   const web3 = new ethers.providers.Web3Provider(provider as any)
   const estateContract = getContract(ContractName.ESTATE, wallet.chainId)
   const contract: Contract = new ethers.Contract(estateContract.address, estateContract.abi, web3.getSigner())
-  const tx = await contract.updateMetdata(landId, metadata)
+  const tx = await contract.updateMetadata(landId, metadata)
   const reciept = await tx.wait()
   return reciept.transactionHash
 }

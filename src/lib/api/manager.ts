@@ -1,6 +1,5 @@
 import { Land, LandType, RoleType } from 'modules/land/types'
 import { coordsToId } from 'modules/land/utils'
-import { isZero } from 'lib/address'
 import { LandAPI } from './land'
 
 const fromParcel = (parcel: any, role: RoleType) => {
@@ -21,10 +20,10 @@ const fromParcel = (parcel: any, role: RoleType) => {
 }
 
 const fromEstate = (estate: any, role: RoleType) => {
-  const id = estate.id || ''
+  const id = String(estate.id) || ''
   const result: Land = {
     id,
-    landId: estate.id,
+    landId: id,
     name: estate.name || `Estate ${id}`,
     type: LandType.ESTATE,
     role,
@@ -50,7 +49,9 @@ export class ManagerAPI {
     const lands: Land[] = []
     if (parcels && parcels.rows && parcels.rows.length > 0) {
       parcels.rows.forEach((item: any) => {
-        lands.push(fromParcel(item, RoleType.OWNER))
+        if (!item.estateId) {
+          lands.push(fromParcel(item, RoleType.OWNER))
+        }
       });
     }
     if (estates && estates.rows && estates.rows.length > 0) {
@@ -62,11 +63,6 @@ export class ManagerAPI {
       lands
         // remove empty estates
         .filter(land => land.type === LandType.PARCEL || land.parcels!.length > 0)
-        // remove duplicated and zero address operators
-        .map(land => {
-          land.operators = Array.from(new Set(land.operators)).filter(address => !isZero(address))
-          return land
-        })
     ]
   }
 }

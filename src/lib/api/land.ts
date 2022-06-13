@@ -41,10 +41,10 @@ export class LandAPI extends BaseAPI {
     }
 
     fetchParcelsByOwner = async (_address: string) => {
-        return await this.request('get', `/parcels?owner=${ethers.utils.getAddress(_address)}&limit=1000`);
+        return await this.request('get', `/parcels?owner=${ethers.utils.getAddress(_address)}&limit=1000&orderBy=updatedAt`);
     }
 
     fetchEstatesOwnByOwner = async (_address: string) => {
-        return await this.request('get', `/estates?include=parcels&owner=${ethers.utils.getAddress(_address)}&limit=1000`);
+        return await this.request('get', `/estates?include=parcels&owner=${ethers.utils.getAddress(_address)}&limit=1000&orderBy=updatedAt`);
     }
 }
