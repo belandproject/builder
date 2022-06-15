@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { Link } from 'react-router-dom'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'
-import { Container, Button, Page, Dropdown, DropdownProps, Pagination, PaginationProps, Row, Header, Icon, Section } from '@beland/uikit'
+import { Container, Button, Page, Dropdown, DropdownProps, Pagination, PaginationProps, Section } from '@beland/uikit'
 
 import BuilderIcon from 'components/Icon'
 import ProjectCard from 'components/ProjectCard'
@@ -136,7 +135,7 @@ export default class HomePage extends React.PureComponent<Props> {
   }
 
   render() {
-    const { projects, isFetching, totalPages, page, isLoggingIn, poolList } = this.props
+    const { projects, isFetching, totalPages, page, isLoggingIn } = this.props
     if (isLoggingIn || isFetching) {
       return <LoadingPage />
     }
@@ -176,7 +175,7 @@ export default class HomePage extends React.PureComponent<Props> {
                 />
               ) : null}
             </Section>
-            {poolList ? (
+            {/* {poolList ? (
               <>
                 <Row>
                   <Row className="scene-pool-menu">
@@ -196,7 +195,7 @@ export default class HomePage extends React.PureComponent<Props> {
                   ))}
                 </div>
               </>
-            ) : null}
+            ) : null} */}
           </Container>
         </Page>
         <Footer />
