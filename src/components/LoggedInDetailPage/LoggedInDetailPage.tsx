@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Page, Loader, Button } from '@beland/uikit'
+import { Page, Loader } from '@beland/uikit'
 
 import Navigation from 'components/Navigation'
 import Navbar from 'components/Navbar'
@@ -50,9 +50,6 @@ export default class LoggedInDetailPage extends React.PureComponent<Props> {
         <Page className={`LoggedInDetailPage ${className}`} isFullscreen={isPageFullscreen}>
           <div className='builder-header'>
             <div className='title'>Builder</div>
-            <Button primary onClick={this.handleOpenCreateModal}>
-              Create new Scence
-            </Button>
           </div>
           {hasNavigation ? <Navigation activeTab={activeTab} isFullscreen={isNavigationFullscreen} /> : null}
           {isLoading ? this.renderLoading() : null}

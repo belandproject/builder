@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { Network } from '@beland/schemas'
-import { Section, Row, Narrow, Column, Header, Button, Icon, Popup, Radio, CheckboxProps } from '@beland/uikit'
+import { Section, Row, Column, Header, Button, Icon, Popup, Radio, CheckboxProps, Container } from '@beland/uikit'
 import { NetworkCheck } from '@beland/dapps/dist/containers'
 import { t, T } from '@beland/dapps/dist/modules/translation/utils'
 import { locations } from 'routing/locations'
@@ -81,7 +81,7 @@ export default class CollectionDetailPage extends React.PureComponent<Props> {
         <Section className={collection.isPublished ? 'is-published' : ''}>
           <Row>
             <Back absolute onClick={this.handleGoBack} />
-            <Narrow>
+            <Container>
               <Row>
                 <Column className="header-column">
                   {isLocked ? (
@@ -151,10 +151,10 @@ export default class CollectionDetailPage extends React.PureComponent<Props> {
                   </Row>
                 </Column>
               </Row>
-            </Narrow>
+            </Container>
           </Row>
         </Section>
-        <Narrow>
+        <Container>
           <Notice storageKey={STORAGE_KEY}>
             <T
               id="collection_detail_page.notice"
@@ -180,7 +180,7 @@ export default class CollectionDetailPage extends React.PureComponent<Props> {
               </div>
             </div>
           )}
-        </Narrow>
+        </Container>
       </>
     )
   }

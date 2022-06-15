@@ -47,16 +47,16 @@ export class ManagerAPI {
     const parcels = await landAPI.fetchParcelsByOwner(address);  
     const estates = await landAPI.fetchEstatesOwnByOwner(address); 
     const lands: Land[] = []
+    if (estates && estates.rows && estates.rows.length > 0) {
+      estates.rows.forEach((item: any) => {
+        lands.push(fromEstate(item, RoleType.OWNER))
+      });
+    }
     if (parcels && parcels.rows && parcels.rows.length > 0) {
       parcels.rows.forEach((item: any) => {
         if (!item.estateId) {
           lands.push(fromParcel(item, RoleType.OWNER))
         }
-      });
-    }
-    if (estates && estates.rows && estates.rows.length > 0) {
-      estates.rows.forEach((item: any) => {
-        lands.push(fromEstate(item, RoleType.OWNER))
       });
     }
     return [
