@@ -250,6 +250,7 @@ function* renderScene(scene: Scene) {
     if (isReadOnlyResult) {
       scene = createReadyOnlyScene(scene)
     }
+
     yield call(() => editorWindow.editor.sendExternalAction(updateEditor(scene.id, { ...scene }, mappings)))
   }
 }

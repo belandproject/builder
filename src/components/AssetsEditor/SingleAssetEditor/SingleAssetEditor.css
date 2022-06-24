@@ -85,6 +85,6 @@
   height: 20px;
 }
 
-.SingleAssetEditor .dcl.select-field .ui.dropdown .text {
+.SingleAssetEditor .bld.select-field .ui.dropdown .text {
   text-transform: capitalize;
 }

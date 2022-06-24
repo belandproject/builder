@@ -5,14 +5,14 @@ const contentServer = initContext()
 
 function initContext() {
   return new Promise(resolve => {
-    define('node_modules/@beland/ecs-scene-utils/channel', [], () => {
+    define('node_modules/@beland/builder-scripts/channel', [], () => {
       /* */
     })
-    define('node_modules/@beland/ecs-scene-utils/inventory', [], () => {
+    define('node_modules/@beland/builder-scripts/inventory', [], () => {
       /* */
     })
 
-    define('__bootstrap', ['require', 'exports', '@decentraland/EnvironmentAPI'], (require, exports, EnvironmentAPI) => {
+    define('__bootstrap', ['require', 'exports', '@beland/EnvironmentAPI'], (require, exports, EnvironmentAPI) => {
       // Object.defineProperty(exports, '__esModule', { value: true })
       EnvironmentAPI.getBootstrapData().then(({ baseUrl }) => {
         resolve(baseUrl)

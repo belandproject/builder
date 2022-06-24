@@ -256,7 +256,7 @@ function createComponent(component: AnyComponent, scene: Scene) {
       case ComponentType.Script: {
         const { assetId, values } = data as ComponentData[ComponentType.Script]
         const asset = scene.assets[assetId]
-        const src = asset.contents[asset.script!]
+        const src = asset.contents[asset.script!].replace("ipfs://", '')
         editorComponents[id] = new Script(assetId, src, values)
         if (!scriptPromises.has(assetId)) {
           const url = scriptBaseUrl + src
