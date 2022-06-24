@@ -1,9 +1,9 @@
 // @ts-ignore
 import Dockerfile from '!raw-loader!beland-project/Dockerfile'
 // @ts-ignore
-import builderChannelRaw from 'raw-loader!decentraland-builder-scripts/lib/channel'
+import builderChannelRaw from 'raw-loader!@beland/builder-scripts/lib/channel'
 // @ts-ignore
-import builderInventoryRaw from 'raw-loader!decentraland-builder-scripts/lib/inventory'
+import builderInventoryRaw from 'raw-loader!@beland/builder-scripts/lib/inventory'
 import * as ECS from '@beland/ecs'
 import { SceneWriter, LightweightWriter } from 'bld-scene-writer'
 import packageJson from 'beland-project/package.json'
@@ -240,8 +240,8 @@ export async function createGameFile(args: { project: Project; scene: Scene; rot
     } else {
       // import all the scripts
       let importScripts = ''
-      importScripts += `import { createChannel } from '../node_modules/decentraland-builder-scripts/channel'\n`
-      importScripts += `import { createInventory } from '../node_modules/decentraland-builder-scripts/inventory'\n`
+      importScripts += `import { createChannel } from '../node_modules/@beland/builder-scripts/channel'\n`
+      importScripts += `import { createInventory } from '../node_modules/@beland/builder-scripts/inventory'\n`
       let currentImport = 1
       const assetIdToConstructorName = new Map<string, string>()
       for (const [assetId] of Array.from(scripts)) {
@@ -423,7 +423,7 @@ export function createDynamicFiles(args: {
         name: project.id,
         dependencies: {
           ...packageJson.devDependencies,
-          'decentraland-builder-scripts': 'latest'
+          '@beland/builder-scripts': 'latest'
         }
       },
       null,
@@ -433,7 +433,7 @@ export function createDynamicFiles(args: {
     [EXPORT_PATH.TSCONFIG_FILE]: JSON.stringify(
       {
         ...tsconfig,
-        include: tsconfig.include.concat(['./node_modules/decentraland-builder-scripts/types.d.ts'])
+        include: tsconfig.include.concat(['./node_modules/@beland/builder-scripts/types.d.ts'])
       },
       null,
       2
