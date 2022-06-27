@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, AxiosError } from 'axios'
 import { APIParam, BaseAPI } from '@beland/dapps/dist/lib/api'
 import { Authorization } from './auth'
-import * as queryString from 'query-string';
+import * as queryString from 'query-string'
 export class HubAPI extends BaseAPI {
   private authorization: Authorization
 
@@ -46,20 +46,33 @@ export class HubAPI extends BaseAPI {
     formData.append('file', fileContent, filename)
     return await this.request('post', `/upload`, formData, {
       onUploadProgress
-    });
+    })
   }
 
   async createMetadata(data: any) {
-    return await this.request('post', `/upload/metadata`, data);
+    return await this.request('post', `/upload/metadata`, data)
   }
 
-  fetchScenesByPointers(pointers: string[]) {
-    const q = queryString.stringify({
-      pointers,
-      limit: 1000
-    })
-    return this.request('get', `/scenes?` + q);
+  async fetchScenesByPointers(pointers: string[]) {
+    let rows: any = []
+    let start = 0
+    let end = 0
+    let res
+    let pagePointers
+    let count = 0;
+    while (true) {
+      end = start + 300
+      pagePointers = pointers.slice(start, end)
+      if (pagePointers.length == 0) break
+      const q = queryString.stringify({
+        pointers: pagePointers,
+        limit: 500
+      })
+      res = await this.request('get', `/scenes?` + q)
+      rows = rows.concat(res.rows)
+      count = res.count;
+      start = end
+    }
+    return { count, rows }
   }
 }
-
-
