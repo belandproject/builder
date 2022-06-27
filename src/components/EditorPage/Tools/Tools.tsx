@@ -135,7 +135,7 @@ export default class Tools extends React.PureComponent<Props, State> {
             </Row>
           }
           position="top right"
-          verticalOffset={3}
+          verticaloffset={3}
           trigger={this.renderShortcutIcon()}
           on="hover"
           inverted

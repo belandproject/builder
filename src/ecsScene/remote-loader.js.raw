@@ -26,7 +26,7 @@ function getScriptInstance(assetId, src) {
   return instance
     ? Promise.resolve(instance)
     : contentServer.then(baseUrl =>
-        fetch(baseUrl + src)
+        fetch(baseUrl +"/"+ src)
           .then(resp => resp.text())
           .then(code => eval(code))
           .then(() => new Promise(resolve => define(assetId + '/load', [assetId + '/item'], item => resolve(item.default))))

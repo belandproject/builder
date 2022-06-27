@@ -75,7 +75,7 @@ export async function createGameFile(args: { project: Project; scene: Scene; rot
   const { scene, project, rotation } = args
   const useLightweight = isDeploy && !hasScripts(scene)
   const Writer = useLightweight ? LightweightWriter : SceneWriter
-  const writer = new Writer(ECS, require('beland-ecs/types/bld/beland-ecs.api'))
+  const writer = new Writer(ECS, require('decentraland-ecs/types/dcl/decentraland-ecs.api'))
   const { cols, rows } = project.layout
   const sceneEntity = new ECS.Entity()
 
@@ -153,7 +153,7 @@ export async function createGameFile(args: { project: Project; scene: Scene; rot
         const { assetId, values } = (component as ComponentDefinition<ComponentType.Script>).data
         const asset = scene.assets[assetId]
         const src = asset.contents[asset.script!]
-        scripts.set(assetId, src)
+        scripts.set(assetId, src.replace("ipfs://", ""))
         const entityId = componentToEntity.get(component.id)!
         hosts.add(entityId)
         instances.push({ entityId, assetId, values })
@@ -183,6 +183,7 @@ export async function createGameFile(args: { project: Project; scene: Scene; rot
           ecsEntity.addComponent(component)
         }
       }
+      console.log(name, ecsEntity)
 
       writer.addEntity(name, ecsEntity as any)
     } catch (e) {
@@ -192,7 +193,6 @@ export async function createGameFile(args: { project: Project; scene: Scene; rot
   }
 
   let code = writer.emitCode()
-
   // SCRIPTS SECTION
   if (scripts.size > 0) {
     if (isDeploy) {
@@ -215,8 +215,7 @@ export async function createGameFile(args: { project: Project; scene: Scene; rot
       for (const [assetId, src] of Array.from(scripts)) {
         const scriptName = SCRIPT_INSTANCE_NAME + currentScript++
         assetIdToScriptName.set(assetId, scriptName)
-        const hash = await convertToV1(src)
-        executeScripts += `\n\tconst ${scriptName} = await getScriptInstance("${assetId}", "${hash}")`
+        executeScripts += `\n\tconst ${scriptName} = await getScriptInstance("${assetId}", "${src}")`
       }
       // initialize all the scripts
       for (const [assetId] of Array.from(scripts)) {
@@ -235,7 +234,6 @@ export async function createGameFile(args: { project: Project; scene: Scene; rot
 
       const builderScripts =
         `var exports = {}\n` + builderChannelRaw.replace(`'use strict'`, `''`) + `\n` + builderInventoryRaw.replace(`'use strict'`, `''`)
-
       code = builderScripts + '\n\n' + code + '\n\n' + scriptLoader + '\n\n' + executeScripts
     } else {
       // import all the scripts

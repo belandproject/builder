@@ -175,7 +175,6 @@ export function* deploymentSaga(builder: BuilderAPI, hub: HubAPI) {
         isDeploy: true,
         onProgress: handleProgress(ProgressStage.CREATE_FILES)
       })
-
       const contentFiles: Map<string, Buffer> = yield call(makeContentFiles, files)
       const metadata: any = { contents: [] }
       for (let filename of contentFiles.keys()) {
