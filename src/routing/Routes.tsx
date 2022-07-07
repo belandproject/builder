@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { Center, Page, Responsive } from '@beland/uikit'
+import { Center, Page } from '@beland/uikit'
 import { env } from 'decentraland-commons'
 import { t } from '@beland/dapps/dist/modules/translation/utils'
 
@@ -12,7 +12,6 @@ import EditorPage from 'components/EditorPage'
 import ErrorPage from 'components/ErrorPage'
 import HomePage from 'components/HomePage'
 import LoadingPage from 'components/LoadingPage'
-import MobilePage from 'components/MobilePage'
 import NotFoundPage from 'components/NotFoundPage'
 import UnsupportedBrowserPage from 'components/UnsupportedBrowserPage'
 import SceneViewPage from 'components/SceneViewPage'
@@ -78,52 +77,38 @@ export default class Routes extends React.Component<Props, State> {
 
     return (
       <>
-        <Responsive maxWidth={1024} as={React.Fragment}>
-          <Switch>
-            <Route exact path={locations.poolSearch()} component={SceneListPage} />
-            <Route exact path={locations.sceneView()} component={SceneViewPage} />
-            <Route exact path={locations.poolView()} component={SceneViewPage} />
-            <Route component={MobilePage} />
-          </Switch>
-        </Responsive>
-        <Responsive minWidth={1025} as={React.Fragment}>
-          <Switch>
-            <Route exact path={locations.root()} component={HomePage} />
-            <Route exact path={locations.notFound()} component={NotFoundPage} />
-            <Route exact path={locations.sceneEditor()} component={EditorPage} />
-            <Route exact path={locations.poolSearch()} component={SceneListPage} />
-            <Route exact path={locations.sceneView()} component={SceneViewPage} />
-            <Route exact path={locations.poolView()} component={SceneViewPage} />
-            <Route exact path={locations.callback()} component={LoadingPage} />
-            <Route exact path={locations.signIn()} component={SignInPage} />
-            <Route exact path={locations.land()} component={LandPage} />
-            <Route exact path={locations.landDetail()} component={LandDetailPage} />
-            <Route exact path={locations.landTransfer()} component={LandTransferPage} />
-            <Route exact path={locations.landEdit()} component={LandEditPage} />
-            <Route exact path={locations.landOperator()} component={LandOperatorPage} />
-            <Route exact path={locations.activity()} component={ActivityPage} />
-            <Route exact path={locations.settings()} component={SettingsPage} />
-            <Route exact path={locations.sceneDetail()} component={SceneDetailPage} />
-            {env.get('REACT_APP_FF_WEARABLES')
-              ? [
-                  <Route exact key={1} path={locations.collections()} component={CollectionsPage} />,
-                  <Route exact key={2} path={locations.itemDetail()} component={ItemDetailPage} />,
-                  <Route exact key={3} path={locations.collectionDetail()} component={CollectionDetailPage} />,
-                  <Route exact key={4} path={locations.itemEditor()} component={ItemEditorPage} />,
-                ]
-              : null}
-            <Redirect to={locations.root()} />
-          </Switch>
-        </Responsive>
+        <Switch>
+          <Route exact path={locations.root()} component={HomePage} />
+          <Route exact path={locations.notFound()} component={NotFoundPage} />
+          <Route exact path={locations.sceneEditor()} component={EditorPage} />
+          <Route exact path={locations.poolSearch()} component={SceneListPage} />
+          <Route exact path={locations.sceneView()} component={SceneViewPage} />
+          <Route exact path={locations.poolView()} component={SceneViewPage} />
+          <Route exact path={locations.callback()} component={LoadingPage} />
+          <Route exact path={locations.signIn()} component={SignInPage} />
+          <Route exact path={locations.land()} component={LandPage} />
+          <Route exact path={locations.landDetail()} component={LandDetailPage} />
+          <Route exact path={locations.landTransfer()} component={LandTransferPage} />
+          <Route exact path={locations.landEdit()} component={LandEditPage} />
+          <Route exact path={locations.landOperator()} component={LandOperatorPage} />
+          <Route exact path={locations.activity()} component={ActivityPage} />
+          <Route exact path={locations.settings()} component={SettingsPage} />
+          <Route exact path={locations.sceneDetail()} component={SceneDetailPage} />
+          {env.get('REACT_APP_FF_WEARABLES')
+            ? [
+                <Route exact key={1} path={locations.collections()} component={CollectionsPage} />,
+                <Route exact key={2} path={locations.itemDetail()} component={ItemDetailPage} />,
+                <Route exact key={3} path={locations.collectionDetail()} component={CollectionDetailPage} />,
+                <Route exact key={4} path={locations.itemEditor()} component={ItemEditorPage} />
+              ]
+            : null}
+          <Redirect to={locations.root()} />
+        </Switch>
       </>
     )
   }
 
   render() {
-    return (
-      <>
-        {this.renderRoutes()}
-      </>
-    )
+    return <>{this.renderRoutes()}</>
   }
 }
